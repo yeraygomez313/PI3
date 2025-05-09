@@ -408,6 +408,7 @@ MonoBehaviour:
   backgroundImage: {fileID: 4850046185693820300}
   monsterIconImage: {fileID: 5766991542973225665}
   manaCostText: {fileID: 1419758130769468941}
+  notEnoughManaColor: {r: 0.8627451, g: 0, b: 0, a: 1}
   cooldownImage: {fileID: 6042574489420369743}
   ManaCost: 2
   MonsterPrefab: {fileID: 248662147868278087, guid: 2b61d60aec93f8d499f45022b264113d,

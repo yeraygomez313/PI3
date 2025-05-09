@@ -1,4 +1,5 @@
 using TMPro;
+using DG.Tweening;
 using UnityEngine;
 
 public class ManaBar : Bar
@@ -8,8 +9,11 @@ public class ManaBar : Bar
     [SerializeField] private float initialMana = 3f;
     [SerializeField] private float manaRegenRate = 1f;
     private float currentMana;
+    public bool HasEnoughMana(float mana) => currentMana >= mana;
     [SerializeField] private TextMeshProUGUI manaText;
     [SerializeField] private Color fullManaColor = Color.white;
+    [SerializeField] private GameObject manaConsumedTextPrefab;
+    [SerializeField] private float manaConsumedTextDuration = 1f;
 
     [Header("Debug")]
     [SerializeField] private bool substractMana = false;
@@ -48,12 +52,26 @@ public class ManaBar : Bar
         }
     }
 
-    public bool ConsumeMana(float amount)
+    public bool ConsumeMana(int amount)
     {
         if (currentMana >= amount)
         {
             currentMana -= amount;
             UpdateBarVisuals(currentMana);
+
+            GameObject manaConsumedTextInstance = Instantiate(manaConsumedTextPrefab, manaText.transform);
+            RectTransform manaConsumedTextRect = manaConsumedTextInstance.GetComponent<RectTransform>();
+            manaConsumedTextRect.anchoredPosition = Vector2.zero; // or localPosition = Vector3.zero;
+
+            manaConsumedTextInstance.GetComponent<TextMeshProUGUI>().text = "-" + amount.ToString();
+
+            manaConsumedTextRect.DOLocalMoveX(100f, manaConsumedTextDuration)
+                .SetEase(Ease.OutCubic)
+                .OnComplete(() => Destroy(manaConsumedTextInstance));
+
+            manaConsumedTextInstance.GetComponent<TextMeshProUGUI>().DOFade(0f, manaConsumedTextDuration)
+                .SetEase(Ease.OutCubic);
+
             return true;
         }
         else
@@ -61,10 +79,5 @@ public class ManaBar : Bar
             Debug.Log("Not enough mana!");
             return false;
         }
-    }
-
-    public bool HasEnoughMana(float amount)
-    {
-        return currentMana >= amount;
     }
 }

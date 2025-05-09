@@ -14,7 +14,7 @@ public class CombatManager : MonoBehaviour
 
     [SerializeField] private GameObject cardHolder;
     private List<DraggableCard> cardsInHand = new List<DraggableCard>();
-    private DraggableCard selectedCard;
+    public DraggableCard SelectedCard { get; private set; }
     //[field:SerializeField] private CardInstance[] deck = new CardInstance[8];
     //private Queue<CardInstance> cardQueue = new Queue<CardInstance>();
 
@@ -38,20 +38,14 @@ public class CombatManager : MonoBehaviour
 
     public void CardSelected(DraggableCard card)
     {
-        selectedCard = card;
+        SelectedCard = card;
         OnCardSelected?.Invoke();
     }
 
     public void CardDeselected()
     {
-        selectedCard = null;
+        SelectedCard = null;
         OnCardDeselected?.Invoke();
-    }
-
-    public void RotateSelectedCard(float rotationSpeed)
-    {
-        if (selectedCard == null) return;
-        selectedCard.DeploymentPreviewObject.transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
     }
 
     public bool UseCard(DraggableCard card, Vector2 position)
@@ -71,7 +65,9 @@ public class CombatManager : MonoBehaviour
                 c.DisableTemporarily(cardCooldown);
             }
 
-            //change used card
+            // dequeue next card
+            // queue used card
+            // set DraggableCard to next card using SetCardInstance
 
             return true;
         }
@@ -90,6 +86,11 @@ public class CombatManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public bool HasEnoughMana(int manaCost)
+    {
+        return manaBar.HasEnoughMana(manaCost);
     }
 
     private IEnumerator SpawnUnits(DraggableCard card)
