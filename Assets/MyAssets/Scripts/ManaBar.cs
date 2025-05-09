@@ -1,9 +1,12 @@
 using TMPro;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ManaBar : Bar
 {
+    [SerializeField] private GameObject intBar;
+
     [Header("Mana")]
     [SerializeField] private float maxMana = 10f;
     [SerializeField] private float initialMana = 3f;
@@ -50,6 +53,18 @@ public class ManaBar : Bar
         {
             manaText.color = Color.white;
         }
+    }
+
+    protected override void UpdateBarVisuals(float currentValue)
+    {
+        base.UpdateBarVisuals(currentValue);
+        intBar.GetComponent<Image>().fillAmount = Mathf.Floor(currentValue) / maxMana;
+    }
+
+    protected override void UpdateMaxValue(float newMaxValue)
+    {
+        base.UpdateMaxValue(newMaxValue);
+        intBar.GetComponent<Image>().fillAmount = Mathf.Floor(currentMana) / newMaxValue;
     }
 
     public bool ConsumeMana(int amount)

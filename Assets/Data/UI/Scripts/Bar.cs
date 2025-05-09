@@ -12,7 +12,7 @@ public class Bar : MonoBehaviour
     private float maxValue = 10;
     private Tween changeVarValueTween;
 
-    protected void UpdateBarVisuals(float currentValue)
+    protected virtual void UpdateBarVisuals(float currentValue)
     {
         valueBar.fillAmount = currentValue / maxValue;
 
@@ -30,7 +30,7 @@ public class Bar : MonoBehaviour
         ).SetDelay(changeBarDelay);
     }
 
-    protected void UpdateMaxValue(float newMaxValue)
+    protected virtual void UpdateMaxValue(float newMaxValue)
     {
         valueBar.fillAmount /= newMaxValue / maxValue;
         maxValue = newMaxValue;
