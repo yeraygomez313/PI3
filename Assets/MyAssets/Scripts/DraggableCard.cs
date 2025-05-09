@@ -102,8 +102,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (!CanDrag(eventData)) return;
 
-        Vector2 mousePos = eventData.position;
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.position = mousePos;
         DeploymentPreviewObject.transform.position = mousePos;
@@ -116,6 +115,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.position = mousePos;
+        DeploymentPreviewObject.transform.position = mousePos;
         bool canBeDeployed = combatManager.ValidateDeploymentPosition(mousePos) && combatManager.HasEnoughMana(ManaCost);
         DeploymentPreviewObject.SetDeploymentAllowed(canBeDeployed);
     }

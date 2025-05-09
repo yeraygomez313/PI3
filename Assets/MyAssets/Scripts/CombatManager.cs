@@ -81,7 +81,6 @@ public class CombatManager : MonoBehaviour
 
         if (hit != null)
         {
-            Debug.Log("Position is inside a forbidden zone: " + hit.name);
             return false;
         }
 
