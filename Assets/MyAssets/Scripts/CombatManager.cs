@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,26 +15,45 @@ public class CombatManager : MonoBehaviour
 
     [SerializeField] private GameObject cardHolder;
     private List<DraggableCard> cardsInHand = new List<DraggableCard>();
-    public DraggableCard SelectedCard { get; private set; }
-    //[field:SerializeField] private CardInstance[] deck = new CardInstance[8];
-    //private Queue<CardInstance> cardQueue = new Queue<CardInstance>();
-
     [SerializeField] private LayerMask forbiddenZoneMask;
+
+    private CardInstance[] deck = new CardInstance[8];
+    public DraggableCard SelectedCard { get; private set; }
+    private Queue<CardInstance> cardQueue = new Queue<CardInstance>();
+
     [HideInInspector] public UnityEvent OnCardSelected;
     [HideInInspector] public UnityEvent OnCardDeselected;
+
+    [Header("Debug")]
+    [SerializeField] private List<CardData> cardData = new List<CardData>();
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
+        for (int i = 0; i < deck.Length; i++)
+        {
+            deck[i] = new CardInstance();
+            deck[i].Initialize(cardData[i], 0);
+        }
+
+        deck = deck.OrderBy(x => Random.value).ToArray();
+
         foreach (var card in cardHolder.GetComponentsInChildren<DraggableCard>())
         {
             cardsInHand.Add(card);
-            card.SetCardInstance(/*cardInstance*/);
         }
 
-        //load deck
+        for (int i = 0; i < cardsInHand.Count; i++)
+        {
+            cardsInHand[i].SetCardInstance(deck[i]);
+        }
+
+        for (int i = cardsInHand.Count; i < deck.Length; i++)
+        {
+            cardQueue.Enqueue(deck[i]);
+        }
     }
 
     public void CardSelected(DraggableCard card)
@@ -56,7 +76,7 @@ public class CombatManager : MonoBehaviour
             return false;
         }
 
-        if (manaBar.ConsumeMana(card.ManaCost))
+        if (manaBar.ConsumeMana(card.CardInstance.ManaCost))
         {
             StartCoroutine(SpawnUnits(card));
 
@@ -65,9 +85,9 @@ public class CombatManager : MonoBehaviour
                 c.DisableTemporarily(cardCooldown);
             }
 
-            // dequeue next card
-            // queue used card
-            // set DraggableCard to next card using SetCardInstance
+            CardInstance nextCard = cardQueue.Dequeue();
+            cardQueue.Enqueue(card.CardInstance);
+            card.SetCardInstance(nextCard);
 
             return true;
         }
@@ -99,7 +119,7 @@ public class CombatManager : MonoBehaviour
 
         foreach (var spawnPoint in spawnPoints)
         {
-            GameObject monster = Instantiate(card.MonsterPrefab, spawnPoint.position, Quaternion.identity);
+            GameObject monster = Instantiate(card.CardInstance.MonsterPrefab, spawnPoint.position, Quaternion.identity);
             monster.transform.localScale = spawnPoint.localScale; // Placeholder
             yield return spawnDelayWait; // Placeholder for spawn delay
         }

@@ -64632,6 +64632,15 @@ MonoBehaviour:
   OnCardDeselected:
     m_PersistentCalls:
       m_Calls: []
+  cardData:
+  - {fileID: 11400000, guid: 300d713335f71d448989124a37f6874c, type: 2}
+  - {fileID: 11400000, guid: 367af7b5ddc0a10488f1463cc14bd973, type: 2}
+  - {fileID: 11400000, guid: 487a8630953d86549b6cae0803a3c792, type: 2}
+  - {fileID: 11400000, guid: 88c490477af40d24f95ad9896dc3a3b2, type: 2}
+  - {fileID: 11400000, guid: 19a8f73a8158c1e46a3b49deb2ee9073, type: 2}
+  - {fileID: 11400000, guid: ddd6b63905bb74c469604da155e986f0, type: 2}
+  - {fileID: 11400000, guid: 4219d2dad19892248b29df0b7df43a74, type: 2}
+  - {fileID: 11400000, guid: 72f3f5189bafc934ab6e39b0f52d789b, type: 2}
 --- !u!1 &1010507970
 GameObject:
   m_ObjectHideFlags: 0

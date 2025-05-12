@@ -23,19 +23,12 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private Sequence deploymentFailedSequence;
     public DeploymentPreview DeploymentPreviewObject { get; private set; }
 
-    //Temporal, replace when scriptable object is finished
-    [Header("Placeholder")]
-    public int ManaCost;
-    public GameObject MonsterPrefab;
-    public Sprite MonsterIcon;
-    public GameObject DeploymentPreview;
+    public CardInstance CardInstance { get; private set; }
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-
-        SetCardInstance(/*cardInstance*/);
     }
 
     private void Start()
@@ -45,7 +38,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void Update()
     {
-        if (combatManager.HasEnoughMana(ManaCost))
+        if (combatManager.HasEnoughMana(CardInstance.ManaCost))
         {
             manaCostText.color = Color.white;
         }
@@ -55,12 +48,13 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    public void SetCardInstance(/*CardInstance card*/)
+    public void SetCardInstance(CardInstance card)
     {
-        monsterIconImage.sprite = MonsterIcon;
-        manaCostText.text = ManaCost.ToString();
+        CardInstance = card;
+        monsterIconImage.sprite = card.Icon;
+        manaCostText.text = card.ManaCost.ToString();
         Destroy(DeploymentPreviewObject);
-        DeploymentPreviewObject = Instantiate(DeploymentPreview, transform.position, Quaternion.identity).GetComponent<DeploymentPreview>();
+        DeploymentPreviewObject = Instantiate(card.DeploymentPreviewPrefab, transform.position, Quaternion.identity).GetComponent<DeploymentPreview>();
         DeploymentPreviewObject.gameObject.SetActive(false);
     }
 
@@ -115,7 +109,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         rectTransform.position = mousePos;
         Debug.Log("Dragging card to position: " + mousePos);
         DeploymentPreviewObject.transform.position = mousePos;
-        bool canBeDeployed = combatManager.ValidateDeploymentPosition(mousePos) && combatManager.HasEnoughMana(ManaCost);
+        bool canBeDeployed = combatManager.ValidateDeploymentPosition(mousePos) && combatManager.HasEnoughMana(CardInstance.ManaCost);
         DeploymentPreviewObject.SetDeploymentAllowed(canBeDeployed);
     }
 
@@ -125,7 +119,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.position = mousePos;
         DeploymentPreviewObject.transform.position = mousePos;
-        bool canBeDeployed = combatManager.ValidateDeploymentPosition(mousePos) && combatManager.HasEnoughMana(ManaCost);
+        bool canBeDeployed = combatManager.ValidateDeploymentPosition(mousePos) && combatManager.HasEnoughMana(CardInstance.ManaCost);
         DeploymentPreviewObject.SetDeploymentAllowed(canBeDeployed);
     }
 

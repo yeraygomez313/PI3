@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbe5fb311822d546b19666dff650701, type: 3}
+  m_Name: Chariot
+  m_EditorClassIdentifier: 
+  <Icon>k__BackingField: {fileID: 766412905, guid: 0c1e734fa85636743af3bc22c6d99ba8,
+    type: 3}
+  <ManaCost>k__BackingField: 3
+  <MonsterPrefab>k__BackingField: {fileID: 248662147868278087, guid: 2b61d60aec93f8d499f45022b264113d,
+    type: 3}
+  <DeploymentPreviewPrefab>k__BackingField: {fileID: 2781874535766077328, guid: 94a603e408603e54fbc304ec38c5eaba,
+    type: 3}
+  <CardLevelDataList>k__BackingField: []
