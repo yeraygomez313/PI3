@@ -11,13 +11,13 @@ public class CardData : ScriptableObject
     [field: SerializeField] public GameObject DeploymentPreviewPrefab { get; private set; }
 
     // Temporal
-    [field: SerializeField] public List<CardLevelData> CardLevelDataList { get; private set; } = new List<CardLevelData>();
+    [field: SerializeField] public List<CardLevelData> CardLevelDataList { get; private set; } = new();
 }
 
 [CreateAssetMenu(fileName = "CardLevelData", menuName = "Scriptable Objects/CardLevelData")]
 public class CardLevelData : ScriptableObject
 {
-
+    public MonsterStats MonsterStats;
 }
 
 public class CardInstance
