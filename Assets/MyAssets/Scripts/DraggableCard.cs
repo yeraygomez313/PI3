@@ -66,7 +66,6 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void DisableTemporarily(float duration)
     {
-        Debug.Log("Card disabled temporarily for " + duration + " seconds.");
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
         cooldownOverlay.fillAmount = 1f;
@@ -114,6 +113,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.position = mousePos;
+        Debug.Log("Dragging card to position: " + mousePos);
         DeploymentPreviewObject.transform.position = mousePos;
         bool canBeDeployed = combatManager.ValidateDeploymentPosition(mousePos) && combatManager.HasEnoughMana(ManaCost);
         DeploymentPreviewObject.SetDeploymentAllowed(canBeDeployed);
