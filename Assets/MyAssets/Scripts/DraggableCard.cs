@@ -11,12 +11,16 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [SerializeField] private Image monsterIconImage;
     [SerializeField] private TextMeshProUGUI manaCostText;
     [SerializeField] private Color notEnoughManaColor;
-    [SerializeField] private Image cooldownImage;
+    [SerializeField] private Image cooldownOverlay;
+    [SerializeField] private Image deploymentFailedOverlay;
+    [SerializeField] private float deploymentFailedOverlayInitialAlpha;
+    [SerializeField] private float deploymentFailedSequenceDuration;
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Vector2 initialPosition;
     private CombatManager combatManager;
+    private Sequence deploymentFailedSequence;
     public DeploymentPreview DeploymentPreviewObject { get; private set; }
 
     //Temporal, replace when scriptable object is finished
@@ -65,9 +69,9 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Debug.Log("Card disabled temporarily for " + duration + " seconds.");
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
-        cooldownImage.fillAmount = 1f;
+        cooldownOverlay.fillAmount = 1f;
 
-        DOTween.To(() => cooldownImage.fillAmount, x => cooldownImage.fillAmount = x, 0f, duration).SetEase(Ease.Linear)
+        DOTween.To(() => cooldownOverlay.fillAmount, x => cooldownOverlay.fillAmount = x, 0f, duration).SetEase(Ease.Linear)
             .OnComplete(() =>
             {
                 canvasGroup.interactable = true;
@@ -91,6 +95,11 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (!CanDrag(eventData)) return;
+
+        if (deploymentFailedSequence != null)
+        {
+            deploymentFailedSequence.Complete();
+        }
 
         initialPosition = rectTransform.localPosition;
         canvasGroup.alpha = dragAlpha;
@@ -135,6 +144,18 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             // Return to initial position if deployment is invalid
             Debug.Log("Invalid deployment position. Returning to initial position.");
+
+            DisableTemporarily(deploymentFailedSequenceDuration);
+            deploymentFailedOverlay.GetComponent<CanvasGroup>().alpha = deploymentFailedOverlayInitialAlpha;
+
+            deploymentFailedSequence = DOTween.Sequence();
+
+            deploymentFailedSequence.Append(rectTransform.DOLocalMoveX(initialPosition.x + 10f, deploymentFailedSequenceDuration / 4f)
+                .SetLoops(2, LoopType.Yoyo));
+            deploymentFailedSequence.Append(rectTransform.DOLocalMoveX(initialPosition.x - 10f, deploymentFailedSequenceDuration / 4f)
+                .SetLoops(2, LoopType.Yoyo));
+            deploymentFailedSequence.Insert(0, deploymentFailedOverlay.GetComponent<CanvasGroup>().DOFade(0f, deploymentFailedSequenceDuration)
+                .SetEase(Ease.InQuad));
         }
 
         rectTransform.localPosition = initialPosition;
