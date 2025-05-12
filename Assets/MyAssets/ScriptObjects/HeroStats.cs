@@ -6,6 +6,7 @@ public class HeroStats : ScriptableObject
 {
     public HeroClass heroClass;
     public float maxHealth;
+    public float defense;
     public float attack;
     public float atSpeed;
     public float atRange;
