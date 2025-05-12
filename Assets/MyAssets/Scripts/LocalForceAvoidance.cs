@@ -7,23 +7,26 @@ public class LocalForceAvoidance : MonoBehaviour
     [SerializeField] private float movementSpeed = 10f;
     private const float maxVelocityPerFrame = 100f;
     private const float maxVelocity = 1000f;
-    private const float repulsionStrength = 150f;
     private const float damping = 0.8f;
     [field:SerializeField] public float Mass { get; private set; } = 1f;
+    public Vector2 Origin { get; private set; }
 
+    private Transform tf;
     private Vector2 velocity;
     private CircleCollider2D circleCollider;
     private Vector2 colliderOrigin;
-    private float colliderRadius;
+    public float ColliderRadius { get; private set; }
+    public Vector2Int ChunkCoordinates { get; private set; }
 
     [SerializeField] private Transform target;
     [SerializeField] private bool staticUnit = false;
 
     private void Awake()
     {
+        tf = transform;
         circleCollider = GetComponent<CircleCollider2D>();
-        colliderOrigin = new Vector2(circleCollider.offset.x * transform.lossyScale.x, circleCollider.offset.y * transform.lossyScale.y);
-        colliderRadius = circleCollider.radius * transform.lossyScale.x;
+        colliderOrigin = new Vector2(circleCollider.offset.x * tf.lossyScale.x, circleCollider.offset.y * tf.lossyScale.y);
+        ColliderRadius = circleCollider.radius * tf.lossyScale.x;
 
         if (!circleCollider.isTrigger)
         {
@@ -31,12 +34,12 @@ public class LocalForceAvoidance : MonoBehaviour
         }
     }
 
-    public void Start()
+    private void Start()
     {
-        ChunkManager.Instance.RegisterUnit(this);
+        ChunkCoordinates = ChunkManager.Instance.RegisterUnit(this);
     }
 
-    private void FixedUpdate()
+    public void CalculateForce()
     {
         if (staticUnit)
         {
@@ -45,26 +48,10 @@ public class LocalForceAvoidance : MonoBehaviour
 
         Vector2 totalForce = Vector2.zero;
 
-        Vector2 targetDirection = ((Vector2)target.position - GetOrigin()).normalized;
+        Vector2 targetDirection = ((Vector2)target.position - Origin).normalized;
         totalForce += targetDirection * movementSpeed;
 
-        foreach (var other in FindNearbyUnits()) // Replace with your chunk-based spatial check
-        {
-            Vector2 direction = (GetOrigin() - other.GetOrigin());
-            float distance = direction.magnitude;
-            float desiredSpacing = GetRadius() + other.GetRadius();
-            float overlap = Mathf.Max(0f, desiredSpacing - distance); // assume desired spacing = 1
-
-            if (overlap > 0f)
-            {
-                float t = Mathf.Clamp01(overlap / desiredSpacing); // Normalize to [0,1]
-                float ease = EaseOutCubic(t);
-
-                direction.Normalize();
-                Vector2 force = direction * ease * repulsionStrength * (other.Mass / Mass);
-                totalForce += force;
-            }
-        }
+        totalForce += ChunkManager.Instance.GetRepulsionForce(this);
 
         // Apply damping to velocity
         velocity *= damping;
@@ -73,38 +60,27 @@ public class LocalForceAvoidance : MonoBehaviour
         velocity += Vector2.ClampMagnitude(totalForce, maxVelocityPerFrame) * Time.fixedDeltaTime;
         velocity = Vector2.ClampMagnitude(velocity, maxVelocity);
 
-        transform.position += (Vector3)velocity * Time.fixedDeltaTime;
+        tf.position += (Vector3)velocity * Time.fixedDeltaTime;
+        Origin = (Vector2)tf.position + colliderOrigin;
     }
 
-    public Vector2 GetOrigin()
+    public void SetMovementSpeed(float speed)
     {
-        return (Vector2)transform.position + colliderOrigin;
+        movementSpeed = speed;
     }
 
-    public float GetRadius()
-    {
-        return colliderRadius;
-    }
-
-    private void SetTarget(Transform newTarget)
+    public void SetTarget(Transform newTarget)
     {
         target = newTarget;
     }
 
-    private IEnumerable<LocalForceAvoidance> FindNearbyUnits()
+    public void SetChunkCoordinates(Vector2Int chunk)
     {
-        foreach (var unit in ChunkManager.Instance.GetNearbyUnits(this))
-        {
-            if (unit != this) // Avoid self-collision
-            {
-                yield return unit;
-            }
-        }
-        yield break;
+        ChunkCoordinates = chunk;
     }
 
-    private float EaseOutCubic(float t)
+    private void OnDisable()
     {
-        return 1f - Mathf.Pow(1f - t, 3);
+        ChunkManager.Instance.UnregisterUnit(this, ChunkCoordinates);
     }
 }

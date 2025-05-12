@@ -6,8 +6,17 @@ public class ChunkManager : MonoBehaviour
     public static ChunkManager Instance { get; private set; }
 
     private Dictionary<Vector2Int, List<LocalForceAvoidance>> chunks = new();
+
     [SerializeField] private float chunkSize = 2f;
     private List<LocalForceAvoidance> units = new();
+    private const float repulsionStrength = 150f;
+
+    private static readonly Vector2Int[] NeighborOffsets = new Vector2Int[]
+{
+    new Vector2Int(-1, -1), new Vector2Int(0, -1), new Vector2Int(1, -1),
+    new Vector2Int(-1,  0), new Vector2Int(0,  0), new Vector2Int(1,  0),
+    new Vector2Int(-1,  1), new Vector2Int(0,  1), new Vector2Int(1,  1)
+};
 
     private void Awake()
     {
@@ -20,7 +29,12 @@ public class ChunkManager : MonoBehaviour
         ClearChunks();
         foreach (var unit in units)
         {
-            RegisterUnit(unit);
+            UpdateChunkPosition(unit);
+        }
+
+        foreach (var unit in units)
+        {
+            unit.CalculateForce();
         }
     }
 
@@ -30,14 +44,19 @@ public class ChunkManager : MonoBehaviour
                               Mathf.FloorToInt(position.y / chunkSize));
     }
 
-    public void RegisterUnit(LocalForceAvoidance unit)
+    public Vector2Int RegisterUnit(LocalForceAvoidance unit)
     {
         if (!units.Contains(unit))
         {
             units.Add(unit);
         }
 
-        Vector2Int chunk = WorldToChunkPos(unit.GetOrigin());
+        return UpdateChunkPosition(unit);
+    }
+
+    private Vector2Int UpdateChunkPosition(LocalForceAvoidance unit)
+    {
+        Vector2Int chunk = WorldToChunkPos(unit.Origin);
 
         if (!chunks.ContainsKey(chunk))
         {
@@ -45,6 +64,16 @@ public class ChunkManager : MonoBehaviour
         }
 
         chunks[chunk].Add(unit);
+        unit.SetChunkCoordinates(chunk);
+        return chunk;
+    }
+
+    public void UnregisterUnit(LocalForceAvoidance unit, Vector2Int chunk)
+    {
+        if (chunks.ContainsKey(chunk))
+        {
+            chunks[chunk].Remove(unit);
+        }
     }
 
     public void ClearChunks()
@@ -52,23 +81,47 @@ public class ChunkManager : MonoBehaviour
         chunks.Clear();
     }
 
-    public List<LocalForceAvoidance> GetNearbyUnits(LocalForceAvoidance unit)
+    public Vector2 GetRepulsionForce(LocalForceAvoidance unit)
     {
-        List<LocalForceAvoidance> nearby = new();
-        Vector2Int centerChunk = WorldToChunkPos(unit.GetOrigin());
+        Vector2 avoidanceForce = Vector2.zero;
+        Vector2 origin = unit.Origin;
+        float radius = unit.ColliderRadius;
+        Vector2Int originChunk = unit.ChunkCoordinates;
+        Vector2Int chunk = new Vector2Int();
 
-        for (int x = -1; x <= 1; x++)
+        foreach (var offset in NeighborOffsets)
         {
-            for (int y = -1; y <= 1; y++)
+            chunk = originChunk + new Vector2Int(offset.x, offset.y);
+
+            if (!chunks.ContainsKey(chunk)) continue;
+
+            foreach (LocalForceAvoidance other in chunks[chunk])
             {
-                Vector2Int chunk = centerChunk + new Vector2Int(x, y);
-                if (chunks.TryGetValue(chunk, out var list))
+                if (other == unit) continue;
+
+                Vector2 direction = origin - other.Origin;
+                float sqrDistance = direction.sqrMagnitude;
+                float desiredSpacing = radius + other.ColliderRadius;
+                float sqrSpacing = desiredSpacing * desiredSpacing;
+
+                if (sqrDistance < sqrSpacing)
                 {
-                    nearby.AddRange(list);
+                    float overlap = desiredSpacing - Mathf.Sqrt(sqrDistance); // only do sqrt if really overlapping
+                    if (overlap < 0.01f) continue;
+                    float ease = EaseOutCubic(overlap / desiredSpacing);
+
+                    direction.Normalize();
+                    Vector2 force = direction * ease * repulsionStrength * (other.Mass / unit.Mass);
+                    avoidanceForce += force;
                 }
             }
         }
 
-        return nearby;
+        return avoidanceForce;
+    }
+
+    private float EaseOutCubic(float t)
+    {
+        return 1f - Mathf.Pow(1f - t, 3);
     }
 }
