@@ -43,6 +43,7 @@ public class LocalForceAvoidance : MonoBehaviour
     {
         if (staticUnit)
         {
+            Origin = (Vector2)tf.position + colliderOrigin;
             return;
         }
 
