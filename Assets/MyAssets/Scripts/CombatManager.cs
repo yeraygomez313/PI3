@@ -12,6 +12,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private float spawnDelay = 0.1f;
 
     [SerializeField] private ManaBar manaBar;
+    [SerializeField] private TimeBar timeBar;
 
     [SerializeField] private GameObject cardHolder;
     private List<DraggableCard> cardsInHand = new List<DraggableCard>();
@@ -54,6 +55,15 @@ public class CombatManager : MonoBehaviour
         {
             cardQueue.Enqueue(deck[i]);
         }
+
+        timeBar.OnTimeUp.AddListener(EndGame);
+
+        //
+    }
+
+    private void EndGame()
+    {
+        Debug.Log("Game Over");
     }
 
     public void CardSelected(DraggableCard card)
