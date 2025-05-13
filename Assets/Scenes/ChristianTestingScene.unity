@@ -64622,6 +64622,7 @@ MonoBehaviour:
   cardCooldown: 0.5
   spawnDelay: 0.05
   manaBar: {fileID: 1553652977}
+  timeBar: {fileID: 666302649}
   cardHolder: {fileID: 1046968279}
   forbiddenZoneMask:
     serializedVersion: 2
