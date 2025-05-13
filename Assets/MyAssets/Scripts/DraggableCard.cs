@@ -110,7 +110,6 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.position = mousePos;
-        Debug.Log("Dragging card to position: " + mousePos);
         DeploymentPreviewObject.transform.position = mousePos;
         bool canBeDeployed = combatManager.ValidateDeploymentPosition(mousePos) && combatManager.HasEnoughMana(CardInstance.ManaCost);
         DeploymentPreviewObject.SetDeploymentAllowed(canBeDeployed);
@@ -135,12 +134,10 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (CombatManager.Instance.UseCard(this, rectTransform.position))
         {
             // Handle successful deployment
-            Debug.Log("Card deployed successfully!");
         }
         else
         {
             // Return to initial position if deployment is invalid
-            Debug.Log("Invalid deployment position. Returning to initial position.");
 
             DisableTemporarily(deploymentFailedSequenceDuration);
             deploymentFailedOverlay.GetComponent<CanvasGroup>().alpha = deploymentFailedOverlayInitialAlpha;

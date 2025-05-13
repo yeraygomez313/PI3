@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
 public class LocalForceAvoidance : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 10f;
-    private const float maxVelocityPerFrame = 100f;
+    private const float maxVelocityPerFrame = 50f;
     private const float maxVelocity = 250f;
     private const float damping = 0.7f;
-    [field:SerializeField] public float Mass { get; private set; } = 1f;
+    [field: SerializeField] public float Mass { get; private set; } = 1f;
     public Vector2 Origin { get; private set; }
 
     private Transform tf;
@@ -18,11 +19,15 @@ public class LocalForceAvoidance : MonoBehaviour
     public float ColliderRadius { get; private set; }
     public Vector2Int ChunkCoordinates { get; private set; }
 
-    [SerializeField] private Transform target;
+    [field: SerializeField] public bool IsMonster { get; private set; } = false;
+    [SerializeField] private LocalForceAvoidance target;
     [SerializeField] private bool staticUnit = false;
 
     private void Awake()
     {
+        //if (GetComponent<MonsterAI>()) IsMonster = true;
+        //else IsMonster = false;
+
         tf = transform;
         circleCollider = GetComponent<CircleCollider2D>();
         colliderOrigin = new Vector2(circleCollider.offset.x * tf.lossyScale.x, circleCollider.offset.y * tf.lossyScale.y);
@@ -51,7 +56,7 @@ public class LocalForceAvoidance : MonoBehaviour
 
         if (target != null)
         {
-            Vector2 targetDirection = ((Vector2)target.position - Origin).normalized;
+            Vector2 targetDirection = (target.Origin - Origin).normalized;
             totalForce += targetDirection * movementSpeed;
         }
 
@@ -73,9 +78,14 @@ public class LocalForceAvoidance : MonoBehaviour
         movementSpeed = speed;
     }
 
-    public void SetTarget(Transform newTarget)
+    public void SetTarget(LocalForceAvoidance newTarget)
     {
         target = newTarget;
+    }
+
+    public void SetStatic(bool isStatic)
+    {
+        staticUnit = isStatic;
     }
 
     public void SetChunkCoordinates(Vector2Int chunk)
@@ -86,5 +96,25 @@ public class LocalForceAvoidance : MonoBehaviour
     private void OnDisable()
     {
         ChunkManager.Instance.UnregisterUnit(this, ChunkCoordinates);
+    }
+
+    public bool IsOverlapingTarget()
+    {
+        if (target == null)
+        {
+            return false;
+        }
+        float distance = Vector2.Distance(Origin, target.Origin);
+        return distance < ColliderRadius + target.ColliderRadius + 0.01f;
+    }
+
+    public bool IsTargetInRange(float range)
+    {
+        if (target == null)
+        {
+            return false;
+        }
+        float distance = Vector2.Distance(Origin, target.Origin);
+        return distance < range;
     }
 }

@@ -139,5 +139,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 30
   <Mass>k__BackingField: 1
+  <IsMonster>k__BackingField: 1
   target: {fileID: 0}
   staticUnit: 0
