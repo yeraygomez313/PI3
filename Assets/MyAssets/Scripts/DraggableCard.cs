@@ -53,7 +53,10 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         CardInstance = card;
         monsterIconImage.sprite = card.Icon;
         manaCostText.text = card.ManaCost.ToString();
-        Destroy(DeploymentPreviewObject);
+        if (DeploymentPreviewObject != null)
+        {
+            Destroy(DeploymentPreviewObject.gameObject);
+        }
         DeploymentPreviewObject = Instantiate(card.DeploymentPreviewPrefab, transform.position, Quaternion.identity).GetComponent<DeploymentPreview>();
         DeploymentPreviewObject.gameObject.SetActive(false);
     }

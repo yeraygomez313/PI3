@@ -26,12 +26,12 @@ public class DeploymentPreview : MonoBehaviour
         }
     }
 
-    public List<Transform> GetSpawnPoints()
+    public List<Vector3> GetSpawnPoints()
     {
-        List<Transform> spawnPoints = new List<Transform>();
+        List<Vector3> spawnPoints = new List<Vector3>();
         foreach (var troop in troops)
         {
-            spawnPoints.Add(troop);
+            spawnPoints.Add(troop.position);
         }
         return spawnPoints;
     }

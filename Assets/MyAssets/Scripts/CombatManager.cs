@@ -88,7 +88,8 @@ public class CombatManager : MonoBehaviour
 
         if (manaBar.ConsumeMana(card.CardInstance.ManaCost))
         {
-            StartCoroutine(SpawnUnits(card));
+            List<Vector3> spawnPoints = card.DeploymentPreviewObject.GetSpawnPoints();
+            StartCoroutine(SpawnUnits(spawnPoints, card.CardInstance.MonsterPrefab));
 
             foreach (var c in cardsInHand)
             {
@@ -122,15 +123,13 @@ public class CombatManager : MonoBehaviour
         return manaBar.HasEnoughMana(manaCost);
     }
 
-    private IEnumerator SpawnUnits(DraggableCard card)
+    private IEnumerator SpawnUnits(List<Vector3> spawnPoints, GameObject monsterPrefab)
     {
         var spawnDelayWait = new WaitForSeconds(spawnDelay);
-        var spawnPoints = card.DeploymentPreviewObject.GetSpawnPoints();
 
         foreach (var spawnPoint in spawnPoints)
         {
-            GameObject monster = Instantiate(card.CardInstance.MonsterPrefab, spawnPoint.position, Quaternion.identity);
-            monster.transform.localScale = spawnPoint.localScale; // Placeholder
+            GameObject monster = Instantiate(monsterPrefab, spawnPoint, Quaternion.identity);
             yield return spawnDelayWait; // Placeholder for spawn delay
         }
     }

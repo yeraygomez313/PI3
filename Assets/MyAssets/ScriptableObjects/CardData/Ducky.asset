@@ -15,7 +15,7 @@ MonoBehaviour:
   <Icon>k__BackingField: {fileID: -1848733633, guid: 0c1e734fa85636743af3bc22c6d99ba8,
     type: 3}
   <ManaCost>k__BackingField: 1
-  <MonsterPrefab>k__BackingField: {fileID: 248662147868278087, guid: 2b61d60aec93f8d499f45022b264113d,
+  <MonsterPrefab>k__BackingField: {fileID: 248662147868278087, guid: 839969fb86b50864fb18ffab5ea69a54,
     type: 3}
   <DeploymentPreviewPrefab>k__BackingField: {fileID: 2781874535766077328, guid: 94a603e408603e54fbc304ec38c5eaba,
     type: 3}

@@ -6,8 +6,8 @@ public class LocalForceAvoidance : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 10f;
     private const float maxVelocityPerFrame = 100f;
-    private const float maxVelocity = 1000f;
-    private const float damping = 0.8f;
+    private const float maxVelocity = 250f;
+    private const float damping = 0.7f;
     [field:SerializeField] public float Mass { get; private set; } = 1f;
     public Vector2 Origin { get; private set; }
 
@@ -49,8 +49,11 @@ public class LocalForceAvoidance : MonoBehaviour
 
         Vector2 totalForce = Vector2.zero;
 
-        Vector2 targetDirection = ((Vector2)target.position - Origin).normalized;
-        totalForce += targetDirection * movementSpeed;
+        if (target != null)
+        {
+            Vector2 targetDirection = ((Vector2)target.position - Origin).normalized;
+            totalForce += targetDirection * movementSpeed;
+        }
 
         totalForce += ChunkManager.Instance.GetRepulsionForce(this);
 
