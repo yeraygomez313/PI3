@@ -134,23 +134,36 @@ public class ChunkManager : MonoBehaviour
 
     public LocalForceAvoidance GetClosestTarget(LocalForceAvoidance unit)
     {
+        return GetClosestTargetInRange(unit, float.MaxValue);
+    }
+
+    public LocalForceAvoidance GetClosestTargetInRange(LocalForceAvoidance unit, float range)
+    {
         LocalForceAvoidance bestTarget = null;
-        float bestDistance = float.MaxValue;
-        int currentChunkDistance = 0;
+        float bestDistance = range;
+        float currentChunkDistance = 0f;
 
         Vector2 origin = unit.Origin;
         float radius = unit.ColliderRadius;
         Vector2Int originChunk = unit.ChunkCoordinates;
-
         Vector2Int chunk = new Vector2Int();
-        List<Vector2Int> neighborChunks = chunks.Keys.OrderBy(coord => MaxAxisDifference(coord, originChunk)).ToList();
 
-        for (int i = 0; i < neighborChunks.Count; i++)
+        var sortedChunkInfo = chunks.Keys
+            .Select(coord => new
+            {
+                Coord = coord,
+                Distance = GetNearestCornerDistance(coord, originChunk)
+            })
+            .OrderBy(x => x.Distance)
+            .ToList();
+
+        for (int i = 0; i < sortedChunkInfo.Count; i++)
         {
-            if (bestTarget != null && currentChunkDistance < MaxAxisDifference(neighborChunks[i], originChunk)) return bestTarget;
-            currentChunkDistance = MaxAxisDifference(neighborChunks[i], originChunk);
+            var sortedChunk = sortedChunkInfo[i];
+            if (bestTarget != null && bestDistance < sortedChunk.Distance) return bestTarget;
+            currentChunkDistance = sortedChunk.Distance;
 
-            chunk = neighborChunks[i];
+            chunk = sortedChunk.Coord;
             if (!chunks.ContainsKey(chunk)) continue;
             foreach (LocalForceAvoidance other in chunks[chunk])
             {
@@ -170,48 +183,26 @@ public class ChunkManager : MonoBehaviour
         return bestTarget;
     }
 
-    public LocalForceAvoidance GetClosestTargetInRange(LocalForceAvoidance unit, float range)
+    public float GetNearestCornerDistance(Vector2Int a, Vector2Int b)
     {
-        LocalForceAvoidance bestTarget = null;
-        float bestDistance = range;
+        // Convert chunk coordinates to world-space bounds
+        float minX1 = a.x * chunkSize;
+        float maxX1 = minX1 + chunkSize;
+        float minY1 = a.y * chunkSize;
+        float maxY1 = minY1 + chunkSize;
 
-        Vector2 origin = unit.Origin;
-        float radius = unit.ColliderRadius;
-        Vector2Int originChunk = unit.ChunkCoordinates;
+        float minX2 = b.x * chunkSize;
+        float maxX2 = minX2 + chunkSize;
+        float minY2 = b.y * chunkSize;
+        float maxY2 = minY2 + chunkSize;
 
-        foreach (var chunk in chunks)
-        {
-            Vector2Int chunkCoordinates = chunk.Key;
-            int chunkDistance = Mathf.FloorToInt(range / chunkSize) + 1;
+        // Compute clamped distance on X axis
+        float dx = Mathf.Max(0f, Mathf.Max(minX1 - maxX2, minX2 - maxX1));
 
-            if (Mathf.Abs(chunkCoordinates.x - originChunk.x) < chunkDistance && Mathf.Abs(chunkCoordinates.y - originChunk.y) < chunkDistance)
-            {
-                foreach (LocalForceAvoidance other in chunk.Value)
-                {
-                    if (unit.IsMonster == other.IsMonster) continue;
+        // Compute clamped distance on Y axis
+        float dy = Mathf.Max(0f, Mathf.Max(minY1 - maxY2, minY2 - maxY1));
 
-                    Vector2 direction = origin - other.Origin;
-                    float distance = direction.magnitude;
-
-                    if (distance < bestDistance)
-                    {
-                        bestTarget = other;
-                        bestDistance = distance;
-                    }
-                }
-            }
-        }
-
-        return bestTarget;
-    }
-
-    public List<LivingEntity> GetRangedTargets(LocalForceAvoidance entity, float range)
-    {
-        return null;
-    }
-
-    private int MaxAxisDifference(Vector2Int a, Vector2Int b)
-    {
-        return Mathf.Max(Mathf.Abs(a.x - b.x), Mathf.Abs(a.y - b.y));
+        // Pythagorean distance between nearest corners
+        return Mathf.Sqrt(dx * dx + dy * dy);
     }
 }
