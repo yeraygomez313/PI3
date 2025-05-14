@@ -138,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deploymentAllowedColor: {r: 0, g: 0.8627451, b: 0, a: 1}
   deploymentForbiddenColor: {r: 0.8627451, g: 0, b: 0, a: 1}
+  deploymentCanceledColor: {r: 0, g: 0.32156864, b: 1, a: 1}
 --- !u!1 &3297860324744851489
 GameObject:
   m_ObjectHideFlags: 0

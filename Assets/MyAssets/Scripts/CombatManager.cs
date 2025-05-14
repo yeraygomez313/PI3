@@ -11,6 +11,9 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private float cardCooldown = 1f;
     [SerializeField] private float spawnDelay = 0.1f;
 
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private CanvasGroup combatGroup;
+
     [SerializeField] private ManaBar manaBar;
     [SerializeField] private TimeBar timeBar;
 
@@ -69,16 +72,18 @@ public class CombatManager : MonoBehaviour
     public void CardSelected(DraggableCard card)
     {
         SelectedCard = card;
+        combatGroup.alpha = 0.4f;
         OnCardSelected?.Invoke();
     }
 
     public void CardDeselected()
     {
         SelectedCard = null;
+        combatGroup.alpha = 1f;
         OnCardDeselected?.Invoke();
     }
 
-    public bool UseCard(DraggableCard card, Vector2 position)
+    public bool TryToUseCard(DraggableCard card, Vector2 position)
     {
         if (ValidateDeploymentPosition(position) == false)
         {

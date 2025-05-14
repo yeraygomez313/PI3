@@ -5,6 +5,7 @@ public class DeploymentPreview : MonoBehaviour
 {
     [SerializeField] private Color deploymentAllowedColor = Color.green;
     [SerializeField] private Color deploymentForbiddenColor = Color.red;
+    [SerializeField] private Color deploymentCanceledColor = Color.blue;
     private List<Transform> troops = new();
 
     private void Awake()
@@ -45,6 +46,18 @@ public class DeploymentPreview : MonoBehaviour
             Renderer spriteRenderer = troop.GetComponent<SpriteRenderer>();
             spriteRenderer.GetPropertyBlock(spritePB);
             spritePB.SetColor("_OutlineColor", color);
+            spriteRenderer.SetPropertyBlock(spritePB);
+        }
+    }
+
+    public void SetDeploymentCanceled()
+    {
+        foreach (var troop in troops)
+        {
+            MaterialPropertyBlock spritePB = new MaterialPropertyBlock();
+            Renderer spriteRenderer = troop.GetComponent<SpriteRenderer>();
+            spriteRenderer.GetPropertyBlock(spritePB);
+            spritePB.SetColor("_OutlineColor", deploymentCanceledColor);
             spriteRenderer.SetPropertyBlock(spritePB);
         }
     }

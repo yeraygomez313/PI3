@@ -40,7 +40,7 @@ public class InputManager : MonoBehaviour
         var selectedCard = CombatManager.Instance.SelectedCard;
         if (selectedCard == null) return;
 
-        selectedCard.UpdatePositionOnCameraMovement(Input.mousePosition);
+        selectedCard.UpdatePosition(Input.mousePosition);
 
         if (rotatingCard)
         {

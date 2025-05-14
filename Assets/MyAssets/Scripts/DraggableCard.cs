@@ -6,7 +6,6 @@ using TMPro;
 
 public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField] private float dragAlpha = 0.4f;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image monsterIconImage;
     [SerializeField] private TextMeshProUGUI manaCostText;
@@ -16,7 +15,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [SerializeField] private float deploymentFailedOverlayInitialAlpha;
     [SerializeField] private float deploymentFailedSequenceDuration;
 
-    private RectTransform rectTransform;
+    public RectTransform RectTransform { get; private set; }
     private CanvasGroup canvasGroup;
     private Vector2 initialPosition;
     private CombatManager combatManager;
@@ -27,7 +26,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
+        RectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
@@ -97,8 +96,7 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             deploymentFailedSequence.Complete();
         }
 
-        initialPosition = rectTransform.localPosition;
-        canvasGroup.alpha = dragAlpha;
+        initialPosition = RectTransform.localPosition;
         DeploymentPreviewObject.gameObject.SetActive(true);
         CombatManager.Instance.CardSelected(this);
     }
@@ -107,22 +105,27 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (!CanDrag(eventData)) return;
 
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.position = mousePos;
-        DeploymentPreviewObject.transform.position = mousePos;
-        bool canBeDeployed = combatManager.ValidateDeploymentPosition(mousePos) && combatManager.HasEnoughMana(CardInstance.ManaCost);
-        DeploymentPreviewObject.SetDeploymentAllowed(canBeDeployed);
+        UpdatePosition(eventData.position);
     }
 
-    public void UpdatePositionOnCameraMovement(Vector2 mousePos)
+    public void UpdatePosition(Vector2 screenPos)
     {
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(screenPos);
         RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.position = mousePos;
+        //rectTransform.position = mousePos;
         DeploymentPreviewObject.transform.position = mousePos;
+
         bool canBeDeployed = combatManager.ValidateDeploymentPosition(mousePos) && combatManager.HasEnoughMana(CardInstance.ManaCost);
-        DeploymentPreviewObject.SetDeploymentAllowed(canBeDeployed);
+        bool isInside = IsInside(screenPos);
+
+        if (isInside)
+        {
+            DeploymentPreviewObject.SetDeploymentCanceled();
+        }
+        else
+        {
+            DeploymentPreviewObject.SetDeploymentAllowed(canBeDeployed);
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -131,29 +134,42 @@ public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         DeploymentPreviewObject.gameObject.SetActive(false);
 
-        if (CombatManager.Instance.UseCard(this, rectTransform.position))
+        if (!IsInside(eventData.position))
         {
-            // Handle successful deployment
+            if (CombatManager.Instance.TryToUseCard(this, DeploymentPreviewObject.transform.position))
+            {
+                // Handle successful deployment
+            }
+            else
+            {
+                // Return to initial position if deployment is invalid
+
+                DisableTemporarily(deploymentFailedSequenceDuration);
+                deploymentFailedOverlay.GetComponent<CanvasGroup>().alpha = deploymentFailedOverlayInitialAlpha;
+
+                deploymentFailedSequence = DOTween.Sequence();
+
+                deploymentFailedSequence.Append(RectTransform.DOLocalMoveX(initialPosition.x + 10f, deploymentFailedSequenceDuration / 4f)
+                    .SetLoops(2, LoopType.Yoyo));
+                deploymentFailedSequence.Append(RectTransform.DOLocalMoveX(initialPosition.x - 10f, deploymentFailedSequenceDuration / 4f)
+                    .SetLoops(2, LoopType.Yoyo));
+                deploymentFailedSequence.Insert(0, deploymentFailedOverlay.GetComponent<CanvasGroup>().DOFade(0f, deploymentFailedSequenceDuration)
+                    .SetEase(Ease.InQuad));
+            }
         }
-        else
-        {
-            // Return to initial position if deployment is invalid
 
-            DisableTemporarily(deploymentFailedSequenceDuration);
-            deploymentFailedOverlay.GetComponent<CanvasGroup>().alpha = deploymentFailedOverlayInitialAlpha;
-
-            deploymentFailedSequence = DOTween.Sequence();
-
-            deploymentFailedSequence.Append(rectTransform.DOLocalMoveX(initialPosition.x + 10f, deploymentFailedSequenceDuration / 4f)
-                .SetLoops(2, LoopType.Yoyo));
-            deploymentFailedSequence.Append(rectTransform.DOLocalMoveX(initialPosition.x - 10f, deploymentFailedSequenceDuration / 4f)
-                .SetLoops(2, LoopType.Yoyo));
-            deploymentFailedSequence.Insert(0, deploymentFailedOverlay.GetComponent<CanvasGroup>().DOFade(0f, deploymentFailedSequenceDuration)
-                .SetEase(Ease.InQuad));
-        }
-
-        rectTransform.localPosition = initialPosition;
-        canvasGroup.alpha = 1f;
+        RectTransform.localPosition = initialPosition;
         CombatManager.Instance.CardDeselected();
+    }
+
+    private bool IsInside(Vector2 screenPos)
+    {
+        bool isInside = RectTransformUtility.RectangleContainsScreenPoint(
+            RectTransform,
+            screenPos,
+            Camera.main
+        );
+
+        return isInside;
     }
 }

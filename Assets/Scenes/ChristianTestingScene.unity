@@ -64764,6 +64764,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardCooldown: 0.5
   spawnDelay: 0.05
+  canvas: {fileID: 0}
+  combatGroup: {fileID: 199162145}
   manaBar: {fileID: 1553652977}
   timeBar: {fileID: 666302649}
   cardHolder: {fileID: 1046968279}
@@ -65586,7 +65588,7 @@ MonoBehaviour:
   initialMana: 3
   manaRegenRate: 1
   manaText: {fileID: 1866711695}
-  fullManaColor: {r: 0, g: 0.19607843, b: 1, a: 1}
+  fullManaColor: {r: 0, g: 0.32312155, b: 1, a: 1}
   manaConsumedTextPrefab: {fileID: 7415832899494315315, guid: 98ed3aa8f6791304b942e0876e6b8b14,
     type: 3}
   manaConsumedTextDuration: 1
