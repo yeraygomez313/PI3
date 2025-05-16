@@ -13,6 +13,12 @@ public class ForbiddenZone : MonoBehaviour
 
     private void Start()
     {
+        if (CombatManager.Instance == null)
+        {
+            Debug.LogError("CombatManager instance is null. Make sure it is initialized before using ForbiddenZone.");
+            return;
+        }
+
         CombatManager.Instance.OnCardSelected.AddListener(ShowZone);
         CombatManager.Instance.OnCardDeselected.AddListener(HideZone);
     }

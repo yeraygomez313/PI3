@@ -3,29 +3,25 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TimeBar : Bar
+public class TimeBar : SelfChargingBar
 {
     [Header("Time")]
-    [SerializeField] private float maxTime = 120f;
-    private float currentTime;
     [SerializeField] private TextMeshProUGUI timeText;
 
     [HideInInspector] public UnityEvent OnTimeUp;
 
-    private void Awake()
+    protected override void Awake()
     {
-        currentTime = maxTime;
-        UpdateMaxValue(maxTime);
-        timeText.text = TimeSpan.FromSeconds(currentTime).ToString(@"mm\:ss");
+        base.Awake();
+        timeText.text = TimeSpan.FromSeconds(currentValue).ToString(@"mm\:ss");
     }
 
-    private void Update()
+    protected override void Update()
     {
-        currentTime = Mathf.Clamp(currentTime - Time.deltaTime, 0, maxTime);
-        UpdateBarVisuals(currentTime);
-        timeText.text = TimeSpan.FromSeconds(currentTime).ToString(@"mm\:ss");
+        base.Update();
+        timeText.text = TimeSpan.FromSeconds(currentValue).ToString(@"mm\:ss");
 
-        if (currentTime <= 0)
+        if (IsEmpty())
         {
             OnTimeUp?.Invoke();
         }

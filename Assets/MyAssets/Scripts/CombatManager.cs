@@ -18,11 +18,11 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private TimeBar timeBar;
 
     [SerializeField] private GameObject cardHolder;
-    private List<DraggableCard> cardsInHand = new List<DraggableCard>();
+    private List<DraggableCombatCard> cardsInHand = new List<DraggableCombatCard>();
     [SerializeField] private LayerMask forbiddenZoneMask;
 
     private CardInstance[] deck = new CardInstance[8];
-    public DraggableCard SelectedCard { get; private set; }
+    public DraggableCombatCard SelectedCard { get; private set; }
     private Queue<CardInstance> cardQueue = new Queue<CardInstance>();
 
     [HideInInspector] public UnityEvent OnCardSelected;
@@ -44,7 +44,7 @@ public class CombatManager : MonoBehaviour
 
         deck = deck.OrderBy(x => Random.value).ToArray();
 
-        foreach (var card in cardHolder.GetComponentsInChildren<DraggableCard>())
+        foreach (var card in cardHolder.GetComponentsInChildren<DraggableCombatCard>())
         {
             cardsInHand.Add(card);
         }
@@ -69,7 +69,7 @@ public class CombatManager : MonoBehaviour
         Debug.Log("Game Over");
     }
 
-    public void CardSelected(DraggableCard card)
+    public void CardSelected(DraggableCombatCard card)
     {
         SelectedCard = card;
         combatGroup.alpha = 0.4f;
@@ -83,7 +83,7 @@ public class CombatManager : MonoBehaviour
         OnCardDeselected?.Invoke();
     }
 
-    public bool TryToUseCard(DraggableCard card, Vector2 position)
+    public bool TryToUseCard(DraggableCombatCard card, Vector2 position)
     {
         if (ValidateDeploymentPosition(position) == false)
         {
@@ -91,7 +91,7 @@ public class CombatManager : MonoBehaviour
             return false;
         }
 
-        if (manaBar.ConsumeMana(card.CardInstance.ManaCost))
+        if (manaBar.ConsumeAmount(card.CardInstance.ManaCost))
         {
             List<Vector3> spawnPoints = card.DeploymentPreviewObject.GetSpawnPoints();
             StartCoroutine(SpawnUnits(spawnPoints, card.CardInstance.MonsterPrefab));
@@ -125,7 +125,7 @@ public class CombatManager : MonoBehaviour
 
     public bool HasEnoughMana(int manaCost)
     {
-        return manaBar.HasEnoughMana(manaCost);
+        return manaBar.HasEnoughAmount(manaCost);
     }
 
     private IEnumerator SpawnUnits(List<Vector3> spawnPoints, GameObject monsterPrefab)

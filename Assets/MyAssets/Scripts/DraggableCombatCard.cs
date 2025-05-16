@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
-public class DraggableCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DraggableCombatCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image monsterIconImage;
