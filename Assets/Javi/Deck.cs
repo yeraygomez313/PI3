@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class Deck : MonoBehaviour, IDropHandler
 {
-	
+
 	public void OnDrop(PointerEventData eventData)
 	{
 		Drag d = eventData.pointerDrag.GetComponent<Drag>();
