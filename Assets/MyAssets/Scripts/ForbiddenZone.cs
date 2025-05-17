@@ -23,12 +23,12 @@ public class ForbiddenZone : MonoBehaviour
         CombatManager.Instance.OnCardDeselected.AddListener(HideZone);
     }
 
-    private void ShowZone()
+    private void ShowZone(DraggableCombatCard card)
     {
         spriteRenderer.color = forbiddenZoneColor;
     }
 
-    private void HideZone()
+    private void HideZone(DraggableCombatCard card)
     {
         spriteRenderer.color = defaultColor;
     }

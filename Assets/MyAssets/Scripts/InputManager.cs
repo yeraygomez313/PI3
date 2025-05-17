@@ -37,15 +37,13 @@ public class InputManager : MonoBehaviour
         clampedPosition.y = Mathf.Clamp(clampedPosition.y, minY, maxY);
         mainCamera.transform.position = clampedPosition;
 
-        var selectedCard = CombatManager.Instance.SelectedCard;
-        if (selectedCard == null) return;
+        //var selectedCard = CombatManager.Instance.SelectedCard;
+        //if (selectedCard == null) return;
 
-        selectedCard.UpdatePosition(Input.mousePosition);
-
-        if (rotatingCard)
-        {
-            selectedCard.DeploymentPreviewObject.transform.Rotate(0, 0, cardRotationSpeed * Time.deltaTime);
-        }
+        //if (rotatingCard)
+        //{
+        //    selectedCard.DeploymentPreviewObject.transform.Rotate(0, 0, cardRotationSpeed * Time.deltaTime);
+        //}
     }
 
     private void OnLook(InputValue value)

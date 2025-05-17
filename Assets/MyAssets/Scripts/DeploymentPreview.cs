@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeploymentPreview : MonoBehaviour
 {
     [SerializeField] private Color deploymentAllowedColor = Color.green;
     [SerializeField] private Color deploymentForbiddenColor = Color.red;
     [SerializeField] private Color deploymentCanceledColor = Color.blue;
-    private List<Transform> troops = new();
+    private List<RectTransform> troops = new();
 
     private void Awake()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            Transform troop = transform.GetChild(i);
+            RectTransform troop = transform.GetChild(i).GetComponent<RectTransform>();
             troops.Add(troop);
         }
 
@@ -37,28 +38,42 @@ public class DeploymentPreview : MonoBehaviour
         return spawnPoints;
     }
 
-    public void SetDeploymentAllowed(bool isAllowed)
+    public void SetDeploymentState(DeploymentState deploymentState)
     {
-        Color color = isAllowed ? deploymentAllowedColor : deploymentForbiddenColor;
-        foreach (var troop in troops)
+        Color color;
+        switch (deploymentState)
         {
-            MaterialPropertyBlock spritePB = new MaterialPropertyBlock();
-            Renderer spriteRenderer = troop.GetComponent<SpriteRenderer>();
-            spriteRenderer.GetPropertyBlock(spritePB);
-            spritePB.SetColor("_OutlineColor", color);
-            spriteRenderer.SetPropertyBlock(spritePB);
+            case DeploymentState.Allowed:
+                color = deploymentAllowedColor;
+                break;
+            case DeploymentState.Forbidden:
+                color = deploymentForbiddenColor;
+                break;
+            case DeploymentState.Canceled:
+                color = deploymentCanceledColor;
+                break;
+            default:
+                color = Color.white;
+                break;
         }
-    }
 
-    public void SetDeploymentCanceled()
-    {
         foreach (var troop in troops)
         {
-            MaterialPropertyBlock spritePB = new MaterialPropertyBlock();
-            Renderer spriteRenderer = troop.GetComponent<SpriteRenderer>();
-            spriteRenderer.GetPropertyBlock(spritePB);
-            spritePB.SetColor("_OutlineColor", deploymentCanceledColor);
-            spriteRenderer.SetPropertyBlock(spritePB);
+            Image image = troop.GetComponent<Image>();
+            if (image == null) continue;
+
+            if (image.material != null)
+            {
+                image.material = Instantiate(image.material);
+                image.material.SetColor("_OutlineColor", color);
+            }
         }
     }
+}
+
+public enum DeploymentState
+{
+    Allowed,
+    Forbidden,
+    Canceled
 }

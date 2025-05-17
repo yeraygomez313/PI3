@@ -3,15 +3,13 @@ using UnityEngine.Events;
 
 public class ItemSlot : MonoBehaviour
 {
-    private DraggableItem assignedItem;
+    public DraggableItem AssignedItem { get; protected set; }
 
     [HideInInspector] public UnityEvent<DraggableItem> OnItemAssigned;
 
-    public void AssignItem(DraggableItem item)
+    public virtual void AssignItem(DraggableItem item)
     {
-        // Logic to assign the item to this slot
-        // This could involve setting the item's parent, updating its position, etc.+
-        assignedItem = item;
+        AssignedItem = item;
         OnItemAssigned?.Invoke(item);
     }
 }

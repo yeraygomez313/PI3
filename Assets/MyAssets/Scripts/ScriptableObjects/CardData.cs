@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CardData", menuName = "Scriptable Objects/CardData")]
-public class CardData : ScriptableObject
+public class CardData : ItemData
 {
     [field: SerializeField] public Sprite Icon { get; private set; }
     [field: SerializeField] public int ManaCost { get; private set; }
@@ -20,31 +20,35 @@ public class CardLevelData : ScriptableObject
     public MonsterStats MonsterStats;
 }
 
-public class CardInstance
+public class CardInstance : ItemInstance
 {
-    public Guid Guid { get; private set; }
-    public CardData Card { get; private set; }
+    public override ItemData Data
+    {
+        get => CardData;
+        protected set => CardData = value as CardData;
+    }
+    public CardData CardData { get; private set; }
+
     public int Level { get; private set; }
-    public Sprite Icon => Card.Icon;
-    public int ManaCost => Card.ManaCost;
-    public GameObject MonsterPrefab => Card.MonsterPrefab;
-    public GameObject DeploymentPreviewPrefab => Card.DeploymentPreviewPrefab;
+    public Sprite Icon => CardData.Icon;
+    public int ManaCost => CardData.ManaCost;
+    public GameObject MonsterPrefab => CardData.MonsterPrefab;
+    public GameObject DeploymentPreviewPrefab => CardData.DeploymentPreviewPrefab;
 
     public void Initialize(CardData card, int level)
     {
-        Guid = Guid.NewGuid();
-        Card = card;
+        CardData = card;
         Level = level;
     }
 
     public CardLevelData GetCardLevelData()
     {
-        return Card.CardLevelDataList[Level];
+        return CardData.CardLevelDataList[Level];
     }
 
     public bool CanBeUpgraded()
     {
-        if (Level < Card.CardLevelDataList.Count - 1)
+        if (Level < CardData.CardLevelDataList.Count - 1)
         {
             return true;
         }
@@ -62,7 +66,7 @@ public class CardInstance
         }
         else
         {
-            Debug.LogWarning($"Card {Card.name} is already at max level.");
+            Debug.LogWarning($"CardData {CardData.name} is already at max level.");
         }
     }
 }

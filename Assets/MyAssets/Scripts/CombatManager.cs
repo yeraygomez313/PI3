@@ -13,20 +13,23 @@ public class CombatManager : MonoBehaviour
 
     [SerializeField] private Canvas canvas;
     [SerializeField] private CanvasGroup combatGroup;
+    [SerializeField] private float cardDraggedAlpha = 0.4f;
 
     [SerializeField] private ManaBar manaBar;
     [SerializeField] private TimeBar timeBar;
 
-    [SerializeField] private GameObject cardHolder;
-    private List<DraggableCombatCard> cardsInHand = new List<DraggableCombatCard>();
+    [SerializeField] private Inventory cardInventory;
+    //[SerializeField] private GameObject cardHolder;
+    //private List<DraggableCombatCard> cardsInHand = new List<DraggableCombatCard>();
     [SerializeField] private LayerMask forbiddenZoneMask;
 
     private CardInstance[] deck = new CardInstance[8];
     public DraggableCombatCard SelectedCard { get; private set; }
     private Queue<CardInstance> cardQueue = new Queue<CardInstance>();
 
-    [HideInInspector] public UnityEvent OnCardSelected;
-    [HideInInspector] public UnityEvent OnCardDeselected;
+    [HideInInspector] public UnityEvent<DraggableCombatCard> OnCardUsed;
+    [HideInInspector] public UnityEvent<DraggableCombatCard> OnCardSelected;
+    [HideInInspector] public UnityEvent<DraggableCombatCard> OnCardDeselected;
 
     [Header("Debug")]
     [SerializeField] private List<CardData> cardData = new List<CardData>();
@@ -44,24 +47,38 @@ public class CombatManager : MonoBehaviour
 
         deck = deck.OrderBy(x => Random.value).ToArray();
 
-        foreach (var card in cardHolder.GetComponentsInChildren<DraggableCombatCard>())
+        timeBar.OnTimeUp.AddListener(EndGame);
+
+        // listen to heroes dying
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < cardInventory.MaxItems; i++)
         {
-            cardsInHand.Add(card);
+            cardInventory.AddItem(deck[i]);
         }
 
-        for (int i = 0; i < cardsInHand.Count; i++)
+        foreach (var card in cardInventory.GetInventoryDraggableItems())
         {
-            cardsInHand[i].SetCardInstance(deck[i]);
+            card.OnBeginItemDrag.AddListener(CardSelected);
+            card.OnEndItemDrag.AddListener(CardDeselected);
         }
 
-        for (int i = cardsInHand.Count; i < deck.Length; i++)
+        //foreach (var card in cardHolder.GetComponentsInChildren<DraggableCombatCard>())
+        //{
+        //    cardsInHand.Add(card);
+        //}
+
+        //for (int i = 0; i < cardsInHand.Count; i++)
+        //{
+        //    cardsInHand[i].SetCardInstance(deck[i]);
+        //}
+
+        for (int i = cardInventory.MaxItems; i < deck.Length; i++)
         {
             cardQueue.Enqueue(deck[i]);
         }
-
-        timeBar.OnTimeUp.AddListener(EndGame);
-
-        //
     }
 
     private void EndGame()
@@ -69,18 +86,16 @@ public class CombatManager : MonoBehaviour
         Debug.Log("Game Over");
     }
 
-    public void CardSelected(DraggableCombatCard card)
+    private void CardSelected(DraggableItem card)
     {
-        SelectedCard = card;
-        combatGroup.alpha = 0.4f;
-        OnCardSelected?.Invoke();
+        combatGroup.alpha = cardDraggedAlpha;
+        OnCardSelected?.Invoke(card as DraggableCombatCard);
     }
 
-    public void CardDeselected()
+    private void CardDeselected(DraggableItem card)
     {
-        SelectedCard = null;
         combatGroup.alpha = 1f;
-        OnCardDeselected?.Invoke();
+        OnCardDeselected?.Invoke(card as DraggableCombatCard);
     }
 
     public bool TryToUseCard(DraggableCombatCard card, Vector2 position)
@@ -96,14 +111,10 @@ public class CombatManager : MonoBehaviour
             List<Vector3> spawnPoints = card.DeploymentPreviewObject.GetSpawnPoints();
             StartCoroutine(SpawnUnits(spawnPoints, card.CardInstance.MonsterPrefab));
 
-            foreach (var c in cardsInHand)
-            {
-                c.DisableTemporarily(cardCooldown);
-            }
-
+            OnCardUsed?.Invoke(card);
             CardInstance nextCard = cardQueue.Dequeue();
             cardQueue.Enqueue(card.CardInstance);
-            card.SetCardInstance(nextCard);
+            card.SetItem(nextCard);
 
             return true;
         }
