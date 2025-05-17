@@ -73,7 +73,6 @@ public class Inventory : MonoBehaviour
     {
         // Logic to handle when an item is assigned to a slot
         // This could involve updating the UI, checking for item limits, etc.
-        Debug.Log("ItemInstance assigned: " + item.name);
     }
 
     public List<DraggableItem> GetInventoryDraggableItems()

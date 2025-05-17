@@ -69,7 +69,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!CanBeDragged(eventData)) return;
+        if (!CanBeDragged(eventData) || !isBeingDragged) return;
 
         DragBehavior(eventData);
     }
@@ -77,13 +77,12 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     protected virtual void DragBehavior(PointerEventData eventData)
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
-        RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.position = mousePos;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!CanBeDragged(eventData)) return;
+        if (!CanBeDragged(eventData) || !isBeingDragged) return;
 
         EndDragBehavior(eventData);
     }

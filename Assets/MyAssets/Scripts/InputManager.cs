@@ -2,15 +2,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
 
+[RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour
 {
     private Camera mainCamera;
     [SerializeField] private BoxCollider2D cameraBoundingBox;
     [SerializeField] private float cameraMoveSpeed = 5f;
     private Vector3 cameraMoveDirection = Vector3.zero;
-
-    [SerializeField] private float cardRotationSpeed = 120f;
-    private bool rotatingCard = false;
 
     private float maxX;
     private float minX;
@@ -36,23 +34,10 @@ public class InputManager : MonoBehaviour
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, minX, maxX);
         clampedPosition.y = Mathf.Clamp(clampedPosition.y, minY, maxY);
         mainCamera.transform.position = clampedPosition;
-
-        //var selectedCard = CombatManager.Instance.SelectedCard;
-        //if (selectedCard == null) return;
-
-        //if (rotatingCard)
-        //{
-        //    selectedCard.DeploymentPreviewObject.transform.Rotate(0, 0, cardRotationSpeed * Time.deltaTime);
-        //}
     }
 
     private void OnLook(InputValue value)
     {
         cameraMoveDirection = value.Get<Vector2>();
-    }
-
-    private void OnRotateCard(InputValue value)
-    {
-        rotatingCard = value.isPressed;
     }
 }

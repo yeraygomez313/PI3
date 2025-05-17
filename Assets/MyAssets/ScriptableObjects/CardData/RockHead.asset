@@ -17,6 +17,7 @@ MonoBehaviour:
   <ManaCost>k__BackingField: 3
   <MonsterPrefab>k__BackingField: {fileID: 248662147868278087, guid: 839969fb86b50864fb18ffab5ea69a54,
     type: 3}
-  <DeploymentPreviewPrefab>k__BackingField: {fileID: 2781874535766077328, guid: 94a603e408603e54fbc304ec38c5eaba,
+  <DeploymentPreviewPrefab>k__BackingField: {fileID: 6575310742073130977, guid: c241b76bc4cbc4545bb7d0d30beed46f,
     type: 3}
-  <CardLevelDataList>k__BackingField: []
+  <CardLevelDataList>k__BackingField:
+  - {fileID: 11400000, guid: 1b00a7620d20798468b99decc335350d, type: 2}

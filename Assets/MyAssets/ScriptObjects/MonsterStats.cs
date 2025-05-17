@@ -9,4 +9,5 @@ public class MonsterStats : ScriptableObject
     public float atSpeed;
     public float mvSpeed;
     public float atRange;
+    public float scale;
 }

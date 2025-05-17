@@ -18,3 +18,4 @@ MonoBehaviour:
   atSpeed: 2
   mvSpeed: 2
   atRange: 5
+  scale: 0.5

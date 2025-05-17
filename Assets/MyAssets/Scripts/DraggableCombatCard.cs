@@ -3,8 +3,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerInput))]
 public class DraggableCombatCard : DraggableItem
 {
     public override ItemInstance ItemInstance
@@ -23,6 +24,8 @@ public class DraggableCombatCard : DraggableItem
     [SerializeField] private Image deploymentFailedOverlay;
     [SerializeField] private float deploymentFailedOverlayInitialAlpha;
     [SerializeField] private float deploymentFailedSequenceDuration;
+    [SerializeField] private float cardRotationSpeed = 180f;
+    private bool rotatingCard = false;
 
     private CombatManager combatManager;
     private Sequence deploymentFailedSequence;
@@ -55,6 +58,11 @@ public class DraggableCombatCard : DraggableItem
         {
             manaCostText.color = notEnoughManaColor;
         }
+
+        if (rotatingCard && isBeingDragged)
+        {
+            DeploymentPreviewObject.transform.Rotate(0, 0, cardRotationSpeed * Time.deltaTime);
+        }
     }
 
     public override void SetItem(ItemInstance card)
@@ -72,6 +80,7 @@ public class DraggableCombatCard : DraggableItem
         }
         DeploymentPreviewObject = Instantiate(cardInstance.DeploymentPreviewPrefab, dragVisuals.transform).GetComponent<DeploymentPreview>();
         DeploymentPreviewObject.GetComponent<RectTransform>().SetParent(dragVisuals.transform);
+        DeploymentPreviewObject.SetCard(cardInstance);
     }
 
     private void OnCardUsed(DraggableCombatCard cardUsed)
@@ -146,5 +155,10 @@ public class DraggableCombatCard : DraggableItem
         }
 
         base.EndDragBehavior(eventData);
+    }
+
+    private void OnRotateCard(InputValue value)
+    {
+        rotatingCard = value.isPressed;
     }
 }

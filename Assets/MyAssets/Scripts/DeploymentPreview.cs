@@ -8,6 +8,7 @@ public class DeploymentPreview : MonoBehaviour
     [SerializeField] private Color deploymentForbiddenColor = Color.red;
     [SerializeField] private Color deploymentCanceledColor = Color.blue;
     private List<RectTransform> troops = new();
+    private DeploymentState currentDeploymentState = DeploymentState.Allowed;
 
     private void Awake()
     {
@@ -16,8 +17,15 @@ public class DeploymentPreview : MonoBehaviour
             RectTransform troop = transform.GetChild(i).GetComponent<RectTransform>();
             troops.Add(troop);
         }
+    }
 
-        // set sprites and scale
+    public void SetCard(CardInstance card)
+    {
+        foreach (var troop in troops)
+        {
+            troop.localScale = card.GetMonsterStats().scale * Vector3.one;
+            troop.GetComponent<Image>().sprite = card.Icon;
+        }
     }
 
     private void Update()
@@ -40,6 +48,9 @@ public class DeploymentPreview : MonoBehaviour
 
     public void SetDeploymentState(DeploymentState deploymentState)
     {
+        if (currentDeploymentState == deploymentState) return;
+        currentDeploymentState = deploymentState;
+
         Color color;
         switch (deploymentState)
         {

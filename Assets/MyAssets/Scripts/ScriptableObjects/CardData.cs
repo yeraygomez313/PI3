@@ -11,13 +11,7 @@ public class CardData : ItemData
     [field: SerializeField] public GameObject DeploymentPreviewPrefab { get; private set; }
 
     // Temporal
-    [field: SerializeField] public List<CardLevelData> CardLevelDataList { get; private set; } = new();
-}
-
-[CreateAssetMenu(fileName = "CardLevelData", menuName = "Scriptable Objects/CardLevelData")]
-public class CardLevelData : ScriptableObject
-{
-    public MonsterStats MonsterStats;
+    [field: SerializeField] public List<MonsterStats> CardLevelDataList { get; private set; } = new();
 }
 
 public class CardInstance : ItemInstance
@@ -41,7 +35,7 @@ public class CardInstance : ItemInstance
         Level = level;
     }
 
-    public CardLevelData GetCardLevelData()
+    public MonsterStats GetMonsterStats()
     {
         return CardData.CardLevelDataList[Level];
     }
