@@ -4,6 +4,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [field:SerializeField] public int MaxItems { get; protected set; } = 4;
+    [field: SerializeField] public bool AllowsSlotSwapping { get; protected set; } = true;
     [SerializeField] protected GameObject itemSlotPrefab;
     [SerializeField] protected GameObject draggableItemPrefab;
     [SerializeField] protected List<ItemData> initialInventory = new();
@@ -13,22 +14,29 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < MaxItems; i++)
         {
+            // Instantiate item slots and add them to the inventory
             GameObject itemSlot = Instantiate(itemSlotPrefab, transform);
             itemSlot.name = "ItemSlot_" + i;
             ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
             itemSlotComponent.OnItemAssigned.AddListener(OnItemAssigned);
             inventorySlots.Add(itemSlotComponent);
 
-            if (initialInventory.Count > i)
+            if (initialInventory.Count > i) // Create new items for each slot if there is an initial inventory
             {
-                GameObject item = Instantiate(draggableItemPrefab.gameObject, itemSlot.transform);
-                item.name = "Item_" + i;
-                item.GetComponent<RectTransform>().SetParent(itemSlot.transform);
-                DraggableItem itemComponent = item.GetComponent<DraggableItem>();
-                itemSlotComponent.AssignItem(itemComponent);
+                // Instantiate item
+                GameObject draggableItem = Instantiate(draggableItemPrefab.gameObject, itemSlot.transform);
+                draggableItem.name = "Item_" + i;
+
+                // Create item instance
                 ItemInstance itemInstance = new ItemInstance();
                 itemInstance.Initialize(initialInventory[i]);
-                itemComponent.SetItem(itemInstance);
+
+                // Set item instance of created draggable item
+                DraggableItem draggableItemComponent = draggableItem.GetComponent<DraggableItem>();
+                draggableItemComponent.SetItem(itemInstance);
+
+                // Assign item to slot
+                itemSlotComponent.RequestItemAssignation(draggableItemComponent);
             }
         }
     }
@@ -61,12 +69,16 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        GameObject item = Instantiate(draggableItemPrefab, slot.transform);
-        item.name = "Item_" + slotIndex;
-        item.GetComponent<RectTransform>().SetParent(slot.transform);
-        DraggableItem itemComponent = item.GetComponent<DraggableItem>();
-        slot.AssignItem(itemComponent);
-        itemComponent.SetItem(itemInstance);
+        // Instantiate item
+        GameObject draggableItem = Instantiate(draggableItemPrefab.gameObject, slot.transform);
+        draggableItem.name = "Item_" + slotIndex;
+
+        // Set item instance of created draggable item
+        DraggableItem draggableItemComponent = draggableItem.GetComponent<DraggableItem>();
+        draggableItemComponent.SetItem(itemInstance);
+
+        // Assign item to slot
+        slot.RequestItemAssignation(draggableItemComponent);
     }
 
     protected virtual void OnItemAssigned(DraggableItem item)

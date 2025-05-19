@@ -65113,6 +65113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxItems>k__BackingField: 4
+  <AllowsSlotSwapping>k__BackingField: 0
   itemSlotPrefab: {fileID: 4962941836458507589, guid: 7e738f32c0d2ada4eafa8051c4922366,
     type: 3}
   draggableItemPrefab: {fileID: 2913536165180775723, guid: 8129283da0fb7ed44958ef41c4bf2edc,

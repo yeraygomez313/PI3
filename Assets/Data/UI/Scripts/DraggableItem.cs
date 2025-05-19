@@ -8,30 +8,32 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 {
     [Header("Draggable Item")]
     [field:SerializeField] public virtual ItemInstance ItemInstance { get; protected set; }
+    public ItemSlot AssignedItemSlot { get; protected set; }
+
     [SerializeField] protected CanvasGroup staticVisuals;
     [SerializeField] protected CanvasGroup dragVisuals;
 
     protected GraphicRaycaster mainCanvasGraphicRaycaster;
     protected RectTransform rectTransform;
-    protected ItemSlot assignedItemSlot;
     protected Vector2 initialLocalPosition;
     protected bool isBeingDragged = false;
     protected bool interactable = true;
 
     [HideInInspector] public UnityEvent<DraggableItem> OnBeginItemDrag;
     [HideInInspector] public UnityEvent<DraggableItem> OnEndItemDrag;
+    [HideInInspector] public UnityEvent<ItemSlot> OnSlotAssigned;
 
     protected virtual void Awake()
     {
         mainCanvasGraphicRaycaster = GetComponentInParent<CanvasScaler>().GetComponent<GraphicRaycaster>();
         rectTransform = GetComponent<RectTransform>();
-        assignedItemSlot = GetComponentInParent<ItemSlot>();
         dragVisuals.alpha = 0f;
     }
 
     public virtual void SetItem(ItemInstance newItem)
     {
         ItemInstance = newItem;
+        // change visuals
     }
 
     protected virtual void Update()
@@ -52,7 +54,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     protected virtual void BeginDragBehavior(PointerEventData eventData)
     {
-        if (assignedItemSlot != null)
+        if (AssignedItemSlot != null)
         {
             initialLocalPosition = Vector2.zero;
         }
@@ -76,8 +78,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     protected virtual void DragBehavior(PointerEventData eventData)
     {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
-        rectTransform.position = mousePos;
+        //Vector2 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
+        //rectTransform.position = mousePos;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -89,6 +91,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     protected virtual void EndDragBehavior(PointerEventData eventData)
     {
+        // Check if the item is dropped on a valid slot
         PointerEventData pointerData = new PointerEventData(EventSystem.current)
         {
             position = eventData.position
@@ -102,16 +105,15 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             ItemSlot slot = result.gameObject.GetComponent<ItemSlot>();
 
-            if (slot != null && slot != assignedItemSlot)
+            if (slot != null && slot != AssignedItemSlot)
             {
-                rectTransform.SetParent(slot.transform);
-                initialLocalPosition = Vector2.zero;
-                assignedItemSlot = slot;
-                slot.AssignItem(this);
+                // Valid slot found, assign the item to it
+                slot.RequestItemAssignation(this);
                 break;
             }
         }
 
+        // Reset position and visuals
         rectTransform.localPosition = initialLocalPosition;
         isBeingDragged = false;
         staticVisuals.alpha = 1f;
@@ -119,7 +121,25 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         OnEndItemDrag?.Invoke(this);
     }
 
-    protected bool CanBeDragged(PointerEventData eventData)
+    public virtual void AssignItemSlot(ItemSlot slot)
+    {
+        OnSlotAssigned?.Invoke(slot);
+        AssignedItemSlot = slot;
+        rectTransform.SetParent(slot.transform);
+        initialLocalPosition = Vector2.zero;
+        rectTransform.localPosition = initialLocalPosition;
+    }
+
+    public virtual void UnassignItemSlot()
+    {
+        OnSlotAssigned?.Invoke(null);
+        AssignedItemSlot = null;
+        rectTransform.SetParent(transform);
+        Vector2 randomDir = Random.insideUnitCircle.normalized * Random.Range(40f, 60f);
+        rectTransform.localPosition += (Vector3)randomDir;
+    }
+
+    protected virtual bool CanBeDragged(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left && interactable)
         {
@@ -146,12 +166,17 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             ItemSlot slot = result.gameObject.GetComponent<ItemSlot>();
 
-            if (assignedItemSlot != null && assignedItemSlot == slot)
+            if (AssignedItemSlot != null && AssignedItemSlot == slot)
             {
                 return true;
             }
         }
 
         return false;
+    }
+
+    public bool HasSlotAssigned()
+    {
+        return AssignedItemSlot != null;
     }
 }
