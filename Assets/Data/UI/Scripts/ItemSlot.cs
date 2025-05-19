@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(RectTransform))]
 public class ItemSlot : MonoBehaviour
 {
     public DraggableItem AssignedItem { get; protected set; }
     public Inventory Inventory { get; protected set; }
 
     [HideInInspector] public UnityEvent<DraggableItem> OnItemAssigned;
+    [HideInInspector] public UnityEvent<DraggableItem> OnItemUnassigned;
 
     protected virtual void Awake()
     {
@@ -48,9 +50,9 @@ public class ItemSlot : MonoBehaviour
 
     protected virtual void AssignItem(DraggableItem newItem)
     {
+        AssignedItem = newItem;
         newItem.AssignItemSlot(this);
         newItem.OnSlotAssigned.AddListener(AssignedItemChangedSlots);
-        AssignedItem = newItem;
         OnItemAssigned?.Invoke(newItem);
     }
 
@@ -59,6 +61,7 @@ public class ItemSlot : MonoBehaviour
         if (itemSlot != this)
         {
             AssignedItem.OnSlotAssigned.RemoveListener(AssignedItemChangedSlots);
+            OnItemUnassigned?.Invoke(AssignedItem);
             AssignedItem = null;
         }
     }

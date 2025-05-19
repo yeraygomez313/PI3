@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CardData", menuName = "Scriptable Objects/CardData")]
 public class CardData : ItemData
 {
-    [field: SerializeField] public Sprite Icon { get; private set; }
     [field: SerializeField] public int ManaCost { get; private set; }
     [field: SerializeField] public GameObject MonsterPrefab { get; private set; }
     [field: SerializeField] public GameObject DeploymentPreviewPrefab { get; private set; }
@@ -24,7 +23,6 @@ public class CardInstance : ItemInstance
     public CardData CardData { get; private set; }
 
     public int Level { get; private set; }
-    public Sprite Icon => CardData.Icon;
     public int ManaCost => CardData.ManaCost;
     public GameObject MonsterPrefab => CardData.MonsterPrefab;
     public GameObject DeploymentPreviewPrefab => CardData.DeploymentPreviewPrefab;

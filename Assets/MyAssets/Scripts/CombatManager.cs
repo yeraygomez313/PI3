@@ -19,8 +19,6 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private TimeBar timeBar;
 
     [SerializeField] private Inventory cardInventory;
-    //[SerializeField] private GameObject cardHolder;
-    //private List<DraggableCombatCard> cardsInHand = new List<DraggableCombatCard>();
     [SerializeField] private LayerMask forbiddenZoneMask;
 
     private CardInstance[] deck = new CardInstance[8];

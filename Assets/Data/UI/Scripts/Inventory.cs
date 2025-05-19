@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(RectTransform))]
 public class Inventory : MonoBehaviour
 {
     [field:SerializeField] public int MaxItems { get; protected set; } = 4;
     [field: SerializeField] public bool AllowsSlotSwapping { get; protected set; } = true;
+    [SerializeField] protected Inventory linkedInventory;
     [SerializeField] protected GameObject itemSlotPrefab;
     [SerializeField] protected GameObject draggableItemPrefab;
     [SerializeField] protected List<ItemData> initialInventory = new();
@@ -19,6 +21,7 @@ public class Inventory : MonoBehaviour
             itemSlot.name = "ItemSlot_" + i;
             ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
             itemSlotComponent.OnItemAssigned.AddListener(OnItemAssigned);
+            itemSlotComponent.OnItemUnassigned.AddListener(OnItemUnassigned);
             inventorySlots.Add(itemSlotComponent);
 
             if (initialInventory.Count > i) // Create new items for each slot if there is an initial inventory
@@ -54,6 +57,19 @@ public class Inventory : MonoBehaviour
         Debug.Log("Inventory is full");
     }
 
+    public ItemSlot GetFirstEmptySlot()
+    {
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            if (inventorySlots[i].AssignedItem == null)
+            {
+                return inventorySlots[i];
+            }
+        }
+
+        return null;
+    }
+
     public virtual void AddItem(ItemInstance itemInstance, int slotIndex)
     {
         if (slotIndex < 0 || slotIndex >= inventorySlots.Count)
@@ -83,8 +99,26 @@ public class Inventory : MonoBehaviour
 
     protected virtual void OnItemAssigned(DraggableItem item)
     {
-        // Logic to handle when an item is assigned to a slot
-        // This could involve updating the UI, checking for item limits, etc.
+        item.OnClicked.AddListener(OnItemClicked);
+    }
+
+    protected virtual void OnItemUnassigned(DraggableItem item)
+    {
+        item.OnClicked.RemoveListener(OnItemClicked);
+    }
+
+    protected virtual void OnItemClicked(DraggableItem item)
+    {
+        if (!AllowsSlotSwapping) return;
+
+        if (linkedInventory != null)
+        {
+            linkedInventory.GetFirstEmptySlot()?.RequestItemAssignation(item);
+        }
+        else
+        {
+            Debug.Log("No linked inventory");
+        }
     }
 
     public List<DraggableItem> GetInventoryDraggableItems()

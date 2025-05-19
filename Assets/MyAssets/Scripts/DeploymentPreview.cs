@@ -24,7 +24,7 @@ public class DeploymentPreview : MonoBehaviour
         foreach (var troop in troops)
         {
             troop.localScale = card.GetMonsterStats().scale * Vector3.one;
-            troop.GetComponent<Image>().sprite = card.Icon;
+            troop.GetComponent<Image>().sprite = card.GetMonsterStats().Icon;
         }
     }
 

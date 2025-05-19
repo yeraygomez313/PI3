@@ -16,7 +16,7 @@ public class DraggableCombatCard : DraggableItem
     public CardInstance CardInstance { get; private set; }
 
     [Header("Draggable Combat Card")]
-    [SerializeField] private Image monsterIconImage;
+    [SerializeField] private CardVisuals cardVisuals;
     [SerializeField] private TextMeshProUGUI manaCostText;
     [SerializeField] private Color notEnoughManaColor;
     [SerializeField] private float cardUsedCooldown;
@@ -71,7 +71,7 @@ public class DraggableCombatCard : DraggableItem
 
         CardInstance = cardInstance;
 
-        monsterIconImage.sprite = cardInstance.Icon;
+        cardVisuals.SetCard(cardInstance.GetMonsterStats());
         manaCostText.text = cardInstance.ManaCost.ToString();
 
         if (DeploymentPreviewObject != null)

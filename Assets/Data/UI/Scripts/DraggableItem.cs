@@ -4,11 +4,15 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+[RequireComponent(typeof(RectTransform))]
+[RequireComponent(typeof(GraphicRaycaster))]
+[RequireComponent(typeof(Canvas))]
+public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [Header("Draggable Item")]
     [field:SerializeField] public virtual ItemInstance ItemInstance { get; protected set; }
     public ItemSlot AssignedItemSlot { get; protected set; }
+    public Inventory Inventory => AssignedItemSlot?.Inventory;
 
     [SerializeField] protected CanvasGroup staticVisuals;
     [SerializeField] protected CanvasGroup dragVisuals;
@@ -19,9 +23,10 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     protected bool isBeingDragged = false;
     protected bool interactable = true;
 
-    [HideInInspector] public UnityEvent<DraggableItem> OnBeginItemDrag;
-    [HideInInspector] public UnityEvent<DraggableItem> OnEndItemDrag;
+    [HideInInspector] public UnityEvent<DraggableItem> OnBeginItemDrag; // communication with the inventory
+    [HideInInspector] public UnityEvent<DraggableItem> OnEndItemDrag; // communication with the inventory
     [HideInInspector] public UnityEvent<ItemSlot> OnSlotAssigned;
+    [HideInInspector] public UnityEvent<DraggableItem> OnClicked; // communication with the inventory
 
     protected virtual void Awake()
     {
@@ -78,8 +83,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     protected virtual void DragBehavior(PointerEventData eventData)
     {
-        //Vector2 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
-        //rectTransform.position = mousePos;
+        // Empty for now
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -164,7 +168,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         foreach (RaycastResult result in results)
         {
-            ItemSlot slot = result.gameObject.GetComponent<ItemSlot>();
+            ItemSlot slot = result.gameObject.GetComponentInParent<ItemSlot>();
 
             if (AssignedItemSlot != null && AssignedItemSlot == slot)
             {
@@ -178,5 +182,12 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public bool HasSlotAssigned()
     {
         return AssignedItemSlot != null;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (isBeingDragged || !interactable) return;
+
+        OnClicked?.Invoke(this);
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MonsterStats", menuName = "PI3/MonsterStats")]
 public class MonsterStats : ScriptableObject
 {
+    public Sprite Icon;
     public float maxHealth;
     public float attack;
     public float defense;
