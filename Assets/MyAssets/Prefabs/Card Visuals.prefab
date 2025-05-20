@@ -235,8 +235,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6846735719740833601}
   - component: {fileID: 5193160208918894913}
-  - component: {fileID: 1546699621158625205}
   - component: {fileID: 2296429607038775837}
+  - component: {fileID: 5264951495309037385}
   m_Layer: 5
   m_Name: Card Visuals
   m_TagString: Untagged
@@ -280,19 +280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 2
   m_AspectRatio: 0.75
---- !u!114 &1546699621158625205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8065357300112982396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcaf6cc81460a6a45b93c18ab322faea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monsterIconImage: {fileID: 4218710404180491252}
 --- !u!114 &2296429607038775837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,3 +300,16 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &5264951495309037385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8065357300112982396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3cb336a74978c74d80a64e89ed5f199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardIcon: {fileID: 4218710404180491252}
