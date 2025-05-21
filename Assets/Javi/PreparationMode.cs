@@ -22,18 +22,5 @@ public class PreparationMode : MonoBehaviour
 
     }
 
-    /*
-    void BattleOver()
-    {
-        else if (!Enemylist.Any(x => x != null))
-        {
-            //OnCombatEnd?.Invoke(true);
-            Debug.Log("Ronda ganada");
-            roundcount++;
-            Debug.Log(roundcount);
-        }
-    }
-    */
-
 
 }
