@@ -107,7 +107,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         foreach (RaycastResult result in results)
         {
-            ItemSlot slot = result.gameObject.GetComponent<ItemSlot>();
+            ItemSlot slot = result.gameObject.GetComponentInParent<ItemSlot>();
 
             if (slot != null && slot != AssignedItemSlot)
             {

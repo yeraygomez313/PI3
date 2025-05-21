@@ -6,6 +6,7 @@ public class Inventory : MonoBehaviour
 {
     [field:SerializeField] public int MaxItems { get; protected set; } = 4;
     [field: SerializeField] public bool AllowsSlotSwapping { get; protected set; } = true;
+    [SerializeField] protected bool flexible = false;
     [SerializeField] protected Inventory linkedInventory;
     [SerializeField] protected GameObject itemSlotPrefab;
     [SerializeField] protected GameObject draggableItemPrefab;
@@ -14,18 +15,49 @@ public class Inventory : MonoBehaviour
 
     protected virtual void Awake()
     {
-        for (int i = 0; i < MaxItems; i++)
+        if (flexible)
         {
-            // Instantiate item slots and add them to the inventory
-            GameObject itemSlot = Instantiate(itemSlotPrefab, transform);
-            itemSlot.name = "ItemSlot_" + i;
-            ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
-            itemSlotComponent.OnItemAssigned.AddListener(OnItemAssigned);
-            itemSlotComponent.OnItemUnassigned.AddListener(OnItemUnassigned);
-            inventorySlots.Add(itemSlotComponent);
-
-            if (initialInventory.Count > i) // Create new items for each slot if there is an initial inventory
+            for (int i = 0; i < MaxItems; i++)
             {
+                // Instantiate item slots and add them to the inventory
+                GameObject itemSlot = Instantiate(itemSlotPrefab, transform);
+                itemSlot.name = "ItemSlot_" + i;
+                ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
+                itemSlotComponent.OnItemAssigned.AddListener(OnItemAssigned);
+                itemSlotComponent.OnItemUnassigned.AddListener(OnItemUnassigned);
+                inventorySlots.Add(itemSlotComponent);
+
+                if (initialInventory.Count > i) // Create new items for each slot if there is an initial inventory
+                {
+                    // Instantiate item
+                    GameObject draggableItem = Instantiate(draggableItemPrefab.gameObject, itemSlot.transform);
+                    draggableItem.name = "Item_" + i;
+
+                    // Create item instance
+                    ItemInstance itemInstance = new ItemInstance();
+                    itemInstance.Initialize(initialInventory[i]);
+
+                    // Set item instance of created draggable item
+                    DraggableItem draggableItemComponent = draggableItem.GetComponent<DraggableItem>();
+                    draggableItemComponent.SetItem(itemInstance);
+
+                    // Assign item to slot
+                    itemSlotComponent.RequestItemAssignation(draggableItemComponent);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < initialInventory.Count; i++)
+            {
+                // Instantiate item slots and add them to the inventory
+                GameObject itemSlot = Instantiate(itemSlotPrefab, transform);
+                itemSlot.name = "ItemSlot_" + i;
+                ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
+                itemSlotComponent.OnItemAssigned.AddListener(OnItemAssigned);
+                itemSlotComponent.OnItemUnassigned.AddListener(OnItemUnassigned);
+                inventorySlots.Add(itemSlotComponent);
+
                 // Instantiate item
                 GameObject draggableItem = Instantiate(draggableItemPrefab.gameObject, itemSlot.transform);
                 draggableItem.name = "Item_" + i;
@@ -54,6 +86,12 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
+
+        if (flexible)
+        {
+
+        }
+
         Debug.Log("Inventory is full");
     }
 
