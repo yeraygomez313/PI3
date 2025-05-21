@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -116,5 +117,20 @@ public class LocalForceAvoidance : MonoBehaviour
         }
         float distance = Vector2.Distance(Origin, target.Origin);
         return distance < range;
+    }
+
+    internal void ApplyPushForce(Vector3 position, float pushStrength)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void ApplySlow(float slowAmount, float slowDuration)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void ApplyStun(float stunDuration)
+    {
+        throw new NotImplementedException();
     }
 }

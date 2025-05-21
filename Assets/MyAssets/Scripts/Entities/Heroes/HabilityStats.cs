@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HabilityStats", menuName = "PI3/HabilityStats")]
@@ -8,4 +9,6 @@ public class HabilityStats : ScriptableObject
     public float tickDamage;
     public float cooldown;
     public float duration;
+
+    [SerializeReference, SubclassSelector] public List<AbilityEffect> abilityEffects;
 }

@@ -363,7 +363,7 @@ MonoBehaviour:
   OnClicked:
     m_PersistentCalls:
       m_Calls: []
-  cardVisuals: {fileID: 9220378747370339968}
+  cardVisuals: {fileID: 2563528949585636988}
   manaCostText: {fileID: 1419758130769468941}
   notEnoughManaColor: {r: 0.8627451, g: 0, b: 0, a: 1}
   cardUsedCooldown: 1
@@ -948,21 +948,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcc1e5ef61e05634380eea489508aecd, type: 3}
---- !u!224 &3857292805337816692 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6846735719740833601, guid: dcc1e5ef61e05634380eea489508aecd,
-    type: 3}
-  m_PrefabInstance: {fileID: 7675161268033282357}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &9220378747370339968 stripped
+--- !u!114 &2563528949585636988 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1546699621158625205, guid: dcc1e5ef61e05634380eea489508aecd,
+  m_CorrespondingSourceObject: {fileID: 5264951495309037385, guid: dcc1e5ef61e05634380eea489508aecd,
     type: 3}
   m_PrefabInstance: {fileID: 7675161268033282357}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcaf6cc81460a6a45b93c18ab322faea, type: 3}
+  m_Script: {fileID: 11500000, guid: f3cb336a74978c74d80a64e89ed5f199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3857292805337816692 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6846735719740833601, guid: dcc1e5ef61e05634380eea489508aecd,
+    type: 3}
+  m_PrefabInstance: {fileID: 7675161268033282357}
+  m_PrefabAsset: {fileID: 0}

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CardData", menuName = "Scriptable Objects/CardData")]
+[CreateAssetMenu(fileName = "CardData", menuName = "PI3/CardData")]
 public class CardData : ItemData
 {
     [field: SerializeField] public int ManaCost { get; private set; }
