@@ -21,12 +21,12 @@ PrefabInstance:
     - target: {fileID: 598554658233078881, guid: 43ce92c27f0746d4aa1286a2b8dc0958,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 598554658233078881, guid: 43ce92c27f0746d4aa1286a2b8dc0958,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 598554658233078881, guid: 43ce92c27f0746d4aa1286a2b8dc0958,
         type: 3}
@@ -119,7 +119,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6956739246459198792, guid: 43ce92c27f0746d4aa1286a2b8dc0958,
         type: 3}
-      insertIndex: 3
+      insertIndex: -1
       addedObject: {fileID: -4381926246370172439}
   m_SourcePrefab: {fileID: 100100000, guid: 43ce92c27f0746d4aa1286a2b8dc0958, type: 3}
 --- !u!1 &4962941836458507589 stripped
