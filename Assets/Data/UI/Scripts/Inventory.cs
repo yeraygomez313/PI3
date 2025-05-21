@@ -17,6 +17,34 @@ public class Inventory : MonoBehaviour
     {
         if (flexible)
         {
+            for (int i = 0; i < initialInventory.Count; i++)
+            {
+                // Instantiate item slots and add them to the inventory
+                GameObject itemSlot = Instantiate(itemSlotPrefab, transform);
+                itemSlot.name = "ItemSlot_" + i;
+                ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
+                itemSlotComponent.OnItemAssigned.AddListener(OnItemAssigned);
+                itemSlotComponent.OnItemUnassigned.AddListener(OnItemUnassigned);
+                inventorySlots.Add(itemSlotComponent);
+
+                // Instantiate item
+                GameObject draggableItem = Instantiate(draggableItemPrefab.gameObject, itemSlot.transform);
+                draggableItem.name = "Item_" + i;
+
+                // Create item instance
+                ItemInstance itemInstance = new ItemInstance();
+                itemInstance.Initialize(initialInventory[i]);
+
+                // Set item instance of created draggable item
+                DraggableItem draggableItemComponent = draggableItem.GetComponent<DraggableItem>();
+                draggableItemComponent.SetItem(itemInstance);
+
+                // Assign item to slot
+                itemSlotComponent.RequestItemAssignation(draggableItemComponent);
+            }
+        }
+        else
+        {
             for (int i = 0; i < MaxItems; i++)
             {
                 // Instantiate item slots and add them to the inventory
@@ -44,34 +72,6 @@ public class Inventory : MonoBehaviour
                     // Assign item to slot
                     itemSlotComponent.RequestItemAssignation(draggableItemComponent);
                 }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < initialInventory.Count; i++)
-            {
-                // Instantiate item slots and add them to the inventory
-                GameObject itemSlot = Instantiate(itemSlotPrefab, transform);
-                itemSlot.name = "ItemSlot_" + i;
-                ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
-                itemSlotComponent.OnItemAssigned.AddListener(OnItemAssigned);
-                itemSlotComponent.OnItemUnassigned.AddListener(OnItemUnassigned);
-                inventorySlots.Add(itemSlotComponent);
-
-                // Instantiate item
-                GameObject draggableItem = Instantiate(draggableItemPrefab.gameObject, itemSlot.transform);
-                draggableItem.name = "Item_" + i;
-
-                // Create item instance
-                ItemInstance itemInstance = new ItemInstance();
-                itemInstance.Initialize(initialInventory[i]);
-
-                // Set item instance of created draggable item
-                DraggableItem draggableItemComponent = draggableItem.GetComponent<DraggableItem>();
-                draggableItemComponent.SetItem(itemInstance);
-
-                // Assign item to slot
-                itemSlotComponent.RequestItemAssignation(draggableItemComponent);
             }
         }
     }
