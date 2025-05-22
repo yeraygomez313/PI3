@@ -6,6 +6,7 @@ public abstract class ItemData : ScriptableObject
     
 }
 
+[Serializable]
 public class ItemInstance
 {
     public Guid Guid { get; protected set; }

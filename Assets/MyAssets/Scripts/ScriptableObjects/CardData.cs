@@ -13,6 +13,7 @@ public class CardData : ItemData
     [field: SerializeField] public List<MonsterStats> CardLevelDataList { get; private set; } = new();
 }
 
+[Serializable]
 public class CardInstance : ItemInstance
 {
     public override ItemData Data
@@ -20,9 +21,9 @@ public class CardInstance : ItemInstance
         get => CardData;
         protected set => CardData = value as CardData;
     }
-    public CardData CardData { get; private set; }
+    [field: SerializeField] public CardData CardData { get; private set; }
 
-    public int Level { get; private set; }
+    [field: SerializeField] public int Level { get; private set; }
     public int ManaCost => CardData.ManaCost;
     public GameObject MonsterPrefab => CardData.MonsterPrefab;
     public GameObject DeploymentPreviewPrefab => CardData.DeploymentPreviewPrefab;

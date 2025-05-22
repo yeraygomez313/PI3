@@ -4,6 +4,7 @@ using System.Linq;
 
 public class RewardSystem : MonoBehaviour
 {
+    /*
     //public Inventory inventory;
     public DeckManager deckManager;
 
@@ -11,7 +12,7 @@ public class RewardSystem : MonoBehaviour
 
     public void GiveReward()
     {
-        List<PreparationCard> rewardOptions = new List<PreparationCard>();
+        List<CardInstance> rewardOptions = new List<CardInstance>();
 
 
         bool giveNewCard = true; 
@@ -28,10 +29,10 @@ public class RewardSystem : MonoBehaviour
         ShowRewardUI(rewardOptions);
     }
 
-    private List<PreparationCard> GetRandomCards(int count)
+    private List<CardInstance> GetRandomCards(int count)
     {
         //List<PreparationCard> pool = new List<PreparationCard>(inventory.MaxItems);
-        List<PreparationCard> selected = new List<PreparationCard>();
+        List<CardInstance> selected = new List<CardInstance>();
 
         /*
         while (selected.Count < count && pool.Count > 0)
@@ -45,7 +46,7 @@ public class RewardSystem : MonoBehaviour
 
             selected.Add(chosen);
             pool.RemoveAt(index);
-        }*/
+        }
 
         return selected;
     }
@@ -62,9 +63,9 @@ public class RewardSystem : MonoBehaviour
         return upgradable;
     }
 
-    public void SelectCard(PreparationCard selectedCard)
+    public void SelectCard(CardInstance selectedCard)
     {
-        PreparationCard existing = deckManager.CardList.FirstOrDefault(c => c.name == selectedCard.name);
+        CardInstance existing = deckManager.CardList.FirstOrDefault(c => c.name == selectedCard.name);
 
         if (existing != null)
         {
@@ -81,5 +82,5 @@ public class RewardSystem : MonoBehaviour
     private void ShowRewardUI(List<PreparationCard> options)
     {
         Debug.Log("Mostrar 3 opciones al jugador.");
-    }
+    }*/
 }
