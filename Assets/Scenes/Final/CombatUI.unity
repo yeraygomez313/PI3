@@ -574,6 +574,12 @@ MonoBehaviour:
   draggableItemPrefab: {fileID: 2913536165180775723, guid: 8129283da0fb7ed44958ef41c4bf2edc,
     type: 3}
   initialInventory: []
+  OnItemAddedToInventory:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemRemovedFromInventory:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!225 &588920442
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1374,7 +1380,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   cardData:
-  - {fileID: 11400000, guid: 300d713335f71d448989124a37f6874c, type: 2}
+  - {fileID: 11400000, guid: 7eb6a95da4a7994439d5005d3a677c9e, type: 2}
   - {fileID: 11400000, guid: 367af7b5ddc0a10488f1463cc14bd973, type: 2}
   - {fileID: 11400000, guid: 487a8630953d86549b6cae0803a3c792, type: 2}
   - {fileID: 11400000, guid: 88c490477af40d24f95ad9896dc3a3b2, type: 2}
