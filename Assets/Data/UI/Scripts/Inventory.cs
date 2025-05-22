@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(RectTransform))]
 public class Inventory : MonoBehaviour
@@ -12,6 +13,9 @@ public class Inventory : MonoBehaviour
     [SerializeField] protected GameObject draggableItemPrefab;
     [SerializeField] protected List<ItemData> initialInventory = new();
     protected List<ItemSlot> inventorySlots = new();
+
+    public UnityEvent<DraggableItem> OnItemAddedToInventory;
+    public UnityEvent<DraggableItem> OnItemRemovedFromInventory;
 
     protected virtual void Awake()
     {
@@ -158,11 +162,13 @@ public class Inventory : MonoBehaviour
     protected virtual void OnItemAssigned(DraggableItem item)
     {
         item.OnClicked.AddListener(OnItemClicked);
+        OnItemAddedToInventory?.Invoke(item);
     }
 
     protected virtual void OnItemUnassigned(DraggableItem item)
     {
         item.OnClicked.RemoveListener(OnItemClicked);
+        OnItemRemovedFromInventory?.Invoke(item);
     }
 
     protected virtual void OnItemClicked(DraggableItem item)
