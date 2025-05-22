@@ -6,21 +6,45 @@ using UnityEngine.Events;
 public class PreparationMode : MonoBehaviour
 {
 
-    private int roundcount = 0;
+  
+    public static PreparationMode Instance { get; private set; }
+
+    private PreparationCard[] cardPlayerList = new PreparationCard[5];
 
 
+    [SerializeField] private GameObject preparationUI;
+    [SerializeField] private CanvasGroup startCombatButton;
+    //[SerializeField] private int roundcount = 0;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public bool CanPlayerPlaceMoreCards => cardPlayerList.Count(element => element != null) < 5;
+
+
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
+        if (CombatManager.Instance == null)
+        {
+            Debug.LogError("CombatManager instance is null. Check if this is because you are in the preparation scene.");
+            return;
+        }
 
     }
 
+    public void CheckList()
+    {
+
+    }
 
 }
