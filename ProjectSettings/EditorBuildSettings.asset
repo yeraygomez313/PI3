@@ -11,3 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/IndieMarc/TopDownDemo/TopDownDemo.unity
     guid: 35fa846952ea23b41a9dca4d21464be1
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 618ece655c9ccfe4c933e0aed361825c,
+      type: 2}
+  m_UseUCBPForAssetBundles: 0

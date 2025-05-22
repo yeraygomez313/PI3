@@ -1,20 +1,20 @@
 using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(CircleCollider2D))]
 public class LocalForceAvoidance : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 10f;
     private const float maxVelocityPerFrame = 50f;
-    private const float maxVelocity = 250f;
     private const float damping = 0.7f;
     [field: SerializeField] public float Mass { get; private set; } = 1f;
     public Vector2 Origin { get; private set; }
 
     private Transform tf;
     private Vector2 velocity;
+    private float velocityMultiplier = 1f;
+    private Tween slowdownTween;
     private CircleCollider2D circleCollider;
     private Vector2 colliderOrigin;
     public float ColliderRadius { get; private set; }
@@ -23,6 +23,9 @@ public class LocalForceAvoidance : MonoBehaviour
     [field: SerializeField] public bool IsMonster { get; private set; } = false;
     [SerializeField] private LocalForceAvoidance target;
     [SerializeField] private bool staticUnit = false;
+    private Tween stunTween;
+    private bool inFear = false;
+    private Tween fearTween;
 
     private void Awake()
     {
@@ -58,6 +61,7 @@ public class LocalForceAvoidance : MonoBehaviour
         if (target != null)
         {
             Vector2 targetDirection = (target.Origin - Origin).normalized;
+            if (inFear) targetDirection *= -1f;
             totalForce += targetDirection * movementSpeed;
         }
 
@@ -68,7 +72,6 @@ public class LocalForceAvoidance : MonoBehaviour
 
         // Add clamped repulsion force
         velocity += Vector2.ClampMagnitude(totalForce, maxVelocityPerFrame) * Time.fixedDeltaTime;
-        velocity = Vector2.ClampMagnitude(velocity, maxVelocity);
 
         tf.position += (Vector3)velocity * Time.fixedDeltaTime;
         Origin = (Vector2)tf.position + colliderOrigin;
@@ -119,18 +122,61 @@ public class LocalForceAvoidance : MonoBehaviour
         return distance < range;
     }
 
-    internal void ApplyPushForce(Vector3 position, float pushStrength)
+    public void ApplyPushForce(Vector3 pushOrigin, float pushStrength)
     {
-        throw new NotImplementedException();
+        Vector2 direction = (transform.position - pushOrigin).normalized;
+        Vector2 force = direction * pushStrength;
+        velocity += force;
     }
 
-    internal void ApplySlow(float slowAmount, float slowDuration)
+    public void ApplySlow(float slowAmount, float slowDuration)
     {
-        throw new NotImplementedException();
+        if (slowdownTween != null && slowdownTween.IsActive())
+        {
+            slowdownTween.Kill();
+        }
+
+        velocityMultiplier = 1f - (slowAmount / 100f);
+
+        slowdownTween = DOVirtual.DelayedCall(slowDuration, () =>
+        {
+            if (stunTween == null || stunTween.IsComplete())
+            {
+                velocityMultiplier = 1f;
+            }
+        }, false);
     }
 
-    internal void ApplyStun(float stunDuration)
+    public void ApplyStun(float stunDuration)
     {
-        throw new NotImplementedException();
+        if (stunTween != null && stunTween.IsActive())
+        {
+            stunTween.Kill();
+        }
+
+        velocityMultiplier = 0f;
+
+        stunTween = DOVirtual.DelayedCall(stunDuration, () =>
+        {
+            if (slowdownTween == null || slowdownTween.IsComplete())
+            {
+                velocityMultiplier = 1f;
+            }
+        }, false);
+    }
+
+    public void ApplyFear(float duration)
+    {
+        if (fearTween != null && fearTween.IsActive())
+        {
+            fearTween.Kill();
+        }
+
+        inFear = true;
+
+        fearTween = DOVirtual.DelayedCall(duration, () =>
+        {
+            inFear = false;
+        }, false);
     }
 }

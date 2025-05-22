@@ -9,6 +9,4 @@ public class HabilityStats : ScriptableObject
     public float tickDamage;
     public float cooldown;
     public float duration;
-
-    [SerializeReference, SubclassSelector] public List<AbilityEffect> abilityEffects;
 }
