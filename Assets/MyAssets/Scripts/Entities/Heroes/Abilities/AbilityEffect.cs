@@ -6,24 +6,60 @@ using UnityEngine;
 [Serializable]
 public abstract class AbilityEffect
 {
+    [SerializeField] private bool affectsHeroes = false;
+
     public void ApplyEffectToTargets(List<LivingEntity> targets, AbilityInstance abilityInstance)
     {
         foreach (var target in targets)
         {
-            if (target == null || target.IsDead)
+            bool applyEffect;
+
+            if (target is HeroController)
+            {
+                applyEffect = affectsHeroes ? true : false;
+            }
+            else if (target is MonsterAI)
+            {
+                applyEffect = !affectsHeroes ? true : false;
+            }
+            else
+            {
+                applyEffect = false; // Default to not applying effect for other types
+                Debug.LogWarning($"Target {target.name} is not a Hero or Monster. Effect will not be applied.");
+            }
+
+            if (target == null || target.IsDead || !applyEffect)
             {
                 continue; // Skip dead or null targets
             }
+
             ApplyEffect(target, abilityInstance);
         }
     }
 
     public void ApplyEffectToTarget(LivingEntity target, AbilityInstance abilityInstance)
     {
-        if (target == null || target.IsDead)
+        bool applyEffect;
+
+        if (target is HeroController)
+        {
+            applyEffect = affectsHeroes ? true : false;
+        }
+        else if (target is MonsterAI)
+        {
+            applyEffect = !affectsHeroes ? true : false;
+        }
+        else
+        {
+            applyEffect = false; // Default to not applying effect for other types
+            Debug.LogWarning($"Target {target.name} is not a Hero or Monster. Effect will not be applied.");
+        }
+
+        if (target == null || target.IsDead || !applyEffect)
         {
             return; // Skip dead or null targets
         }
+
         ApplyEffect(target, abilityInstance);
     }
 

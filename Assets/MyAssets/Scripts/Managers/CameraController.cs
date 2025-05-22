@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(PlayerInput))]
-public class InputManager : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     private Camera mainCamera;
     [SerializeField] private BoxCollider2D cameraBoundingBox;

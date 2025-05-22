@@ -22,7 +22,8 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  AreaPrefab: {fileID: 0}
+  AreaPrefab: {fileID: 557681537949906955, guid: 2cbdcf320f0c7b74e9e162f4de5728d6,
+    type: 3}
   Scale: 1
   Duration: 0
   TickRate: 0
@@ -37,8 +38,10 @@ MonoBehaviour:
     - rid: 9222591890287493257
       type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
+        affectsHeroes: 0
         damageAmount: 10
     - rid: 9222591890287493258
       type: {class: PushEffect, ns: , asm: Assembly-CSharp}
       data:
+        affectsHeroes: 0
         pushStrength: 300

@@ -62,7 +62,7 @@ public class LocalForceAvoidance : MonoBehaviour
         {
             Vector2 targetDirection = (target.Origin - Origin).normalized;
             if (inFear) targetDirection *= -1f;
-            totalForce += targetDirection * movementSpeed;
+            totalForce += targetDirection * movementSpeed * velocityMultiplier;
         }
 
         totalForce += ChunkManager.Instance.GetRepulsionForce(this);
@@ -178,5 +178,10 @@ public class LocalForceAvoidance : MonoBehaviour
         {
             inFear = false;
         }, false);
+    }
+
+    private void OnDestroy()
+    {
+        ChunkManager.Instance.UnregisterUnit(this, ChunkCoordinates);
     }
 }

@@ -6,11 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/IndieMarc/PlatformerDemo/PlatformerDemo.unity
-    guid: 230ee21eea18d46e48f6038641c438b7
+    path: Assets/Scenes/Final/MainScene.unity
+    guid: 51830bb9c59cfcd498c20cfb7c1e43d7
   - enabled: 1
-    path: Assets/IndieMarc/TopDownDemo/TopDownDemo.unity
-    guid: 35fa846952ea23b41a9dca4d21464be1
+    path: Assets/Scenes/Final/PreparationUI.unity
+    guid: 7467005bff7fb594380c63db03951da6
+  - enabled: 1
+    path: Assets/Scenes/Final/CombatUI.unity
+    guid: c728804e9d343454d96cd68ddc86767b
+  - enabled: 1
+    path: Assets/Scenes/Final/RewardUI.unity
+    guid: 1d47a3d3aa595c548ba426cf056a3dfc
+  - enabled: 1
+    path: Assets/Scenes/Final/GameOverUI.unity
+    guid: c792a9b78ce36334b8708d82d93e1a67
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 618ece655c9ccfe4c933e0aed361825c,
       type: 2}

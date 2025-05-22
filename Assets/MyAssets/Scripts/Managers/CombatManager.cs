@@ -46,6 +46,7 @@ public class CombatManager : MonoBehaviour
         deck = deck.OrderBy(x => Random.value).ToArray();
 
         timeBar.OnTimeUp.AddListener(EndGame);
+        canvas.worldCamera = Camera.main;
 
         // listen to heroes dying
     }
@@ -143,7 +144,7 @@ public class CombatManager : MonoBehaviour
 
         foreach (var spawnPoint in spawnPoints)
         {
-            GameObject monster = Instantiate(monsterPrefab, spawnPoint, Quaternion.identity);
+            GameObject monster = Instantiate(monsterPrefab, spawnPoint, Quaternion.identity, ChunkManager.Instance.transform);
             yield return spawnDelayWait; // Placeholder for spawn delay
         }
     }
