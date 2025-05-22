@@ -177,10 +177,14 @@ public class Inventory : MonoBehaviour
             {
                 emptySlot.RequestItemAssignation(item);
             }
+            else if (linkedInventory.flexible)
+            {
+                emptySlot = linkedInventory.AddItemSlot();
+                emptySlot.RequestItemAssignation(item);
+            }
             else
             {
-                emptySlot = AddItemSlot();
-                emptySlot.RequestItemAssignation(item);
+                Debug.Log("No empty slots in linked inventory");
             }
         }
         else
