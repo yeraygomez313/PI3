@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbe5fb311822d546b19666dff650701, type: 3}
+  m_Name: RockHead
+  m_EditorClassIdentifier: 
+  <ManaCost>k__BackingField: 2
+  <MonsterPrefab>k__BackingField: {fileID: 248662147868278087, guid: 37ed2d355630e7543b9c678231053f81,
+    type: 3}
+  <DeploymentPreviewPrefab>k__BackingField: {fileID: 6575310742073130977, guid: 042d5447a7037e0479e62ee3e8545e81,
+    type: 3}
+  <CardLevelDataList>k__BackingField:
+  - {fileID: 11400000, guid: f6291ed1b6e1e984da66e0405dc1abe3, type: 2}
