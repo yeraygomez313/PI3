@@ -3,10 +3,10 @@ using UnityEngine.Events;
 
 public class LivingEntity : MonoBehaviour
 {
-    [HideInInspector] public float currentHealth;
+    protected float currentHealth;
     public bool IsDead => currentHealth <= 0;
 
-    public UnityEvent<LivingEntity> OnEntityDied;
+    [HideInInspector] public UnityEvent<LivingEntity> OnEntityDied;
 
     public virtual void TakeDamage(float damage)
     {

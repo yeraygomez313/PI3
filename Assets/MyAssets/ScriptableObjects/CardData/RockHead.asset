@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfbe5fb311822d546b19666dff650701, type: 3}
   m_Name: RockHead
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 1586471666, guid: 0c1e734fa85636743af3bc22c6d99ba8,
-    type: 3}
   <ManaCost>k__BackingField: 3
-  <MonsterPrefab>k__BackingField: {fileID: 248662147868278087, guid: 839969fb86b50864fb18ffab5ea69a54,
+  <MonsterPrefab>k__BackingField: {fileID: 248662147868278087, guid: b2113d2e3480ad547918f5e66244962c,
     type: 3}
   <DeploymentPreviewPrefab>k__BackingField: {fileID: 6575310742073130977, guid: c241b76bc4cbc4545bb7d0d30beed46f,
     type: 3}

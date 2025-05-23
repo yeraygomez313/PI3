@@ -28,7 +28,8 @@ MonoBehaviour:
   Duration: 0
   TickRate: 0
   LinkedToCaster: 0
-  OnAwakeEffects: []
+  OnAwakeEffects:
+  - rid: 9222591917812613207
   OnEntityContactEffects:
   - rid: 9222591890287493257
   - rid: 9222591890287493258
@@ -45,3 +46,13 @@ MonoBehaviour:
       data:
         affectsHeroes: 0
         pushStrength: 300
+    - rid: 9222591917812613207
+      type: {class: SpawnEffect, ns: , asm: Assembly-CSharp}
+      data:
+        affectsHeroes: 0
+        prefabToSpawn: {fileID: 0}
+        spawnCount: 1
+        spawnAngle: 90
+        spawnRandomly: 0
+        spawnDelay: 0.25
+        linkedToTarget: 0

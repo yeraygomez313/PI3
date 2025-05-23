@@ -400,7 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   valueBar: {fileID: 1375741604}
   <MaxValue>k__BackingField: 150
-  initialValue: 10
+  initialValue: 150
   valueChangeMultiplier: -1
   substractAmount: 0
   amountToSubstract: 1
@@ -1630,7 +1630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafb2245f3c7602449328b88ef0aac06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCooldown: 0.5
   spawnDelay: 0.05
   canvas: {fileID: 1496272638}
   combatGroup: {fileID: 522353106}

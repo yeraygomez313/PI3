@@ -17,6 +17,6 @@ MonoBehaviour:
   attack: 35
   defense: 25
   atSpeed: 1
-  mvSpeed: 1
+  mvSpeed: 10
   atRange: 15
   scale: 0.5

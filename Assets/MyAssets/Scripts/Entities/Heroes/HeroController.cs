@@ -35,7 +35,7 @@ public class HeroController : LivingEntity
             MonsterAI monster = enemy.GetComponent<MonsterAI>();
             if (monster != null && !monster.IsDead)
             {
-                float finalDamage = Mathf.Max(1, stats.attack - monster.stats.defense);
+                float finalDamage = Mathf.Max(1, stats.attack /*- monster.stats.defense*/);
                 monster.TakeDamage(finalDamage);
                 Debug.Log($"{gameObject.name} attacked {monster.name} dealing {finalDamage} damage");
                 break;

@@ -36,6 +36,7 @@ public class LocalForceAvoidance : MonoBehaviour
         circleCollider = GetComponent<CircleCollider2D>();
         colliderOrigin = new Vector2(circleCollider.offset.x * tf.lossyScale.x, circleCollider.offset.y * tf.lossyScale.y);
         ColliderRadius = circleCollider.radius * tf.lossyScale.x;
+        target = transform.position;
 
         if (!circleCollider.isTrigger)
         {

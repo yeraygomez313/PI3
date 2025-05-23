@@ -11,16 +11,10 @@ public class ForbiddenZone : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Start()
+    public void ListenToCombatManager(CombatManager combatManager)
     {
-        if (CombatManager.Instance == null)
-        {
-            Debug.LogError("CombatManager instance is null. Make sure it is initialized before using ForbiddenZone.");
-            return;
-        }
-
-        CombatManager.Instance.OnCardSelected.AddListener(ShowZone);
-        CombatManager.Instance.OnCardDeselected.AddListener(HideZone);
+        combatManager.OnCardSelected.AddListener(ShowZone);
+        combatManager.OnCardDeselected.AddListener(HideZone);
     }
 
     private void ShowZone(DraggableCombatCard card)

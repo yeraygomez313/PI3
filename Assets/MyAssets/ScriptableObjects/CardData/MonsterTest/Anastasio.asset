@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Anastasio
   m_EditorClassIdentifier: 
   <ManaCost>k__BackingField: 3
-  <MonsterPrefab>k__BackingField: {fileID: 248662147868278087, guid: 638c140fc4580474eb588a2d95c5bfeb,
+  <MonsterPrefab>k__BackingField: {fileID: 3794647184385127474, guid: 3f630e0f0d9990d47a7617984ccdaf44,
     type: 3}
   <DeploymentPreviewPrefab>k__BackingField: {fileID: 6575310742073130977, guid: 911547a0f9a4e2c4fb75256022adc141,
     type: 3}
   <CardLevelDataList>k__BackingField:
   - {fileID: 11400000, guid: 40b81efc5efc104479fc81ded6426051, type: 2}
+  - {fileID: 11400000, guid: a2b4047912e24ed41b57360c475d8856, type: 2}
+  - {fileID: 11400000, guid: 05152f259a8e79741bd7d78b5042fd8d, type: 2}

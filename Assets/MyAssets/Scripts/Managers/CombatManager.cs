@@ -57,6 +57,8 @@ public class CombatManager : MonoBehaviour
                     CombatWon();
                 }
             });
+
+            hero.GetComponentInChildren<ForbiddenZone>().ListenToCombatManager(Instance);
         }
     }
 
@@ -117,7 +119,7 @@ public class CombatManager : MonoBehaviour
         if (manaBar.ConsumeAmount(card.CardInstance.ManaCost))
         {
             List<Vector3> spawnPoints = card.DeploymentPreviewObject.GetSpawnPoints();
-            StartCoroutine(SpawnUnits(spawnPoints, card.CardInstance.MonsterPrefab));
+            StartCoroutine(SpawnUnits(spawnPoints, card.CardInstance.MonsterPrefab, card.CardInstance));
 
             OnCardUsed?.Invoke(card);
             CardInstance nextCard = cardQueue.Dequeue();
@@ -147,13 +149,18 @@ public class CombatManager : MonoBehaviour
         return manaBar.HasEnoughAmount(manaCost);
     }
 
-    private IEnumerator SpawnUnits(List<Vector3> spawnPoints, GameObject monsterPrefab)
+    private IEnumerator SpawnUnits(List<Vector3> spawnPoints, GameObject monsterPrefab, CardInstance card)
     {
         var spawnDelayWait = new WaitForSeconds(spawnDelay);
 
         foreach (var spawnPoint in spawnPoints)
         {
             GameObject monster = Instantiate(monsterPrefab, spawnPoint, Quaternion.identity, ChunkManager.Instance.transform);
+            MonsterAI monsterAI = monster.GetComponent<MonsterAI>();
+            if (monsterAI != null)
+            {
+                monsterAI.Initialize(card.GetMonsterStats());
+            }
             yield return spawnDelayWait; // Placeholder for spawn delay
         }
     }

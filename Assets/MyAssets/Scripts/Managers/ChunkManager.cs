@@ -81,6 +81,11 @@ public class ChunkManager : MonoBehaviour
         {
             chunks[chunk].Remove(unit);
         }
+
+        if (units.Contains(unit))
+        {
+            units.Remove(unit);
+        }
     }
 
     public void ClearChunks()

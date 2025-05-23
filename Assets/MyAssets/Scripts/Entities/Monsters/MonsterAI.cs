@@ -2,45 +2,63 @@ using UnityEngine;
 
 public class MonsterAI : LivingEntity
 {
-    public MonsterStats stats;
+    private MonsterStats stats;
 
-    private Transform heroTarget;
-    private HeroController heroController;
+    [SerializeField] private LocalForceAvoidance avoidance;
+    private LivingEntity heroController;
     private float attackCooldown;
 
-    private void Start()
+    public void Initialize(MonsterStats monsterStats)
     {
-        currentHealth = stats.maxHealth;
-        GameObject heroObj = GameObject.FindGameObjectWithTag("Hero");
-
-        if (heroObj != null)
-        {
-            heroTarget = heroObj.transform;
-            heroController = heroObj.GetComponent<HeroController>();
-        }
+        GetComponent<SpriteRenderer>().sprite = monsterStats.Icon; //DEBUG
+        stats = monsterStats;
+        currentHealth = monsterStats.maxHealth;
+        avoidance.SetMovementSpeed(monsterStats.mvSpeed);
+        ChaseClosestTarget();
     }
 
     private void Update()
     {
-        if (IsDead || heroController == null || heroController.IsDead) return;
+        if (IsDead) return;
 
-        float distance = Vector2.Distance(transform.position, heroTarget.position);
+        ChaseClosestTarget();
+        attackCooldown -= Time.deltaTime;
+        if (heroController == null || heroController.IsDead) return;
+
+        float distance = Vector2.Distance(transform.position, heroController.transform.position);
 
         if (distance <= stats.atRange)
         {
+            if (heroController == null || heroController.IsDead) return;
+            Debug.Log("Attacking");
             TryAttackHero();
+            //avoidance.SetStatic(true);
         }
         else
         {
-            MoveTowardsHero();
+            Debug.Log("Searching");
+            //avoidance.SetStatic(false);
+        }
+    }
+
+    private void ChaseClosestTarget()
+    {
+        LocalForceAvoidance closestTarget = ChunkManager.Instance.GetClosestTarget(avoidance);
+
+        if (closestTarget == null)
+        {
+            Debug.Log("No target found");
+            return;
         }
 
-        attackCooldown -= Time.deltaTime;
+        avoidance.SetTarget(closestTarget.transform.position);
+        heroController = closestTarget.GetComponent<LivingEntity>();
     }
+
 
     private void MoveTowardsHero()
     {
-        Vector2 direction = (heroTarget.position - transform.position).normalized;
+        Vector2 direction = (heroController.transform.position - transform.position).normalized;
         transform.position += (Vector3)(direction * stats.mvSpeed * Time.deltaTime);
     }
 
@@ -48,7 +66,7 @@ public class MonsterAI : LivingEntity
     {
         if (attackCooldown <= 0f)
         {
-            float finalDamage = Mathf.Max(1, stats.attack - heroController.stats.defense);
+            float finalDamage = Mathf.Max(1, stats.attack /*- heroController.stats.defense*/);
             heroController.TakeDamage(finalDamage);
             attackCooldown = 1f / stats.atSpeed;
         }
