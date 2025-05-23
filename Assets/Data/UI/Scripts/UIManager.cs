@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
         List<string> panelsToClose = new();
         foreach (var activePanel in activePanels)
         {
-            if (activePanel.incompatiblePanels.Contains(openedPanelId) && activePanel.priority <= openedPanel.priority)
+            if (activePanel.incompatiblePanels.Contains(openedPanelId) && activePanel.priority < openedPanel.priority)
             {
                 panelsToClose.Clear();
                 return;
@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
 
             if (openedPanel.incompatiblePanels.Contains(activePanel.Id))
             {
-                if (activePanel.priority > openedPanel.priority)
+                if (activePanel.priority <= openedPanel.priority)
                 {
                     panelsToClose.Add(activePanel.Id);
                 }
@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour
 
         closedPanel.canvasGroup.alpha = 0f;
         closedPanel.canvasGroup.interactable = false;
-        closedPanel.canvasGroup.blocksRaycasts = true;
+        closedPanel.canvasGroup.blocksRaycasts = false;
         activePanels.Remove(closedPanel);
 
         if (!activePanels.Any(x => x.pausesTime)) Time.timeScale = 1f;
