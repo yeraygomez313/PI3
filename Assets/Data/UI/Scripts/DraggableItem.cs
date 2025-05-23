@@ -14,6 +14,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public ItemSlot AssignedItemSlot { get; protected set; }
     public Inventory Inventory => AssignedItemSlot?.Inventory;
 
+    private Canvas canvas;
     [SerializeField] protected CanvasGroup staticVisuals;
     [SerializeField] protected CanvasGroup dragVisuals;
 
@@ -33,6 +34,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         mainCanvasGraphicRaycaster = GetComponentInParent<CanvasScaler>().GetComponent<GraphicRaycaster>();
         rectTransform = GetComponent<RectTransform>();
         dragVisuals.alpha = 0f;
+
+        canvas = GetComponent<Canvas>();
+        canvas.sortingLayerName = "UI";
     }
 
     public virtual void SetItem(ItemInstance newItem)

@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LivingEntity : MonoBehaviour
 {
     [HideInInspector] public float currentHealth;
     public bool IsDead => currentHealth <= 0;
+
+    public UnityEvent<LivingEntity> OnEntityDied;
 
     public virtual void TakeDamage(float damage)
     {
@@ -19,6 +22,7 @@ public class LivingEntity : MonoBehaviour
     protected virtual void Die()
     {
         Debug.Log($"{gameObject.name} died.");
+        OnEntityDied?.Invoke(this);
         Destroy(gameObject);
     }
 }

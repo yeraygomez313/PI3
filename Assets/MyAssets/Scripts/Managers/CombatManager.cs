@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class CombatManager : MonoBehaviour
 {
@@ -25,30 +26,39 @@ public class CombatManager : MonoBehaviour
     public DraggableCombatCard SelectedCard { get; private set; }
     private Queue<CardInstance> cardQueue = new Queue<CardInstance>();
 
+    private List<HeroController> activeHeroes = new();
+
     [HideInInspector] public UnityEvent<DraggableCombatCard> OnCardUsed;
     [HideInInspector] public UnityEvent<DraggableCombatCard> OnCardSelected;
     [HideInInspector] public UnityEvent<DraggableCombatCard> OnCardDeselected;
 
-    [Header("Debug")]
-    [SerializeField] private List<CardData> cardData = new List<CardData>();
+    //[Header("Debug")]
+    //[SerializeField] private List<CardData> cardData = new List<CardData>();
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        for (int i = 0; i < deck.Length; i++)
-        {
-            deck[i] = new CardInstance();
-            deck[i].Initialize(cardData[i], 0);
-        }
-
+        deck = DeckManager.Instance.combatCardlist.ToArray();
         deck = deck.OrderBy(x => Random.value).ToArray();
 
-        timeBar.OnTimeUp.AddListener(EndGame);
+        timeBar.OnTimeUp.AddListener(CombatLost);
         canvas.worldCamera = Camera.main;
 
-        // listen to heroes dying
+        activeHeroes = FindObjectsByType<HeroController>(FindObjectsSortMode.None).ToList();
+
+        foreach (var hero in activeHeroes)
+        {
+            hero.OnEntityDied.AddListener((LivingEntity entity) =>
+            {
+                activeHeroes.Remove(hero);
+                if (activeHeroes.Count == 0)
+                {
+                    CombatWon();
+                }
+            });
+        }
     }
 
     private void Start()
@@ -80,9 +90,15 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    private void EndGame()
+    private void CombatWon()
     {
-        Debug.Log("Game Over");
+        Debug.Log("Game Won");
+        GameManager.Instance.CombatWon();
+    }
+
+    private void CombatLost()
+    {
+        Debug.Log("Game Lost");
     }
 
     private void CardSelected(DraggableItem card)

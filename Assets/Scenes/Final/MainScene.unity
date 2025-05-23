@@ -63656,6 +63656,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daaa146b9aa584a488d7ca497aad420a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroFormationsPerLevel:
+  - objects:
+    - {fileID: 8619898715268287473, guid: c34d43de20084e549912ef3af0412590, type: 3}
 --- !u!4 &2059956781
 Transform:
   m_ObjectHideFlags: 0
