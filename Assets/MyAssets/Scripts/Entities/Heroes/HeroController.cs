@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HeroController : LivingEntity
 {
     public HeroStats stats;
     public LayerMask enemyLayer;
+
+    [SerializeField] private List<AbilityData> abilities;
 
     private float attackCooldown = 0f;
 

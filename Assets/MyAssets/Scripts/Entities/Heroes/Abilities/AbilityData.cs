@@ -17,6 +17,7 @@ public class AbilityData : ScriptableObject
     public float Duration;
     public float TickRate;
     public bool LinkedToCaster;
+    public float ForwardOffset;
     [Space]
     [SerializeReference, SubclassSelector] public List<AbilityEffect> OnAwakeEffects = new();
     [SerializeReference, SubclassSelector] public List<AbilityEffect> OnEntityContactEffects = new();

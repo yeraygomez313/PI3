@@ -28,6 +28,7 @@ MonoBehaviour:
   Duration: 0
   TickRate: 0
   LinkedToCaster: 0
+  ForwardOffset: 1
   OnAwakeEffects:
   - rid: 9222591917812613207
   OnEntityContactEffects:
