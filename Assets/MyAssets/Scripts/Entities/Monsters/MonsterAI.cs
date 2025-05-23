@@ -2,11 +2,19 @@ using UnityEngine;
 
 public class MonsterAI : LivingEntity
 {
-    private MonsterStats stats;
+    [SerializeField] private MonsterStats stats;
 
     [SerializeField] private LocalForceAvoidance avoidance;
     private LivingEntity heroController;
     private float attackCooldown;
+
+    private void Awake()
+    {
+        if (stats != null)
+        {
+            Initialize(stats);
+        }
+    }
 
     public void Initialize(MonsterStats monsterStats)
     {

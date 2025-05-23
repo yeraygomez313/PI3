@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc784ec2bb0a4024a8dae9dd1284e45a, type: 3}
+  m_Name: AA
+  m_EditorClassIdentifier: 
+  Description: Basic Attack
+  Icon: {fileID: 0}
+  Cooldown: 1.5
+  abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
+    type: 3}
+  AreaPrefab: {fileID: 6847584251105636141, guid: cd824e4876ac0714ab88c91562a47c1f,
+    type: 3}
+  Scale: 1
+  Duration: 0
+  TickRate: 0
+  LinkedToCaster: 0
+  ForwardOffset: 0
+  OnAwakeEffects: []
+  OnEntityContactEffects:
+  - rid: 7197770891017060433
+  references:
+    version: 2
+    RefIds:
+    - rid: 7197770891017060433
+      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        affectsHeroes: 0
+        damageAmount: 20

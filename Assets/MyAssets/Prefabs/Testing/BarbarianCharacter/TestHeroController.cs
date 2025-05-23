@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -6,16 +7,20 @@ public class TestHeroController : LivingEntity
     public HeroStats stats;
     public LayerMask enemyLayer;
 
-    public CircleCollider2D attackCollider;
-    public BoxCollider2D rockbreakerCollider;
+    [SerializeField] private List<AbilityData> abilities;
 
     private float attackCooldown = 0f;
 
-    private MonsterAI closestMonster = null;
+    private LivingEntity monsterController;
+
+    [SerializeField] private LocalForceAvoidance avoidance;
+
+    private float initialScale;
 
     private void Start()
     {
         currentHealth = stats.maxHealth;
+        initialScale = transform.localScale.x;
     }
 
     private void Update()
@@ -23,41 +28,40 @@ public class TestHeroController : LivingEntity
         if (IsDead) return;
 
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, stats.atRange, enemyLayer);
+        
         if (enemies.Length > 0)
         {
-            closestMonster = enemies[0].GetComponent<MonsterAI>();
-            this.transform.rotation = closestMonster.transform.rotation.normalized;
+            ChaseClosestTarget();
         }
 
         attackCooldown -= Time.deltaTime;
 
         if (enemies.Length > 0 && attackCooldown <= 0f)
         {
-            AutoAttackEnemies(/*enemies*/);
-            attackCooldown = 1f / stats.atSpeed;
+            AutoAttackEnemies();
+            attackCooldown = 1f / abilities[0].Cooldown * stats.atSpeed;
         }
-        attackCollider.enabled = false;
     }
 
-    private void AutoAttackEnemies(/*Collider2D[] enemies*/)
+    private void AutoAttackEnemies()
     {
+        abilities[0].InstantiateAbility(this, transform.rotation);
+        
+    }
+    private void ChaseClosestTarget()
+    {
+        LocalForceAvoidance closestTarget = ChunkManager.Instance.GetClosestTarget(avoidance);
 
-        attackCollider.enabled = true;
-
-        /*Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, stats.atRange, enemyLayer);
-        Debug.Log("Autoattack: detected " + enemies.Length + " enemies");
-
-        foreach (var enemy in enemies)
+        if (closestTarget == null)
         {
-            MonsterAI monster = enemy.GetComponent<MonsterAI>();
-            if (monster != null && !monster.IsDead)
-            {
-                float finalDamage = Mathf.Max(1, stats.attack - (stats.attack * monster.stats.defense / 100));
-                monster.TakeDamage(finalDamage);
-                Debug.Log($"{gameObject.name} attacked {monster.name} dealing {finalDamage} damage");
-                break;
-            }
-        }*/
+            //Debug.Log("No target found");
+            return;
+        }
+
+        avoidance.SetTarget(closestTarget.transform.position);
+        monsterController = closestTarget.GetComponent<LivingEntity>();
+        Vector3 newScale = new Vector3(Mathf.Sign(transform.position.x - closestTarget.transform.position.x) * initialScale, initialScale, initialScale);
+        transform.localScale = newScale;
     }
 
     private void OnDrawGizmosSelected()

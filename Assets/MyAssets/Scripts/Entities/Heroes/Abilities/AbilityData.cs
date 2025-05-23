@@ -11,7 +11,8 @@ public class AbilityData : ScriptableObject
     public Sprite Icon;
     public float Cooldown = 10;
     [Space]
-    public AssetReferenceGameObject abilityInstancePrefab;
+    //public AssetReferenceGameObject abilityInstancePrefab;
+    public GameObject abilityInstancePrefab;
     public GameObject AreaPrefab;
     public float Scale = 1; // Still needs to be applied to the VFX
     public float Duration;
@@ -24,7 +25,7 @@ public class AbilityData : ScriptableObject
 
     public void InstantiateAbility(LivingEntity caster, Quaternion orientation)
     {
-        AbilityInstance abilityInstance = Object.Instantiate(abilityInstancePrefab.Asset, caster.transform.position, orientation).GetComponent<AbilityInstance>();
+        AbilityInstance abilityInstance = Object.Instantiate(abilityInstancePrefab, caster.transform.position, orientation).GetComponent<AbilityInstance>();
         abilityInstance.Initialize(this, caster, orientation);
     }
 }
