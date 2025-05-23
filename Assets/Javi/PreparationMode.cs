@@ -37,7 +37,10 @@ public class PreparationMode : MonoBehaviour
         chosenCardsInventory.OnItemRemovedFromInventory.AddListener(CheckRemove);
 
         canvasPreparation.worldCamera = Camera.main;
-        
+
+        GameObject heroFormation = GameManager.Instance.GetHeroFormation();
+        GameObject formationInstance = Instantiate(heroFormation, Vector3.zero, Quaternion.identity, ChunkManager.Instance.transform);
+        Time.timeScale = 0f;
     }
 
 	private void OnDisable()

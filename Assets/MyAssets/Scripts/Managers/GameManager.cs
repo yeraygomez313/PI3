@@ -8,7 +8,22 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private List<GameObjectList> heroFormationsPerLevel = new();
+    private int maxLevel => heroFormationsPerLevel.Count - 1;
     private int currentLevel = 0;
+
+    public GameObject GetHeroFormation()
+    {
+        if (currentLevel < heroFormationsPerLevel.Count)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, heroFormationsPerLevel[currentLevel].Count);
+            return heroFormationsPerLevel[currentLevel][randomIndex];
+        }
+        else
+        {
+            Debug.LogError("Current level exceeds the number of hero formations available.");
+            return null;
+        }
+    }
 
     private void Awake()
     {
@@ -16,40 +31,74 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // Debug
+            if (SceneManager.GetActiveScene().name == "MainScene")
+            {
+                SceneManager.LoadScene("PreparationUI", LoadSceneMode.Additive);
+            }
         }
         else
         {
             Destroy(gameObject);
         }
+    }
 
+    public void StartGame()
+    {
+        SceneManager.LoadScene("MainScene");
+        SceneManager.UnloadSceneAsync("TitleScene");
         SceneManager.LoadScene("PreparationUI", LoadSceneMode.Additive);
-
-        if (heroFormationsPerLevel[currentLevel].Count == 0)
-        {
-            Debug.LogError("No hero formations set up in the GameManager.");
-            return;
-        }
-        int randomIndex = UnityEngine.Random.Range(0, heroFormationsPerLevel[currentLevel].Count);
-        GameObject formation = heroFormationsPerLevel[currentLevel][randomIndex];
-        GameObject formationInstance = Instantiate(formation);
     }
 
     public void StartCombat()
     {
         SceneManager.LoadScene("CombatUI", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync("PreparationUI");
+        Time.timeScale = 1f;
     }
 
     public void CombatWon()
     {
-        SceneManager.LoadScene("RewardUI", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("CombatUI");
+        currentLevel++;
+
+        if (currentLevel > maxLevel)
+        {
+            SceneManager.LoadScene("GameClearedUI", LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync("CombatUI");
+        }
+        else
+        {
+            SceneManager.LoadScene("RewardUI", LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync("CombatUI");
+        }
+
+        Time.timeScale = 0f;
     }
 
     public void CombatLost()
     {
         SceneManager.LoadScene("GameOverUI", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync("CombatUI");
+        Time.timeScale = 0f;
+    }
+
+    public void ReturnToTitleScreen()
+    {
+        SceneManager.LoadScene("TitleScene");
+        SceneManager.UnloadSceneAsync("MainScene");
+
+        if (SceneManager.GetSceneByName("RewardUI").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("RewardUI");
+        }
+        if (SceneManager.GetSceneByName("GameOverUI").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("GameOverUI");
+        }
+
+        currentLevel = 0;
+        Time.timeScale = 1f;
     }
 }
 

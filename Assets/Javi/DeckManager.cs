@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DeckManager : MonoBehaviour
@@ -27,4 +28,21 @@ public class DeckManager : MonoBehaviour
 	{
         combatCardlist = cardlists;
 	}
+
+    public List<CardInstance> GetUpgradableCards()
+    {
+        return combatCardlist.Where(card => card.CanBeUpgraded()).ToList();
+    }
+
+    public void UpgradeCard(CardInstance card)
+    {
+        if (card.CanBeUpgraded())
+        {
+            card.Upgrade();
+        }
+        else
+        {
+            Debug.LogWarning("Card cannot be upgraded");
+        }
+    }
 }

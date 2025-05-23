@@ -74,20 +74,15 @@ public class CombatManager : MonoBehaviour
             card.OnEndItemDrag.AddListener(CardDeselected);
         }
 
-        //foreach (var card in cardHolder.GetComponentsInChildren<DraggableCombatCard>())
-        //{
-        //    cardsInHand.Add(card);
-        //}
-
-        //for (int i = 0; i < cardsInHand.Count; i++)
-        //{
-        //    cardsInHand[i].SetCardInstance(deck[i]);
-        //}
-
         for (int i = cardInventory.MaxItems; i < deck.Length; i++)
         {
             cardQueue.Enqueue(deck[i]);
         }
+    }
+
+    public void DebugWin()
+    {
+        CombatWon();
     }
 
     private void CombatWon()
@@ -99,6 +94,7 @@ public class CombatManager : MonoBehaviour
     private void CombatLost()
     {
         Debug.Log("Game Lost");
+        GameManager.Instance.CombatLost();
     }
 
     private void CardSelected(DraggableItem card)
