@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToTitleScreen()
     {
+        Destroy(DeckManager.Instance);
         SceneManager.LoadScene("TitleScene");
 
         currentLevel = 0;

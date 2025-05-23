@@ -75,7 +75,7 @@ public class RewardManager : MonoBehaviour
     public void AddCardToDeck(CardInstance selectedCard)
     {
         DeckManager.Instance.AddCardToDeck(selectedCard);
-        HideRewardGroup();
+        DisableRewardGroup();
         DOVirtual.DelayedCall(1f, () =>
         {
             GameManager.Instance.StartNewRound();
@@ -85,7 +85,7 @@ public class RewardManager : MonoBehaviour
     public void UpdradeCardInDeck(CardInstance selectedCard)
     {
         DeckManager.Instance.UpgradeCard(selectedCard);
-        HideRewardGroup();
+        DisableRewardGroup();
         DOVirtual.DelayedCall(1f, () =>
         {
             GameManager.Instance.StartNewRound();
@@ -102,9 +102,9 @@ public class RewardManager : MonoBehaviour
         rewardGroup.blocksRaycasts = true;
     }
 
-    private void HideRewardGroup()
+    private void DisableRewardGroup()
     {
-        rewardGroup.alpha = 0;
+        rewardGroup.alpha = 0.5f;
         rewardGroup.interactable = false;
         rewardGroup.blocksRaycasts = false;
     }
