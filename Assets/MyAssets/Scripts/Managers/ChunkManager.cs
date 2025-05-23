@@ -39,10 +39,10 @@ public class ChunkManager : MonoBehaviour
             unit.CalculateForce();
         }
 
-        foreach (var unit in units)
-        {
-            unit.SetTarget(GetClosestTarget(unit));
-        }
+        //foreach (var unit in units)
+        //{
+        //    unit.SetTarget(GetClosestTarget(unit));
+        //}
     }
 
     public Vector2Int WorldToChunkPos(Vector2 position)

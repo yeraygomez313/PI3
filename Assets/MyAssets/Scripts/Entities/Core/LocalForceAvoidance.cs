@@ -21,7 +21,7 @@ public class LocalForceAvoidance : MonoBehaviour
     public Vector2Int ChunkCoordinates { get; private set; }
 
     [field: SerializeField] public bool IsMonster { get; private set; } = false;
-    [SerializeField] private LocalForceAvoidance target;
+    [SerializeField] private Vector2 target;
     [SerializeField] private bool staticUnit = false;
     private Tween stunTween;
     private bool inFear = false;
@@ -60,7 +60,7 @@ public class LocalForceAvoidance : MonoBehaviour
 
         if (target != null)
         {
-            Vector2 targetDirection = (target.Origin - Origin).normalized;
+            Vector2 targetDirection = (target - Origin).normalized;
             if (inFear) targetDirection *= -1f;
             totalForce += targetDirection * movementSpeed * velocityMultiplier;
         }
@@ -82,7 +82,7 @@ public class LocalForceAvoidance : MonoBehaviour
         movementSpeed = speed;
     }
 
-    public void SetTarget(LocalForceAvoidance newTarget)
+    public void SetTarget(Vector2 newTarget)
     {
         target = newTarget;
     }
@@ -102,15 +102,15 @@ public class LocalForceAvoidance : MonoBehaviour
         ChunkManager.Instance.UnregisterUnit(this, ChunkCoordinates);
     }
 
-    public bool IsOverlapingTarget()
-    {
-        if (target == null)
-        {
-            return false;
-        }
-        float distance = Vector2.Distance(Origin, target.Origin);
-        return distance < ColliderRadius + target.ColliderRadius + 0.01f;
-    }
+    //public bool IsOverlapingTarget()
+    //{
+    //    if (target == null)
+    //    {
+    //        return false;
+    //    }
+    //    float distance = Vector2.Distance(Origin, target.Origin);
+    //    return distance < ColliderRadius + target.ColliderRadius + 0.01f;
+    //}
 
     public bool IsTargetInRange(float range)
     {
@@ -118,7 +118,7 @@ public class LocalForceAvoidance : MonoBehaviour
         {
             return false;
         }
-        float distance = Vector2.Distance(Origin, target.Origin);
+        float distance = Vector2.Distance(Origin, target);
         return distance < range;
     }
 

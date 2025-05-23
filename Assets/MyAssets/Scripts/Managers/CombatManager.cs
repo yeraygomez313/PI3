@@ -9,7 +9,6 @@ public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance { get; private set; }
 
-    [SerializeField] private float cardCooldown = 1f;
     [SerializeField] private float spawnDelay = 0.1f;
 
     [SerializeField] private Canvas canvas;
@@ -87,13 +86,11 @@ public class CombatManager : MonoBehaviour
 
     private void CombatWon()
     {
-        Debug.Log("Game Won");
         GameManager.Instance.CombatWon();
     }
 
     private void CombatLost()
     {
-        Debug.Log("Game Lost");
         GameManager.Instance.CombatLost();
     }
 
