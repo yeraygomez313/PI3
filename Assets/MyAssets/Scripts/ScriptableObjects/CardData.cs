@@ -30,6 +30,7 @@ public class CardInstance : ItemInstance
 
     public void Initialize(CardData card, int level)
     {
+        base.Initialize(card);
         CardData = card;
         Level = level;
     }

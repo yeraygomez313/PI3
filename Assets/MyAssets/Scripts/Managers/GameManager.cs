@@ -86,19 +86,15 @@ public class GameManager : MonoBehaviour
     public void ReturnToTitleScreen()
     {
         SceneManager.LoadScene("TitleScene");
-        SceneManager.UnloadSceneAsync("MainScene");
-
-        if (SceneManager.GetSceneByName("RewardUI").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("RewardUI");
-        }
-        if (SceneManager.GetSceneByName("GameOverUI").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("GameOverUI");
-        }
 
         currentLevel = 0;
         Time.timeScale = 1f;
+    }
+
+    public void StartNewRound()
+    {
+        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("PreparationUI", LoadSceneMode.Additive);
     }
 }
 
