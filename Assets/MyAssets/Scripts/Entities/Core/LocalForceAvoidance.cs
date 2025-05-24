@@ -5,7 +5,7 @@ using DG.Tweening;
 [RequireComponent(typeof(CircleCollider2D))]
 public class LocalForceAvoidance : MonoBehaviour
 {
-    [SerializeField] private float movementSpeed = 10f;
+    [HideInInspector] public float movementSpeed = 10f;
     private const float maxVelocityPerFrame = 50f;
     private const float damping = 0.7f;
     [field: SerializeField] public float Mass { get; private set; } = 1f;
@@ -42,6 +42,10 @@ public class LocalForceAvoidance : MonoBehaviour
         {
             Debug.LogWarning("CircleCollider2D is not set to trigger.");
         }
+
+        Debug.LogWarning("mv:"+ movementSpeed);
+
+
     }
 
     private void Start()

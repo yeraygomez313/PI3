@@ -16,12 +16,13 @@ MonoBehaviour:
   Icon: {fileID: 0}
   Cooldown: 10
   abilityInstancePrefab: {fileID: 0}
-  AreaPrefab: {fileID: 0}
+  AreaPrefab: {fileID: 6847584251105636141, guid: 46d8fde064637f344a44a5f2463ac327,
+    type: 3}
   Scale: 1
   Duration: 0
   TickRate: 0
   LinkedToCaster: 0
-  ForwardOffset: 0
+  ForwardOffset: 1
   OnAwakeEffects: []
   OnEntityContactEffects:
   - rid: 7197770895798566998
@@ -33,7 +34,7 @@ MonoBehaviour:
       type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
         affectsHeroes: 0
-        damageAmount: 0
+        damageMultiplier: 1.5
     - rid: 7197770895798567000
       type: {class: PushEffect, ns: , asm: Assembly-CSharp}
       data:

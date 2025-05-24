@@ -16,6 +16,6 @@ MonoBehaviour:
   maxHealth: 500
   defense: 60
   attack: 15
-  atSpeed: 0.7
+  atSpeed: 1
   mvSpeed: 13
   atRange: 10

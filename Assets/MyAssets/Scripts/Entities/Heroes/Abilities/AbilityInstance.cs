@@ -21,6 +21,13 @@ public class AbilityInstance : MonoBehaviour
 
         hitCollider = Instantiate(AbilityData.AreaPrefab, transform.position, orientation, transform).GetComponent<Collider2D>();
         hitCollider.transform.localPosition += transform.forward * AbilityData.ForwardOffset;
+        if (hitCollider.GetComponentsInChildren<Collider2D>() != null)
+        {
+            foreach (Collider2D collider in hitCollider.GetComponentsInChildren<Collider2D>())
+            {
+                collider.transform.localPosition += transform.forward * AbilityData.ForwardOffset;
+            }
+        }
         hitCollider.isTrigger = true;
         hitCollider.transform.localScale = Vector3.one * AbilityData.Scale;
 

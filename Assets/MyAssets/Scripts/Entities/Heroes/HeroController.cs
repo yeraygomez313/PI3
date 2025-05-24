@@ -21,6 +21,12 @@ public class HeroController : LivingEntity
     {
         currentHealth = stats.maxHealth;
         initialScale = transform.localScale.x;
+        
+    }
+
+    private void Awake()
+    {
+        avoidance.SetMovementSpeed(stats.mvSpeed);
     }
 
     private void Update()
@@ -46,11 +52,8 @@ public class HeroController : LivingEntity
     private void AutoAttackEnemies()
     {
         abilities[0].InstantiateAbility(this, transform.rotation, stats.attack);
-
-        //////Convertir el daño de la habilidad en un multiplicador del daño del heroe
-        ///realizarlo en el script abilityefects
-
     }
+
     private void ChaseClosestTarget()
     {
         LocalForceAvoidance closestTarget = ChunkManager.Instance.GetClosestTarget(avoidance);
