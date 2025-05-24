@@ -9,7 +9,7 @@ public class AbilityInstance : MonoBehaviour
     private float timeOfLastTick = 0;
     private Collider2D hitCollider;
 
-    public void Initialize(AbilityData abilityData, LivingEntity caster, Quaternion orientation)
+    public void Initialize(AbilityData abilityData, LivingEntity caster, Quaternion orientation, float casterAttack)
     {
         AbilityData = abilityData;
 
@@ -26,12 +26,12 @@ public class AbilityInstance : MonoBehaviour
 
         foreach (var effect in AbilityData.OnAwakeEffects)
         {
-            effect.ApplyEffectToTarget(caster, this);
+            effect.ApplyEffectToTarget(caster, this, casterAttack);
         }
 
         foreach (var effect in AbilityData.OnEntityContactEffects)
         {
-            effect.ApplyEffectToTargets(SearchForTargets(), this);
+            effect.ApplyEffectToTargets(SearchForTargets(), this, casterAttack);
         }
     }
 
@@ -82,7 +82,7 @@ public class AbilityInstance : MonoBehaviour
             timeOfLastTick = timeSinceCreation;
             foreach (var effect in AbilityData.OnAwakeEffects)
             {
-                effect.ApplyEffectToTargets(SearchForTargets(), this);
+                effect.ApplyEffectToTargets(SearchForTargets(), this, GetComponentInParent<HeroStats>().attack);
             }
         }
     }

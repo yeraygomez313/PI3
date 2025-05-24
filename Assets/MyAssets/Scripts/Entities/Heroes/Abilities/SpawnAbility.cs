@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SpawnAbility : MonoBehaviour
 {
-    [field: SerializeField] public HabilityStats AbilityStats { get; protected set; }
+    //[field: SerializeField] public HabilityStats AbilityStats { get; protected set; }
 
     [SerializeField] private GameObject prefabToSpawn;
     [SerializeField] private int spawnCount = 1;

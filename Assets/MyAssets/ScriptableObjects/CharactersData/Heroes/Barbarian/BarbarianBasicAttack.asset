@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc784ec2bb0a4024a8dae9dd1284e45a, type: 3}
-  m_Name: AA
+  m_Name: BarbarianBasicAttack
   m_EditorClassIdentifier: 
-  Description: Basic Attack
+  Description: Barbarian basic attack
   Icon: {fileID: 0}
   Cooldown: 1.5
   abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
@@ -34,4 +34,4 @@ MonoBehaviour:
       type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
         affectsHeroes: 0
-        damageAmount: 20
+        damageMultiplier: 1

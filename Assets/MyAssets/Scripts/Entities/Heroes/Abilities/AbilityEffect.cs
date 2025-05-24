@@ -8,7 +8,7 @@ public abstract class AbilityEffect
 {
     [SerializeField] private bool affectsHeroes = false;
 
-    public void ApplyEffectToTargets(List<LivingEntity> targets, AbilityInstance abilityInstance)
+    public void ApplyEffectToTargets(List<LivingEntity> targets, AbilityInstance abilityInstance, float heroAttack)
     {
         foreach (var target in targets)
         {
@@ -33,11 +33,11 @@ public abstract class AbilityEffect
                 continue; // Skip dead or null targets
             }
 
-            ApplyEffect(target, abilityInstance);
+            ApplyEffect(target, abilityInstance, heroAttack);
         }
     }
 
-    public void ApplyEffectToTarget(LivingEntity target, AbilityInstance abilityInstance)
+    public void ApplyEffectToTarget(LivingEntity target, AbilityInstance abilityInstance, float heroAttack)
     {
         bool applyEffect;
 
@@ -60,20 +60,20 @@ public abstract class AbilityEffect
             return; // Skip dead or null targets
         }
 
-        ApplyEffect(target, abilityInstance);
+        ApplyEffect(target, abilityInstance, heroAttack);
     }
 
-    protected abstract void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance);
+    protected abstract void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance, float attack);
 }
 
 [Serializable]
 public class DealDamageEffect : AbilityEffect
 {
-    [SerializeField] private float damageAmount;
+    [SerializeField] private float damageMultiplier;
 
-    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance)
+    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance, float attack)
     {
-        target.TakeDamage(damageAmount);
+        target.TakeDamage(attack*damageMultiplier);
     }
 }
 
@@ -82,7 +82,7 @@ public class PushEffect : AbilityEffect
 {
     [SerializeField] private float pushStrength;
 
-    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance)
+    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance, float attack)
     {
         target.GetComponent<LocalForceAvoidance>().ApplyPushForce(abilityInstance.transform.position, pushStrength);
     }
@@ -93,7 +93,7 @@ public class SlowEffect : AbilityEffect
 {
     [SerializeField] private float slowAmount;
     [SerializeField] private float slowDuration;
-    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance)
+    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance, float attack)
     {
         target.GetComponent<LocalForceAvoidance>().ApplySlow(slowAmount, slowDuration);
     }
@@ -103,7 +103,7 @@ public class SlowEffect : AbilityEffect
 public class StunEffect : AbilityEffect
 {
     [SerializeField] private float stunDuration;
-    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance)
+    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance, float attack)
     {
         target.GetComponent<LocalForceAvoidance>().ApplyStun(stunDuration);
     }
@@ -118,8 +118,8 @@ public class SpawnEffect : AbilityEffect
     [SerializeField] private bool spawnRandomly = false;
     [SerializeField] private float spawnDelay = 0.25f;
     [SerializeField] private bool linkedToTarget;
-
-    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance)
+    
+    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance, float attack)
     {
         MonoBehaviour spawner = target.GetComponent<MonoBehaviour>();
         spawner.StartCoroutine(SpawnWithDelay(target.transform));

@@ -45,7 +45,7 @@ public class TestHeroController : LivingEntity
 
     private void AutoAttackEnemies()
     {
-        abilities[0].InstantiateAbility(this, transform.rotation);
+        abilities[0].InstantiateAbility(this, transform.rotation, stats.attack);
         
     }
     private void ChaseClosestTarget()

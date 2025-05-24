@@ -23,9 +23,9 @@ public class AbilityData : ScriptableObject
     [SerializeReference, SubclassSelector] public List<AbilityEffect> OnAwakeEffects = new();
     [SerializeReference, SubclassSelector] public List<AbilityEffect> OnEntityContactEffects = new();
 
-    public void InstantiateAbility(LivingEntity caster, Quaternion orientation)
+    public void InstantiateAbility(LivingEntity caster, Quaternion orientation, float casterAttack)
     {
         AbilityInstance abilityInstance = Object.Instantiate(abilityInstancePrefab, caster.transform.position, orientation).GetComponent<AbilityInstance>();
-        abilityInstance.Initialize(this, caster, orientation);
+        abilityInstance.Initialize(this, caster, orientation, casterAttack);
     }
 }

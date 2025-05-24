@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class HeroController : LivingEntity
@@ -10,40 +11,60 @@ public class HeroController : LivingEntity
 
     private float attackCooldown = 0f;
 
+    private LivingEntity monsterController;
+
+    [SerializeField] private LocalForceAvoidance avoidance;
+
+    private float initialScale;
+
     private void Start()
     {
         currentHealth = stats.maxHealth;
+        initialScale = transform.localScale.x;
     }
 
     private void Update()
     {
         if (IsDead) return;
 
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, stats.atRange, enemyLayer);
+
+        if (enemies.Length > 0)
+        {
+            ChaseClosestTarget();
+        }
+
         attackCooldown -= Time.deltaTime;
 
-        if (attackCooldown <= 0f)
+        if (enemies.Length > 0 && attackCooldown <= 0f)
         {
             AutoAttackEnemies();
-            attackCooldown = 1f / stats.atSpeed;
+            attackCooldown = 1f / abilities[0].Cooldown * stats.atSpeed;
         }
     }
 
     private void AutoAttackEnemies()
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, stats.atRange, enemyLayer);
-        Debug.Log("Autoattack: detected " + enemies.Length + " enemies");
+        abilities[0].InstantiateAbility(this, transform.rotation, stats.attack);
 
-        foreach (var enemy in enemies)
+        //////Convertir el daño de la habilidad en un multiplicador del daño del heroe
+        ///realizarlo en el script abilityefects
+
+    }
+    private void ChaseClosestTarget()
+    {
+        LocalForceAvoidance closestTarget = ChunkManager.Instance.GetClosestTarget(avoidance);
+
+        if (closestTarget == null)
         {
-            MonsterAI monster = enemy.GetComponent<MonsterAI>();
-            if (monster != null && !monster.IsDead)
-            {
-                float finalDamage = Mathf.Max(1, stats.attack /*- monster.stats.defense*/);
-                monster.TakeDamage(finalDamage);
-                Debug.Log($"{gameObject.name} attacked {monster.name} dealing {finalDamage} damage");
-                break;
-            }
+            //Debug.Log("No target found");
+            return;
         }
+
+        avoidance.SetTarget(closestTarget.transform.position);
+        monsterController = closestTarget.GetComponent<LivingEntity>();
+        Vector3 newScale = new Vector3(Mathf.Sign(transform.position.x - closestTarget.transform.position.x) * initialScale, initialScale, initialScale);
+        transform.localScale = newScale;
     }
 
     private void OnDrawGizmosSelected()
