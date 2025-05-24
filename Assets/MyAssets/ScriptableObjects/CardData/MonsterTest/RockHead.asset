@@ -19,3 +19,5 @@ MonoBehaviour:
     type: 3}
   <CardLevelDataList>k__BackingField:
   - {fileID: 11400000, guid: f6291ed1b6e1e984da66e0405dc1abe3, type: 2}
+  - {fileID: 11400000, guid: e9e41ce4c5794cb41ad6ff323672c099, type: 2}
+  - {fileID: 11400000, guid: aa19fb13c2bf6b743a628f700269886b, type: 2}

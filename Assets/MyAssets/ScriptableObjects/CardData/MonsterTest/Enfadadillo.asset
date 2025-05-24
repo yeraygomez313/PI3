@@ -18,4 +18,6 @@ MonoBehaviour:
   <DeploymentPreviewPrefab>k__BackingField: {fileID: 6575310742073130977, guid: 8dd3e9ddf21ea4743a7940339becb575,
     type: 3}
   <CardLevelDataList>k__BackingField:
+  - {fileID: 11400000, guid: 0d3e4611a6fa13c46afb6d8d5200333f, type: 2}
+  - {fileID: 11400000, guid: fbbfaa86fc3d5154ba04be472b8dc20b, type: 2}
   - {fileID: 11400000, guid: dc9452d190667d64e9da98b253b8544a, type: 2}

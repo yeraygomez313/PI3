@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8180615888004335036}
   - component: {fileID: 7158557042988667250}
   - component: {fileID: 8048724201664759702}
+  - component: {fileID: 5723843931907649486}
   m_Layer: 6
   m_Name: Martillo Prefab
   m_TagString: Untagged
@@ -140,5 +141,22 @@ MonoBehaviour:
   movementSpeed: 30
   <Mass>k__BackingField: 1
   <IsMonster>k__BackingField: 1
-  target: {fileID: 0}
+  target: {x: 0, y: 0}
   staticUnit: 0
+--- !u!114 &5723843931907649486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248662147868278087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6174ef3920082714a94c38873145dd1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEntityDied:
+    m_PersistentCalls:
+      m_Calls: []
+  stats: {fileID: 0}
+  avoidance: {fileID: 8048724201664759702}

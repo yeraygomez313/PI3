@@ -47,6 +47,52 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseHero (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b7e5367685aac04bb548849200498c1,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: avoidance
+      value: 
+      objectReference: {fileID: 8048724201664759702, guid: b6a203f28543e994f98c8955790c3ce9,
+        type: 3}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: abilities.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a17dbd20fa80522468f56866971e540d,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 582e2b545cd640d489b8c253acc09bb6,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 13ed3000cb40b02489fb09de9a503b86,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ee6e14f96e6db0d4d8707a010c74da90,
+        type: 2}
     - target: {fileID: 7949239517474139980, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -121,6 +167,52 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseHero (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b7e5367685aac04bb548849200498c1,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: avoidance
+      value: 
+      objectReference: {fileID: 8048724201664759702, guid: b6a203f28543e994f98c8955790c3ce9,
+        type: 3}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: abilities.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a17dbd20fa80522468f56866971e540d,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 582e2b545cd640d489b8c253acc09bb6,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 13ed3000cb40b02489fb09de9a503b86,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ee6e14f96e6db0d4d8707a010c74da90,
+        type: 2}
     - target: {fileID: 7949239517474139980, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -195,6 +287,52 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseHero
       objectReference: {fileID: 0}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b7e5367685aac04bb548849200498c1,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: avoidance
+      value: 
+      objectReference: {fileID: 8048724201664759702, guid: b6a203f28543e994f98c8955790c3ce9,
+        type: 3}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: abilities.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a17dbd20fa80522468f56866971e540d,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 582e2b545cd640d489b8c253acc09bb6,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 13ed3000cb40b02489fb09de9a503b86,
+        type: 2}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: 'abilities.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ee6e14f96e6db0d4d8707a010c74da90,
+        type: 2}
     - target: {fileID: 7949239517474139980, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
       propertyPath: m_LocalPosition.x
