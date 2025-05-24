@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: A lightning impact the ground and make area damage
   Icon: {fileID: 0}
-  Cooldown: 10
-  abilityInstancePrefab: {fileID: 0}
+  Cooldown: 12
+  abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
+    type: 3}
   AreaPrefab: {fileID: 6847584251105636141, guid: 15aaef34ef8f1554d90b7880ab2edb94,
     type: 3}
   Scale: 1
@@ -25,12 +26,12 @@ MonoBehaviour:
   ForwardOffset: 0
   OnAwakeEffects: []
   OnEntityContactEffects:
-  - rid: 7197770895798566997
+  - rid: 7197770912738050186
   references:
     version: 2
     RefIds:
-    - rid: 7197770895798566997
-      type: {class: PushEffect, ns: , asm: Assembly-CSharp}
+    - rid: 7197770912738050186
+      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
         affectsHeroes: 0
-        pushStrength: 0
+        damageMultiplier: 2

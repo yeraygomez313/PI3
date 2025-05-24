@@ -14,8 +14,11 @@ public class HeroController : LivingEntity
     private LivingEntity monsterController;
 
     [SerializeField] private LocalForceAvoidance avoidance;
+    private LocalForceAvoidance closestTarget;
 
     private float initialScale;
+
+    private Quaternion lookAt = new Quaternion(0,0,0,1);
 
     private void Start()
     {
@@ -38,6 +41,7 @@ public class HeroController : LivingEntity
         if (enemies.Length > 0)
         {
             ChaseClosestTarget();
+            lookAt.x = transform.position.x - closestTarget.transform.position.x;
         }
 
         attackCooldown -= Time.deltaTime;
@@ -51,12 +55,13 @@ public class HeroController : LivingEntity
 
     private void AutoAttackEnemies()
     {
-        abilities[0].InstantiateAbility(this, transform.rotation, stats.attack);
+         
+        abilities[0].InstantiateAbility(this, lookAt, stats.attack);
     }
 
     private void ChaseClosestTarget()
     {
-        LocalForceAvoidance closestTarget = ChunkManager.Instance.GetClosestTarget(avoidance);
+        closestTarget = ChunkManager.Instance.GetClosestTarget(avoidance);
 
         if (closestTarget == null)
         {

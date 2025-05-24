@@ -17,12 +17,12 @@ MonoBehaviour:
   Cooldown: 1
   abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
     type: 3}
-  AreaPrefab: {fileID: 6847584251105636141, guid: cd824e4876ac0714ab88c91562a47c1f,
-    type: 3}
+  AreaPrefab: {fileID: 0}
   Scale: 1
   Duration: 0
   TickRate: 0
   LinkedToCaster: 0
+  selfCast: 0
   ForwardOffset: 0
   OnAwakeEffects: []
   OnEntityContactEffects:

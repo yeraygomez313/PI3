@@ -110,6 +110,17 @@ public class StunEffect : AbilityEffect
 }
 
 [Serializable]
+public class BuffEffect : AbilityEffect
+{
+    [SerializeField] private float buffDuration;
+    [SerializeField] private float buffPercent;
+    protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance, float attack)
+    {
+        target.buffDefense(buffDuration, buffPercent);
+    }
+}
+
+[Serializable]
 public class SpawnEffect : AbilityEffect
 {
     [SerializeField] private GameObject prefabToSpawn;

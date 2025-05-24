@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: 
   Icon: {fileID: 0}
-  Cooldown: 10
-  abilityInstancePrefab: {fileID: 0}
+  Cooldown: 15
+  abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
+    type: 3}
   AreaPrefab: {fileID: 6847584251105636141, guid: 46d8fde064637f344a44a5f2463ac327,
     type: 3}
   Scale: 1
@@ -39,4 +40,4 @@ MonoBehaviour:
       type: {class: PushEffect, ns: , asm: Assembly-CSharp}
       data:
         affectsHeroes: 0
-        pushStrength: 0
+        pushStrength: 100

@@ -20,7 +20,17 @@ public class AbilityInstance : MonoBehaviour
         }
 
         hitCollider = Instantiate(AbilityData.AreaPrefab, transform.position, orientation, transform).GetComponent<Collider2D>();
-        hitCollider.transform.localPosition += transform.forward * AbilityData.ForwardOffset;
+
+        if (orientation.x > 0)
+        {
+            hitCollider.GetComponent<Collider2D>().offset = transform.right * -AbilityData.ForwardOffset;
+        }
+        else
+        {
+            hitCollider.GetComponent<Collider2D>().offset = transform.right * AbilityData.ForwardOffset;
+        }
+        //hitCollider.transform.localPosition += transform.right * AbilityData.ForwardOffset;
+
         if (hitCollider.GetComponentsInChildren<Collider2D>() != null)
         {
             foreach (Collider2D collider in hitCollider.GetComponentsInChildren<Collider2D>())

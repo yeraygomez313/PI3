@@ -21,15 +21,24 @@ MonoBehaviour:
   Duration: 0
   TickRate: 0
   LinkedToCaster: 0
+  selfCast: 0
   ForwardOffset: 0
-  OnAwakeEffects: []
+  OnAwakeEffects:
+  - rid: -2
   OnEntityContactEffects:
-  - rid: 7197770895798566997
+  - rid: 7197770912738050199
   references:
     version: 2
     RefIds:
-    - rid: 7197770895798566997
-      type: {class: PushEffect, ns: , asm: Assembly-CSharp}
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 7197770912738050199
+      type: {class: SpawnEffect, ns: , asm: Assembly-CSharp}
       data:
-        affectsHeroes: 0
-        pushStrength: 0
+        affectsHeroes: 1
+        prefabToSpawn: {fileID: 0}
+        spawnCount: 1
+        spawnAngle: 90
+        spawnRandomly: 0
+        spawnDelay: 0.25
+        linkedToTarget: 1

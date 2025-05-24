@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: A frozen area that slows the enemies
   Icon: {fileID: 0}
-  Cooldown: 10
-  abilityInstancePrefab: {fileID: 0}
+  Cooldown: 7
+  abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
+    type: 3}
   AreaPrefab: {fileID: 6847584251105636141, guid: 973b00646d217a0489608d2dcff55e02,
     type: 3}
   Scale: 1
@@ -25,12 +26,13 @@ MonoBehaviour:
   ForwardOffset: 0
   OnAwakeEffects: []
   OnEntityContactEffects:
-  - rid: 7197770895798566997
+  - rid: 7197770912738050188
   references:
     version: 2
     RefIds:
-    - rid: 7197770895798566997
-      type: {class: PushEffect, ns: , asm: Assembly-CSharp}
+    - rid: 7197770912738050188
+      type: {class: SlowEffect, ns: , asm: Assembly-CSharp}
       data:
         affectsHeroes: 0
-        pushStrength: 0
+        slowAmount: 40
+        slowDuration: 3

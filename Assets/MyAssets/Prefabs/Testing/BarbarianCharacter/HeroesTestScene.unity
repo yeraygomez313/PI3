@@ -242,7 +242,7 @@ PrefabInstance:
     - target: {fileID: 7949239517474139980, guid: b6a203f28543e994f98c8955790c3ce9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.912664
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7949239517474139980, guid: b6a203f28543e994f98c8955790c3ce9,
         type: 3}
@@ -463,10 +463,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseMonster
       objectReference: {fileID: 0}
+    - target: {fileID: 248662147868278087, guid: b2113d2e3480ad547918f5e66244962c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7949239517474139980, guid: b2113d2e3480ad547918f5e66244962c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.885829
+      value: -8.04
       objectReference: {fileID: 0}
     - target: {fileID: 7949239517474139980, guid: b2113d2e3480ad547918f5e66244962c,
         type: 3}

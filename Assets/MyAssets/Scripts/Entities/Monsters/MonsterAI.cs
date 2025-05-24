@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MonsterAI : LivingEntity
 {
-    [SerializeField] private MonsterStats stats;
+    public MonsterStats stats;
 
     [SerializeField] private LocalForceAvoidance avoidance;
     private LivingEntity heroController;

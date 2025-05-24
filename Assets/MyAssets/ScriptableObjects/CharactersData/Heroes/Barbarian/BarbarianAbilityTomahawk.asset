@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: 
   Icon: {fileID: 0}
-  Cooldown: 10
-  abilityInstancePrefab: {fileID: 0}
+  Cooldown: 12
+  abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
+    type: 3}
   AreaPrefab: {fileID: 6847584251105636141, guid: 81d2dacdbbccfa840bc4220e9fc9bf22,
     type: 3}
   Scale: 1

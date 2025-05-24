@@ -18,14 +18,15 @@ public class AbilityData : ScriptableObject
     public float Duration;
     public float TickRate;
     public bool LinkedToCaster;
+    public bool selfCast;
     public float ForwardOffset;
     [Space]
     [SerializeReference, SubclassSelector] public List<AbilityEffect> OnAwakeEffects = new();
     [SerializeReference, SubclassSelector] public List<AbilityEffect> OnEntityContactEffects = new();
 
-    public void InstantiateAbility(LivingEntity caster, Quaternion orientation, float casterAttack)
+    public void InstantiateAbility(LivingEntity objective, Quaternion orientation, float casterAttack)
     {
-        AbilityInstance abilityInstance = Object.Instantiate(abilityInstancePrefab, caster.transform.position, orientation).GetComponent<AbilityInstance>();
-        abilityInstance.Initialize(this, caster, orientation, casterAttack);
+        AbilityInstance abilityInstance = Object.Instantiate(abilityInstancePrefab, objective.transform.position, orientation).GetComponent<AbilityInstance>();
+        abilityInstance.Initialize(this, objective, orientation, casterAttack);
     }
 }
