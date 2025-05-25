@@ -63765,7 +63765,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'heroFormationsPerLevel.Array.data[3].objects.Array.data[3]'
       value: 
-      objectReference: {fileID: 8619898715268287473, guid: c34d43de20084e549912ef3af0412590,
+      objectReference: {fileID: 8619898715268287473, guid: b67359283d1da1647994218dcafca189,
         type: 3}
     - target: {fileID: 3545864636534762357, guid: 40f8d38c35bd4214b8e6e5fc31bdb9a3,
         type: 3}
