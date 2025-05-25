@@ -22,8 +22,8 @@ public class PreparationCard : DraggableItem
 	{
 		if (card is not CardInstance cardInstance) return;
 		CardInstance = cardInstance;
-		cardVisuals.SetCard(cardInstance.GetMonsterStats());
-		cardVisuals2.SetCard(cardInstance.GetMonsterStats());
+		cardVisuals.SetCard(cardInstance);
+		cardVisuals2.SetCard(cardInstance);
 	}
 
 

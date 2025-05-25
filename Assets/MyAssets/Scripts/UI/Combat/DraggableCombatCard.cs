@@ -71,7 +71,7 @@ public class DraggableCombatCard : DraggableItem
 
         CardInstance = cardInstance;
 
-        cardVisuals.SetCard(cardInstance.GetMonsterStats());
+        cardVisuals.SetCard(cardInstance);
         manaCostText.text = cardInstance.ManaCost.ToString();
 
         if (DeploymentPreviewObject != null)

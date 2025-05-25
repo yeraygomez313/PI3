@@ -240,6 +240,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardIcon: {fileID: 7569178596174535707}
+  border: {fileID: 2954455078325106708}
+  levelOneBorderColor: {r: 1, g: 1, b: 1, a: 1}
+  levelTwoBorderColor: {r: 0.41611242, g: 0.5973176, b: 0.6075471, a: 1}
+  levelThreeBorderColor: {r: 1, g: 0.7807201, b: 0, a: 1}
 --- !u!114 &-7680072565777747589
 MonoBehaviour:
   m_ObjectHideFlags: 0

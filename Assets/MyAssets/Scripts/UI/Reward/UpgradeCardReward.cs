@@ -8,7 +8,7 @@ public class UpgradeCardReward : MonoBehaviour
     public void Initialize(CardInstance card)
     {
         cardInstance = card;
-        cardVisuals.SetCard(cardInstance.GetMonsterStats());
+        cardVisuals.SetCard(cardInstance);
     }
 
     public void UpgradeCard()
