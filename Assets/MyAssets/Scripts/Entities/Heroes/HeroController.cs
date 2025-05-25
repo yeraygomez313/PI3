@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HeroController : LivingEntity
 {
@@ -9,7 +11,7 @@ public class HeroController : LivingEntity
 
     [SerializeField] private List<AbilityData> abilities;
 
-    private float attackCooldown = 0f;
+    private List<float> abilitiesCooldowns = new List<float>() { 0f, 0f, 0f, 0f };
 
     private LivingEntity monsterController;
 
@@ -26,7 +28,6 @@ public class HeroController : LivingEntity
     {
         currentHealth = stats.maxHealth;
         initialScale = transform.localScale.x;
-        
     }
 
     private void Awake()
@@ -46,12 +47,27 @@ public class HeroController : LivingEntity
             lookAt.x = transform.position.x - closestTarget.transform.position.x;
         }
 
-        attackCooldown -= Time.deltaTime;
+        for (int i = 0; i < abilitiesCooldowns.Count; i++)
+        {
+            abilitiesCooldowns[i] -= Time.deltaTime;
+        }
 
-        if (enemies.Length > 0 && attackCooldown <= 0f)
+        if (enemies.Length > 0 && abilitiesCooldowns[0] <= 0f)
         {
             AutoAttackEnemies();
-            attackCooldown = 1f / abilities[0].Cooldown * stats.atSpeed;
+            abilitiesCooldowns[0] = 1f / abilities[0].Cooldown * stats.atSpeed;
+        }
+
+        UseAbility();
+    }
+
+    private void UseAbility()
+    {
+        int rand = Random.Range(1,4);
+        if (abilitiesCooldowns[rand] <= 0f)
+        {
+            abilities[rand].InstantiateAbility(this, lookAt, stats.attack);
+            abilitiesCooldowns[rand] = abilities[rand].Cooldown;
         }
     }
 

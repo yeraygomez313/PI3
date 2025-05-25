@@ -14,31 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: 
   Icon: {fileID: 0}
-  Cooldown: 10
-  abilityInstancePrefab: {fileID: 0}
-  AreaPrefab: {fileID: 0}
+  Cooldown: 15
+  abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
+    type: 3}
+  AreaPrefab: {fileID: 6847584251105636141, guid: 7470514d66874ac46b8793ddf0548e31,
+    type: 3}
   Scale: 1
-  Duration: 0
+  Duration: 1
   TickRate: 0
   LinkedToCaster: 0
   selfCast: 0
   ForwardOffset: 0
-  OnAwakeEffects:
-  - rid: -2
+  OnAwakeEffects: []
   OnEntityContactEffects:
-  - rid: 7197770912738050199
+  - rid: 7197770932474085376
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 7197770912738050199
-      type: {class: SpawnEffect, ns: , asm: Assembly-CSharp}
+    - rid: 7197770932474085376
+      type: {class: BuffEffect, ns: , asm: Assembly-CSharp}
       data:
         affectsHeroes: 1
-        prefabToSpawn: {fileID: 0}
-        spawnCount: 1
-        spawnAngle: 90
-        spawnRandomly: 0
-        spawnDelay: 0.25
-        linkedToTarget: 1
+        buffDuration: 5
+        buffPercent: 50

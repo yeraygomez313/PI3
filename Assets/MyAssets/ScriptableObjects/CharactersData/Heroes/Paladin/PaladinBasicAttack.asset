@@ -17,7 +17,8 @@ MonoBehaviour:
   Cooldown: 0.7
   abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
     type: 3}
-  AreaPrefab: {fileID: 0}
+  AreaPrefab: {fileID: 6847584251105636141, guid: 979f4bd127b504b478ce7e98e8aa21de,
+    type: 3}
   Scale: 1
   Duration: 0
   TickRate: 0
