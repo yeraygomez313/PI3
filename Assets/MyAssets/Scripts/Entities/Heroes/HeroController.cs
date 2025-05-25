@@ -46,11 +46,7 @@ public class HeroController : LivingEntity
             ChaseClosestTarget();
             Vector2 direction = (closestTarget.transform.position - transform.position).normalized;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            //Quaternion lookAt = Quaternion.Euler(0, 0, angle);
             lookAt = Quaternion.Euler(0, 0, angle);
-            //lookAt = Quaternion.LookRotation(closestTarget.transform.position - transform.position);
-            //lookAt.x = closestTarget.transform.position.x - transform.position.x;
-            //lookAt.y = closestTarget.transform.position.y - transform.position.y;
         }
 
         for (int i = 0; i < abilitiesCooldowns.Count; i++)
@@ -60,7 +56,7 @@ public class HeroController : LivingEntity
 
         if (enemies.Length > 0 && abilitiesCooldowns[0] <= 0f)
         {
-            //AutoAttackEnemies();
+            AutoAttackEnemies();
             abilitiesCooldowns[0] = 1f / abilities[0].Cooldown * stats.atSpeed;
         }
 
