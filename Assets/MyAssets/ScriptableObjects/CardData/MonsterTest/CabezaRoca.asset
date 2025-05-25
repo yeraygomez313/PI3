@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfbe5fb311822d546b19666dff650701, type: 3}
-  m_Name: RockHead
+  m_Name: CabezaRoca
   m_EditorClassIdentifier: 
   <ManaCost>k__BackingField: 2
   <MonsterPrefab>k__BackingField: {fileID: 248662147868278087, guid: 37ed2d355630e7543b9c678231053f81,
