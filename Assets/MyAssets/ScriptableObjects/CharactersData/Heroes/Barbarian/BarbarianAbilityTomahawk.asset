@@ -35,9 +35,12 @@ MonoBehaviour:
       type: {class: SpawnEffect, ns: , asm: Assembly-CSharp}
       data:
         affectsHeroes: 0
-        prefabToSpawn: {fileID: 0}
+        prefabToSpawn: {fileID: 1000010755293042, guid: 3c89cf85330d64b4b91f3b23d3142777,
+          type: 3}
         spawnCount: 3
         spawnAngle: 70
         spawnRandomly: 0
         spawnDelay: 0.25
+        lifetime: 5
+        damageMultiplier: 0.7
         linkedToTarget: 0

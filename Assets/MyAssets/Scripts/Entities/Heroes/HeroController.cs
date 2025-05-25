@@ -71,12 +71,10 @@ public class HeroController : LivingEntity
             if (abilities[rand].selfCast)
             {
                 abilities[rand].InstantiateAbility(this, lookAt, stats.attack);
-                Debug.LogWarning("Habilidad:" + abilities[rand].name);
             }
             else
             {
                 abilities[rand].InstantiateAbility(monsterController, lookAt, stats.attack);
-                Debug.LogWarning("Habilidad:" + abilities[rand].name);
             }
             abilitiesCooldowns[rand] = abilities[rand].Cooldown;
         }

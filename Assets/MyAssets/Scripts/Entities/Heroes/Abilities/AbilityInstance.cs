@@ -117,7 +117,7 @@ public class AbilityInstance : MonoBehaviour
         }
     }
 
-    public void SpawnObject(GameObject go, Vector3 position, Quaternion rotation, Transform parent = null)
+    public void SpawnObject(GameObject go, Vector3 position, Quaternion rotation, Transform parent = null, float casterAttack = 0)
     {
         GameObject spawnedObject;
 

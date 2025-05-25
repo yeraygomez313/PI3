@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [Serializable]
 public abstract class AbilityEffect
@@ -129,15 +131,17 @@ public class SpawnEffect : AbilityEffect
     [SerializeField] private float spawnAngle = 90f;
     [SerializeField] private bool spawnRandomly = false;
     [SerializeField] private float spawnDelay = 0.25f;
+    [SerializeField] private float lifetime = 5f;
+    [SerializeField] private float damageMultiplier;
     [SerializeField] private bool linkedToTarget;
     
     protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance, float attack)
     {
         MonoBehaviour spawner = target.GetComponent<MonoBehaviour>();
-        spawner.StartCoroutine(SpawnWithDelay(target.transform));
+        spawner.StartCoroutine(SpawnWithDelay(target.transform, abilityInstance, attack));
     }
 
-    private IEnumerator SpawnWithDelay(Transform origin)
+    private IEnumerator SpawnWithDelay(UnityEngine.Transform origin, AbilityInstance abilityInstance, float attack)
     {
         WaitForSeconds wait = new WaitForSeconds(spawnDelay);
 
@@ -161,12 +165,19 @@ public class SpawnEffect : AbilityEffect
 
             GameObject spawnedObject = UnityEngine.Object.Instantiate(prefabToSpawn, spawnPosition, spawnRotation);
 
+            if (prefabToSpawn.GetComponent<Projectile>() != null)
+            {
+                Vector2 direction = abilityInstance.transform.rotation * Vector2.right;
+                spawnedObject.GetComponent<Projectile>().Initialize(direction, attack, false);
+            }
+
             if (linkedToTarget)
             {
                 spawnedObject.transform.SetParent(origin);
                 spawnedObject.transform.localPosition = Vector3.zero;
             }
 
+            UnityEngine.Object.Destroy(spawnedObject, lifetime);
             //Ability spawnedAbility = spawnedObject.GetComponent<Ability>();
 
             //if (spawnedAbility != null)
