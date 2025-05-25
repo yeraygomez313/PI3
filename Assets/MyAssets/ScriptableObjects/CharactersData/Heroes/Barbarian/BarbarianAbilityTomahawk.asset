@@ -23,15 +23,21 @@ MonoBehaviour:
   Duration: 0
   TickRate: 0
   LinkedToCaster: 0
+  selfCast: 1
   ForwardOffset: 2
-  OnAwakeEffects: []
-  OnEntityContactEffects:
-  - rid: 7197770895798566999
+  OnAwakeEffects:
+  - rid: 7197770935025795159
+  OnEntityContactEffects: []
   references:
     version: 2
     RefIds:
-    - rid: 7197770895798566999
-      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
+    - rid: 7197770935025795159
+      type: {class: SpawnEffect, ns: , asm: Assembly-CSharp}
       data:
         affectsHeroes: 0
-        damageMultiplier: 0.7
+        prefabToSpawn: {fileID: 0}
+        spawnCount: 3
+        spawnAngle: 70
+        spawnRandomly: 0
+        spawnDelay: 0.25
+        linkedToTarget: 0

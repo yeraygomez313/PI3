@@ -80,6 +80,19 @@ public class AbilityInstance : MonoBehaviour
                 }
             }
         }
+        else if (hitCollider is PolygonCollider2D polCollider)
+        {
+            List<Collider2D> colliderList = new List<Collider2D>();
+            Physics2D.OverlapCollider(polCollider, colliderList);
+            foreach (var col in colliderList)
+            {
+                LivingEntity entity = col.GetComponent<LivingEntity>();
+                if (entity != null && !entity.IsDead)
+                {
+                    targets.Add(entity);
+                }
+            }
+        }
 
         return targets;
     }

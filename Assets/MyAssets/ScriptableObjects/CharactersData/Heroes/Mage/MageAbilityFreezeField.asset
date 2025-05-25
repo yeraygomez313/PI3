@@ -22,7 +22,8 @@ MonoBehaviour:
   Scale: 1
   Duration: 0
   TickRate: 0
-  LinkedToCaster: 0
+  LinkedToCaster: 1
+  selfCast: 1
   ForwardOffset: 0
   OnAwakeEffects: []
   OnEntityContactEffects:

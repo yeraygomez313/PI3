@@ -23,9 +23,11 @@ MonoBehaviour:
   Duration: 0
   TickRate: 0
   LinkedToCaster: 0
+  selfCast: 1
   ForwardOffset: 0
   OnAwakeEffects: []
   OnEntityContactEffects:
+  - rid: 7197770935025795160
   - rid: 7197770895798566997
   references:
     version: 2
@@ -34,4 +36,9 @@ MonoBehaviour:
       type: {class: PushEffect, ns: , asm: Assembly-CSharp}
       data:
         affectsHeroes: 0
-        pushStrength: 0
+        pushStrength: 75
+    - rid: 7197770935025795160
+      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        affectsHeroes: 0
+        damageMultiplier: 0

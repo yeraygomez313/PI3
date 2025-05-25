@@ -99,6 +99,8 @@ public class MonsterAI : LivingEntity
     }
 
 
+
+
     private void MoveTowardsHero()
     {
         Vector2 direction = (heroController.transform.position - transform.position).normalized;
@@ -111,6 +113,10 @@ public class MonsterAI : LivingEntity
         {
             float finalDamage = Mathf.Max(1, stats.attack /*- heroController.stats.defense*/);
             heroController.TakeDamage(finalDamage);
+            if(heroController.reflectDamage)
+            {
+                this.TakeDamage(finalDamage);
+            }
             attackCooldown = 1f / stats.atSpeed;
         }
     }

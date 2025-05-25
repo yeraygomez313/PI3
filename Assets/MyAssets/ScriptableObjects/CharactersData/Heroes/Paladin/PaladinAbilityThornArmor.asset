@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Description: 
   Icon: {fileID: 0}
-  Cooldown: 10
+  Cooldown: 15
   abilityInstancePrefab: {fileID: 7961440127492734819, guid: 66aed7e81dc87d540ae7654be3ed5aed,
     type: 3}
   AreaPrefab: {fileID: 0}
@@ -24,8 +24,16 @@ MonoBehaviour:
   LinkedToCaster: 0
   selfCast: 1
   ForwardOffset: 0
-  OnAwakeEffects: []
+  OnAwakeEffects:
+  - rid: 7197770935025795156
   OnEntityContactEffects: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7197770935025795156
+      type: {class: BuffEffect, ns: , asm: Assembly-CSharp}
+      data:
+        affectsHeroes: 1
+        buffDuration: 3
+        buffPercent: 15
+        reflectDamage: 1

@@ -23,6 +23,7 @@ MonoBehaviour:
   Duration: 0
   TickRate: 0
   LinkedToCaster: 0
+  selfCast: 1
   ForwardOffset: 1
   OnAwakeEffects: []
   OnEntityContactEffects:

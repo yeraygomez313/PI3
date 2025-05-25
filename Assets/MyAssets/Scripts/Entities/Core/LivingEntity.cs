@@ -14,6 +14,8 @@ public class LivingEntity : MonoBehaviour
 
     private float defense;
 
+    public bool reflectDamage;
+
     public virtual void TakeDamage(float damage)
     {
         if (defTween == null)
@@ -45,11 +47,16 @@ public class LivingEntity : MonoBehaviour
         Destroy(gameObject);
     }
 
-    internal void buffDefense(float buffDuration, float buffPercent)
+    internal void buffDefense(float buffDuration, float buffPercent, bool reflect)
     {
         if (defTween != null && defTween.IsActive())
         {
             defTween.Kill();
+        }
+
+        if (reflect)
+        {
+            reflectDamage = true;
         }
 
         defense = GetComponent<HeroController>().stats.defense + ((GetComponent<HeroController>().stats.defense * buffPercent) / 100);

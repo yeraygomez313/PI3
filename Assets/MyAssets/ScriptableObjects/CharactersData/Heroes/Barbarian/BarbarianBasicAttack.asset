@@ -20,10 +20,10 @@ MonoBehaviour:
   AreaPrefab: {fileID: 6847584251105636141, guid: cd824e4876ac0714ab88c91562a47c1f,
     type: 3}
   Scale: 1
-  Duration: 5
+  Duration: 0
   TickRate: 0
   LinkedToCaster: 0
-  selfCast: 0
+  selfCast: 1
   ForwardOffset: 1
   OnAwakeEffects: []
   OnEntityContactEffects:

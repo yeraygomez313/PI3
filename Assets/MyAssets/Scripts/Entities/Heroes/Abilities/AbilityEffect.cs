@@ -114,9 +114,10 @@ public class BuffEffect : AbilityEffect
 {
     [SerializeField] private float buffDuration;
     [SerializeField] private float buffPercent;
+    [SerializeField] private bool reflectDamage;
     protected override void ApplyEffect(LivingEntity target, AbilityInstance abilityInstance, float attack)
     {
-        target.buffDefense(buffDuration, buffPercent);
+        target.buffDefense(buffDuration, buffPercent, reflectDamage);
     }
 }
 
