@@ -100,6 +100,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 40b81efc5efc104479fc81ded6426051,
         type: 2}
+    - target: {fileID: 8376655513178346473, guid: b2113d2e3480ad547918f5e66244962c,
+        type: 3}
+      propertyPath: canShoot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376655513178346473, guid: b2113d2e3480ad547918f5e66244962c,
+        type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 6655405699254965206, guid: 8e0e98aa49d554d47a23aaf0b6a4d8fe,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

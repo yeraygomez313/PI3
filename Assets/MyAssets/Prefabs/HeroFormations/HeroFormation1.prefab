@@ -61,6 +61,12 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 6655405699254965206, guid: 8e0e98aa49d554d47a23aaf0b6a4d8fe,
+        type: 3}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
       propertyPath: enemyLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -171,13 +177,19 @@ PrefabInstance:
         type: 3}
       propertyPath: stats
       value: 
-      objectReference: {fileID: 11400000, guid: 5b7e5367685aac04bb548849200498c1,
+      objectReference: {fileID: 11400000, guid: ab6ef98a50b80794c9637c1aef939481,
         type: 2}
     - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
       propertyPath: avoidance
       value: 
-      objectReference: {fileID: 8048724201664759702, guid: b6a203f28543e994f98c8955790c3ce9,
+      objectReference: {fileID: 8048724201664759702, guid: 22abda76288a79a48bc7c90b5aa6cfd3,
+        type: 3}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 6655405699254965206, guid: 8e0e98aa49d554d47a23aaf0b6a4d8fe,
         type: 3}
     - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
@@ -193,25 +205,25 @@ PrefabInstance:
         type: 3}
       propertyPath: 'abilities.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: a17dbd20fa80522468f56866971e540d,
+      objectReference: {fileID: 11400000, guid: e8218fe2110ae384b8828a49991c3229,
         type: 2}
     - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
       propertyPath: 'abilities.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: 582e2b545cd640d489b8c253acc09bb6,
+      objectReference: {fileID: 11400000, guid: 49099f6d5eb0e1f4ba5dd9c91dde8fbd,
         type: 2}
     - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
       propertyPath: 'abilities.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 13ed3000cb40b02489fb09de9a503b86,
+      objectReference: {fileID: 11400000, guid: 8c3b5197dff471648b7f4cada1f4e6cb,
         type: 2}
     - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
       propertyPath: 'abilities.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: ee6e14f96e6db0d4d8707a010c74da90,
+      objectReference: {fileID: 11400000, guid: ce9bffe0937869648a0eb90a1341990b,
         type: 2}
     - target: {fileID: 7949239517474139980, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}
@@ -298,6 +310,12 @@ PrefabInstance:
       propertyPath: avoidance
       value: 
       objectReference: {fileID: 8048724201664759702, guid: b6a203f28543e994f98c8955790c3ce9,
+        type: 3}
+    - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
+        type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 6655405699254965206, guid: 8e0e98aa49d554d47a23aaf0b6a4d8fe,
         type: 3}
     - target: {fileID: 5804405175387418146, guid: cb8846f2cbcd8b445a04b382c4983a68,
         type: 3}

@@ -20,6 +20,8 @@ public class HeroController : LivingEntity
 
     private Quaternion lookAt = new Quaternion(0,0,0,1);
 
+    [SerializeField] private GameObject projectilePrefab;
+
     private void Start()
     {
         currentHealth = stats.maxHealth;
@@ -55,7 +57,9 @@ public class HeroController : LivingEntity
 
     private void AutoAttackEnemies()
     {
-         
+        /*GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        Vector2 direction = (monsterController.transform.position - transform.position).normalized;
+        projectile.GetComponent<Projectile>().Initialize(direction, stats.attack, false);*/
         abilities[0].InstantiateAbility(this, lookAt, stats.attack);
     }
 
