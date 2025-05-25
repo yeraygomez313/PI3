@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 682652913645278883}
@@ -104,6 +104,7 @@ MonoBehaviour:
   OnEntityDied:
     m_PersistentCalls:
       m_Calls: []
+  reflectDamage: 0
   stats: {fileID: 11400000, guid: 5b7e5367685aac04bb548849200498c1, type: 2}
   enemyLayer:
     serializedVersion: 2
@@ -114,6 +115,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 13ed3000cb40b02489fb09de9a503b86, type: 2}
   - {fileID: 11400000, guid: ee6e14f96e6db0d4d8707a010c74da90, type: 2}
   avoidance: {fileID: 8048724201664759702}
+  projectilePrefab: {fileID: 0}
 --- !u!1001 &2504351225277252426
 PrefabInstance:
   m_ObjectHideFlags: 0

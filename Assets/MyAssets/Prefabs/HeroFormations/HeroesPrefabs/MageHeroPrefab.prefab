@@ -104,6 +104,7 @@ MonoBehaviour:
   OnEntityDied:
     m_PersistentCalls:
       m_Calls: []
+  reflectDamage: 0
   stats: {fileID: 11400000, guid: ab6ef98a50b80794c9637c1aef939481, type: 2}
   enemyLayer:
     serializedVersion: 2
@@ -114,6 +115,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8c3b5197dff471648b7f4cada1f4e6cb, type: 2}
   - {fileID: 11400000, guid: ce9bffe0937869648a0eb90a1341990b, type: 2}
   avoidance: {fileID: 8048724201664759702}
+  projectilePrefab: {fileID: 6655405699254965206, guid: 8e0e98aa49d554d47a23aaf0b6a4d8fe,
+    type: 3}
 --- !u!1001 &2504351225277252426
 PrefabInstance:
   m_ObjectHideFlags: 0
