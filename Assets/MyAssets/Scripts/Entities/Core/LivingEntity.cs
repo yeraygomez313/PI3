@@ -28,7 +28,7 @@ public class LivingEntity : MonoBehaviour
             }
         }
 
-        currentHealth -= damage - ((damage * defense) / 100);
+        currentHealth -= Mathf.Clamp(damage - ((damage * defense) / 100),10,1000);
         
         Debug.Log($"{gameObject.name} received {damage} damage. Life: {currentHealth}");
 

@@ -22,7 +22,7 @@ public class MonsterAI : LivingEntity
     }
 
     public void Initialize(MonsterStats monsterStats)
-    {;
+    {
         GetComponent<SpriteRenderer>().sprite = monsterStats.Icon; //DEBUG
         stats = monsterStats;
         currentHealth = monsterStats.maxHealth;
@@ -44,7 +44,7 @@ public class MonsterAI : LivingEntity
         float distance = Vector2.Distance(transform.position, heroController.transform.position);
 
         // --- MODO DE DISPARO ---
-        if (canShoot && remainingShots > 0 && distance <= stats.atRange + 10f && distance > stats.atRange)
+        if (canShoot && remainingShots > 0 && distance <= stats.atRange + 10f)
         {
             if (!inRangedMode)
             {
@@ -95,6 +95,7 @@ public class MonsterAI : LivingEntity
 
         avoidance.SetTarget(closestTarget.transform.position);
         heroController = closestTarget.GetComponent<LivingEntity>();
+        inRangedMode = false;
     }
 
 

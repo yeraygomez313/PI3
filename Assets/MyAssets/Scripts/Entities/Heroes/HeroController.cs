@@ -57,10 +57,16 @@ public class HeroController : LivingEntity
 
     private void AutoAttackEnemies()
     {
-        /*GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        Vector2 direction = (monsterController.transform.position - transform.position).normalized;
-        projectile.GetComponent<Projectile>().Initialize(direction, stats.attack, false);*/
-        abilities[0].InstantiateAbility(this, lookAt, stats.attack);
+		if (stats.heroClass == HeroClass.mage)
+		{
+            GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            Vector2 direction = (monsterController.transform.position - transform.position).normalized;
+            projectile.GetComponent<Projectile>().Initialize(direction, stats.attack, false);
+		}
+		else
+		{
+            abilities[0].InstantiateAbility(this, lookAt, stats.attack);
+        }
     }
 
     private void ChaseClosestTarget()

@@ -15,7 +15,7 @@ MonoBehaviour:
   Icon: {fileID: -1220102675, guid: 0c1e734fa85636743af3bc22c6d99ba8, type: 3}
   maxHealth: 110
   attack: 20
-  defense: 125
+  defense: 1000
   atSpeed: 1
   mvSpeed: 12
   atRange: 1

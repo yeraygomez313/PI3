@@ -16,7 +16,7 @@ MonoBehaviour:
   maxHealth: 50
   attack: 25
   defense: 50
-  atSpeed: 1
+  atSpeed: 0.5
   mvSpeed: 15
-  atRange: 1
+  atRange: 5
   scale: 0.75

@@ -160,3 +160,6 @@ MonoBehaviour:
       m_Calls: []
   stats: {fileID: 0}
   avoidance: {fileID: 8048724201664759702}
+  projectilePrefab: {fileID: 6655405699254965206, guid: 8e0e98aa49d554d47a23aaf0b6a4d8fe,
+    type: 3}
+  canShoot: 1
